@@ -1,0 +1,26 @@
+div * {
+    margin: 0.5em 0;
+}
+
+a, span, div, p, em, b, c, ul, li, h1, h2, h3, h4, h5, h6, small, td, input, button {
+    list-style: none;
+    font-family: 'Noto Sans CJK', 'Noto Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a {
+    font-weight: normal;
+}
+
+b {
+    animation: wavetext 2s alternate infinite;
+    display: inline-block;
+}
+
+@keyframes wavetext {
+    from {
+        transform: translate(0, -5px);
+    }
+    to {
+        transform: translate(0, 5px);
+    }
+}

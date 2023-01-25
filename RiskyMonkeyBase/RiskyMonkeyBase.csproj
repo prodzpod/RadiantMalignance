@@ -1,0 +1,187 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="libs\**" />
+    <EmbeddedResource Remove="libs\**" />
+    <None Remove="libs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Achievements\EnemyAchievement.cs~RF26fc11d3.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BepInEx.Core" Version="5.4.19" />
+	<PackageReference Include="BepInEx.BaseLib" Version="5.4.19" /> 
+	<PackageReference Include="R2API" Version="4.4.1" />
+	<PackageReference Include="UnityEngine" Version="5.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AOCAssembly">
+      <HintPath>libs\AOCAssembly.dll</HintPath>
+    </Reference>
+    <Reference Include="ArtifactDissimilarity">
+      <HintPath>libs\ArtifactDissimilarity.dll</HintPath>
+    </Reference>
+    <Reference Include="ArtifactOfBlindness">
+      <HintPath>libs\ArtifactOfBlindness.dll</HintPath>
+    </Reference>
+    <Reference Include="ArtifactOfPotential">
+      <HintPath>libs\ArtifactOfPotential.dll</HintPath>
+    </Reference>
+    <Reference Include="BetterUI">
+      <HintPath>libs\BetterUI.dll</HintPath>
+    </Reference>
+    <Reference Include="BetterUnityPlugin">
+      <HintPath>libs\BetterUnityPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="BossAntiSoftlock">
+      <HintPath>libs\BossAntiSoftlock.dll</HintPath>
+    </Reference>
+    <Reference Include="BubbetsItems">
+      <HintPath>libs\BubbetsItems.dll</HintPath>
+    </Reference>
+    <Reference Include="BulwarksHaunt">
+      <HintPath>libs\BulwarksHaunt.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomEmotesAPI">
+      <HintPath>libs\CustomEmotesAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="DiggerUnearthed">
+      <HintPath>libs\DiggerUnearthed.dll</HintPath>
+    </Reference>
+    <Reference Include="Enforcer">
+      <HintPath>libs\Enforcer.dll</HintPath>
+    </Reference>
+    <Reference Include="Facepunch.Steamworks">
+      <HintPath>libs\Facepunch.Steamworks.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="FHCSharp">
+      <HintPath>libs\FHCSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Inferno">
+      <HintPath>libs\Inferno.dll</HintPath>
+    </Reference>
+    <Reference Include="KdTreeLib">
+      <HintPath>libs\KdTreeLib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="KinematicCharacterController">
+      <HintPath>libs\KinematicCharacterController.dll</HintPath>
+    </Reference>
+    <Reference Include="LasyBastardEngineer">
+      <HintPath>libs\LasyBastardEngineer.dll</HintPath>
+    </Reference>
+    <Reference Include="MMHOOK_RoR2">
+      <HintPath>libs\MMHOOK_RoR2.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>libs\Mono.Security.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="PaladinMod">
+      <HintPath>libs\PaladinMod.dll</HintPath>
+    </Reference>
+    <Reference Include="pb_Stl">
+      <HintPath>libs\pb_Stl.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Poly2Tri">
+      <HintPath>libs\Poly2Tri.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ProBuilderCore">
+      <HintPath>libs\ProBuilderCore.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ProBuilderMeshOps">
+      <HintPath>libs\ProBuilderMeshOps.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="R2API">
+      <HintPath>libs\R2API.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Rewired_Windows_Lib">
+      <HintPath>libs\Rewired_Windows_Lib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="RFTV">
+      <HintPath>libs\RFTV.dll</HintPath>
+    </Reference>
+    <Reference Include="RiskOfOptions">
+      <HintPath>libs\RiskOfOptions.dll</HintPath>
+    </Reference>
+    <Reference Include="RoR2BepInExPack">
+      <HintPath>libs\RoR2BepInExPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ShrineOfRepair">
+      <HintPath>libs\ShrineOfRepair.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleJSON">
+      <HintPath>libs\SimpleJSON.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SniperClassic">
+      <HintPath>libs\SniperClassic.dll</HintPath>
+    </Reference>
+    <Reference Include="StageAesthetic">
+      <HintPath>libs\StageAesthetic.dll</HintPath>
+    </Reference>
+    <Reference Include="Templar">
+      <HintPath>libs\Templar.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>libs\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>libs\Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityNamedPipe">
+      <HintPath>libs\UnityNamedPipe.dll</HintPath>
+    </Reference>
+    <Reference Include="Wwise">
+      <HintPath>libs\Wwise.dll</HintPath>
+    </Reference>
+    <Reference Include="ZetArtifacts">
+      <HintPath>libs\ZetArtifacts.dll</HintPath>
+    </Reference>
+    <Reference Include="Zio">
+      <HintPath>libs\Zio.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Update="riskymonkey">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Update="riskymonkey.manifest">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+    <None Update="Lang\fixes.language">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Lang\memes.notlanguage">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Lang\krpatch.overlaylanguage">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties lang_4fixes_1language__JsonSchema="https://appliedengdesign.github.io/cnccodes-json-schema/draft/2022-07/schema" /></VisualStudio></ProjectExtensions>
+
+</Project>

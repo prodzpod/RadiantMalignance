@@ -1,0 +1,103 @@
+ManifestFileVersion: 0
+CRC: 3660102678
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1781d38ececd37e103d7fb8129cdcce6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e43acdfd8c19e20e90b11b4531392bdb
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/unlocks/texArtifactSanction.png
+- Assets/iconProd.png
+- Assets/iconModpack.png
+- Assets/unlocks/texItemItemDefGemCarapace.png
+- Assets/texReprogrammer.png
+- Assets/unlocks/texArtifactKith.png
+- Assets/unlocks/texArtifactMultitudes.png
+- Assets/unlocks/texItemItemDefEscapePlan.png
+- Assets/ALCube2.prefab
+- Assets/matAncientLoft_DimondPattern.mat
+- Assets/meshSnowyForestTerrainWaterSpecial.obj
+- Assets/SatelliteSpecial.obj
+- Assets/texNormalConcrete.png
+- Assets/mdlLunarBloodArenaRoofSpecial.obj
+- Assets/unlocks/texArtifactRevival.png
+- Assets/texReprogrammerEmit.png
+- Assets/unlocks/texItemHCFB_ITEM_KNIFE.png
+- Assets/ALSphere2.prefab
+- Assets/texReprogrammerDiffuse.png
+- Assets/unlocks/texArtifactEclipse.png
+- Assets/unlocks/texArtifactEscalation.png
+- Assets/BbRuinPillar1_LOD0Special.obj
+- Assets/downpour.png
+- Assets/unlocks/texArtifactDissimilarity.png
+- Assets/unlocks/texArtifactAccumulation.png
+- Assets/icon.png
+- Assets/ALCube.prefab
+- Assets/unlocks/texItemItemDefEternalSlug.png
+- Assets/unlocks/texArtifactTranspose.png
+- Assets/unlocks/texItemItemDefBunnyFoot.png
+- Assets/matRecycler.mat
+- Assets/ALSphere.prefab
+- Assets/unlocks/texArtifactBrigade.png
+- Assets/unlocks/texArtifactWander.png
+- Assets/unlocks/texArtifactRemodeling.png
+- Assets/IconMods.png
+- Assets/iconOutline.png
+- Assets/unlocks/texItemHCFB_ITEM_CHOPSTICKS.png
+- Assets/columnLargeSpecial.obj
+- Assets/unlocks/texItemReprogrammer.png
+- Assets/Terrain Middle Special.obj
+- Assets/DisplayReprogrammer.fbx
+- Assets/unlocks/texSurvivorTemplar.png
+- Assets/unlocks/texArtifactTossing.png
+- Assets/MoonArenaBaseLayerBowlSpecial.obj
+- Assets/unlocks/texSurvivorRailgunner.png
+- Assets/PickupReprogrammer.fbx
+- Assets/matAncientLoft_Boulder.mat
+- Assets/texRockyNormals.png
+- Assets/meshVoidCenterStatueSpecial.obj
+- Assets/meshSPDomeSpecial.obj
+- Assets/logoLunar.png
+- Assets/logoMeme.png
+- Assets/iconTemplar.png
+- Assets/unlocks/texItemEquipmentDefWildlifeCamera.png
+- Assets/texRecyclerNormal.png
+- Assets/logoVoid.png
+- Assets/GPRuinGrateSpecial.obj
+- Assets/logo.png
+- Assets/texAncientLoft_StoneSurfaceDiffuse.png
+- Assets/unlocks/texArtifactSpiriting.png
+- Assets/unlocks/texArtifactChosen.png
+- Assets/unlocks/texArtifactPotential.png
+- Assets/unlocks/texArtifactBlindness.png
+Dependencies: []

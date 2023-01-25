@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 3793911975
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: riskymonkey
+      Dependencies: {}
+    Info_1:
+      Name: templarskins
+      Dependencies: {}

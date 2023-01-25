@@ -9,6 +9,12 @@
 
 Refer to the [official page](https://prodzpod.github.io/RadiantMalignance/index.html) for credits and changelog.
 
+**Profile Code**: `0185ea23-59d2-f951-d44d-8137cde2184e`
+**Profile File**: [Download](https://prodzpod.github.io/RadiantMalignance/Radiant Malignance.r2z)
+
+## Note: Survivors of the Void
+SotV is **heavily recommended** when playing this modpack as many features are tied in with SotV in mind. the modpack without SotV is **not tested** and can lead to diminished experience.
+
 ## Note: Playtest Beta
 Some features may be buggy or missing in the 0.9 versions of the game. This release is to conduct playtest and is subject to change. Although I don't see major changes in its future, **It is advised against that you make serious progress.** fully expect to make a new profile once the 1.0 version drops.
 

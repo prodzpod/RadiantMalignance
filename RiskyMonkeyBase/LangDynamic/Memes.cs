@@ -10,10 +10,10 @@ namespace RiskyMonkeyBase.LangDynamic
         public static void Patch()
         {
             RiskyMonkeyBase.Log.LogInfo("[[Return to monkey]] module loaded");
-            RiskyMonkeyBase.Log.LogInfo("loading " + Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\memes.notlanguage"));
-            LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\memes.notlanguage"));
-            RiskyMonkeyBase.Log.LogInfo("loading " + Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\memes.notlanguage"));
-            LanguageAPI.AddOverlayPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\memes.moddedlanguage"));
+            RiskyMonkeyBase.Log.LogInfo("loading " + Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "memes.notlanguage"));
+            LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "memes.notlanguage"));
+            RiskyMonkeyBase.Log.LogInfo("loading " + Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "memes.notlanguage"));
+            LanguageAPI.AddOverlayPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "memes.moddedlanguage"));
             On.RoR2.CharacterBody.GetUserName += (orig, self) => { return Language.GetString(orig(self)); };
             On.RoR2.Util.GetBestMasterName += (orig, self) => { return Language.GetString(orig(self)); };
             On.RoR2.CharacterBody.GetColoredUserName += (orig, self) =>

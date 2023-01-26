@@ -15,6 +15,7 @@ using UnityEngine.UI;
 using RoR2.UI;
 using TMPro;
 using UnityEngine.Events;
+using System.Reflection;
 
 namespace RiskyMonkeyBase
 {
@@ -129,6 +130,7 @@ namespace RiskyMonkeyBase
             if (Reference.Mods("com.IkalaGaming.QuickRestart")) PauseButtonLangKeys.PatchQuickRestart();
             if (Reference.Mods("com.Dragonyck.PhotoMode")) PauseButtonLangKeys.PatchPhotoMode();
 
+            if (Reference.RadiantMalignance.Value) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "fixes.modpacklanguage"));
             KRPatch.Patch();
             if (!Reference.SeriousMode.Value) Memes.Patch();
             if (Reference.Mods("com.doctornoodlearms.huntressmomentum")) LanguageAPI.AddOverlay("NOODLE_HUNTRESSPASSIVE_DESC", $"Sprinting gives stacks of momentum.\nAt 10 stacks, the next attack will be a <style=cIsDamage>Critical Strike</style>.");

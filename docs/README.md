@@ -1,5 +1,5 @@
 # Radiant Malignance - Playtest Beta
-![logo image](./logo.png)
+![logo image](https://prodzpod.github.io/RadiantMalignance/logo.png)  
 > Kitchen Sink pushed to its logical extreme  
 > Proper introduction soon:tm: (maybe a video)
 
@@ -9,8 +9,8 @@
 
 Refer to the [official page](https://prodzpod.github.io/RadiantMalignance/index.html) for credits and changelog.
 
-**Profile Code**: `0185ea23-59d2-f951-d44d-8137cde2184e`
-**Profile File**: [Download](https://prodzpod.github.io/RadiantMalignance/Radiant Malignance.r2z)
+**Profile Code**: `0185ea23-59d2-f951-d44d-8137cde2184e`  
+**Profile File**: [Download](https://prodzpod.github.io/RadiantMalignance/RadiantMalignance.r2z)
 
 ## Note: Survivors of the Void
 SotV is **heavily recommended** when playing this modpack as many features are tied in with SotV in mind. the modpack without SotV is **not tested** and can lead to diminished experience.

@@ -1,5 +1,5 @@
 # Radiant Malignance - Base
-![logo image](./docs/logo.png)
+![logo image](https://prodzpod.github.io/RadiantMalignance/logo.png)  
 This is a base mod for Radiance Malignance. Issues related to the modpack and the basemod should be directed here.
 **DO NOT REPORT ERRORS YOU ENCOUNTER IN THE MODPACK TO THE MOD DEV** unless you know what you're doing. Cross-mod interactions are supposed to be messy and it should be reported here instead.
 
@@ -39,7 +39,7 @@ Add unlocks for:
     - Blunderbuss
     - Sidestep
     - Weapon Swap
-- Skins (Skin renames will be moved to Modpack Mode only option)
+- Skins (Skin renames are Modpack Mode only)
   - Add skin categories similar to Mastery
     - Nemesis: Kill n enemies in a run (subject to change)
     - Mastery: Monsoon
@@ -165,7 +165,7 @@ Add unlocks for:
 - [Bubbet's Items](https://thunderstore.io/package/Bubbet/BubbetsItems/): Ability for void lunar items to be used in cleansing pool, chance for void lunar items to appear on shop.
 - [Bubbet's Items](https://thunderstore.io/package/Bubbet/BubbetsItems/): Fixed Submerging Cistern's item display.
 - [QuickRestart](https://thunderstore.io/package/AceOfShades/QuickRestart/) & [Photo Mode](https://thunderstore.io/package/Dragonyck/PhotoMode/): Makes button order more sensible.
-- [Risk Of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options/): Ability to hide ROO categories. for modpack development.
+- [Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options/): Ability to hide ROO categories. for modpack development.
 - [Bulwark's Haunt](https://thunderstore.io/package/TheMysticSword/BulwarksHaunt/): "Fixes" Void Fiend achievement name.
 - [Released From the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid/): Ability to disable modules of the mod.
 - Customizable Focused Convergence stacking. configurable max range stack and max rate stack.
@@ -175,7 +175,6 @@ Add unlocks for:
 - [BossAntiSoftlock](https://thunderstore.io/package/JustDerb/BossAntiSoftlock/): Disables the text that appears every time a boss appears.
 - [DiscordRichPresence](https://thunderstore.io/package/Cuno/DiscordRichPresence/): Removes log spam.
 - togglable tweak to H3AD-5T v2, removes cooldown and stack increases damage instead. also affects [Empyrean Braces](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics/).
-- [Shrine of Repair](https://thunderstore.io/package/viliger/ShrineOfRepair/): Changes name to Shrine of Time. (will be moves to Modpack Mode Only)
 
 ### Logbook
 Added logbook entries for missing things. may change as mods gets updates.
@@ -237,4 +236,5 @@ currently implemented:
 - [QuickRestart](https://thunderstore.io/package/AceOfShades/QuickRestart/)
 - [Photo Mode](https://thunderstore.io/package/Dragonyck/PhotoMode/)
 - [BetterUI](https://thunderstore.io/package/XoXFaby/BetterUI/)
-- [Shrine of Repair](https://thunderstore.io/package/viliger/ShrineOfRepair/)
+- [Artifact of Chosen](https://thunderstore.io/package/DogeTeam/ArtifactOfChosen/)
+- [Shrine of Repair](https://thunderstore.io/package/viliger/ShrineOfRepair/) (Modpack Mode Only)

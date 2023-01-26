@@ -1,6 +1,6 @@
 {
 	"name": "Radiant_Malignance",
-	"version_number": "0.9.0",
+	"version_number": "0.9.1",
 	"website_url": "https://github.com/prodzpod/RadiantMalignance",
 	"description": "Kitchen Sink Modpack pushed to its extreme.",
 	"dependencies": [
@@ -207,6 +207,6 @@
         "HIFU-ArtifactOfBlindness-1.1.0",
         "Zenithrium-VanillaVoid-1.4.4",
         "Nuxlar-TweakAWU-1.0.0",
-        "prodzpod-RadiantMalignance-0.9.0"
+        "prodzpod-RadiantMalignance-0.9.1"
 	]
 }

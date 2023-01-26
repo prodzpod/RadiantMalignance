@@ -10,8 +10,8 @@ namespace RiskyMonkeyBase
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RiskyMonkeyBase";
         public const string PluginDisplayName = "Radiant Malignance";
-        public const string PluginVersion = "0.9.0";
-        public static int[] Releases = { 90 }; // prepend new releases
+        public const string PluginVersion = "0.9.1";
+        public static int[] Releases = { 91, 90 }; // prepend new releases
         public static ConfigFile Config;
         public static ConfigEntry<bool> RadiantMalignance;
         public static ConfigEntry<bool> UseFullDescForPickup;

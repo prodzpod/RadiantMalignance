@@ -175,6 +175,7 @@ Add unlocks for:
 - [BossAntiSoftlock](https://thunderstore.io/package/JustDerb/BossAntiSoftlock/): Disables the text that appears every time a boss appears.
 - [DiscordRichPresence](https://thunderstore.io/package/Cuno/DiscordRichPresence/): Removes log spam.
 - togglable tweak to H3AD-5T v2, removes cooldown and stack increases damage instead. also affects [Empyrean Braces](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics/).
+- Ability to see all artifacts, as well as display hints. (Vanilla artifact hints from [RoR2 Wiki](https://riskofrain2.fandom.com/wiki/Artifact_Hints)). Hint level configurable.
 
 ### Logbook
 Added logbook entries for missing things. may change as mods gets updates.

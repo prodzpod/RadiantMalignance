@@ -98,7 +98,7 @@ namespace RiskyMonkeyBase.Achievements
     public class HCFB_ITEM_KNIFEAchievement : BaseAchievement
     {
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
-        public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.crit >= 100f) Grant(); }
+        public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.crit >= 111f) Grant(); }
     }
 
     [RegisterModdedAchievement("RiskyMonkey_Items_HCFB_ITEM_CHOPSTICKS", "Items.HCFB_ITEM_CHOPSTICKS", null, null, "com.Ner0ls.HolyCrapForkIsBack")]
@@ -112,7 +112,7 @@ namespace RiskyMonkeyBase.Achievements
     public class ItemDefGemCarapaceAchievement : BaseAchievement
     {
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
-        public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.healthComponent.barrier >= localUser.cachedBody.maxBarrier) Grant(); }
+        public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (!localUser.cachedBody.healthComponent.godMode && localUser.cachedBody.healthComponent.barrier >= localUser.cachedBody.maxBarrier) Grant(); }
     }
 
     [RegisterModdedAchievement("RiskyMonkey_Items_ItemDefEternalSlug", "Items.ItemDefEternalSlug", null, null, "bubbet.bubbetsitems")]
@@ -147,7 +147,7 @@ namespace RiskyMonkeyBase.Achievements
         {
             orig(self, info);
             if (localUser != null && localUser.cachedBody != null && self == localUser.cachedBody.healthComponent)
-                if ((info.damageType & DamageType.NonLethal) > 0 && self.combinedHealthFraction <= 0.01f) Grant();
+                if ((info.damageType & DamageType.NonLethal) == 0 && self.combinedHealthFraction <= 0.01f) Grant();
         }
     }
 

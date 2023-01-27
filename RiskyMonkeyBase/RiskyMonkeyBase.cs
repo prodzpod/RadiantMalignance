@@ -16,6 +16,7 @@ using RoR2.UI;
 using TMPro;
 using UnityEngine.Events;
 using System.Reflection;
+using System.IO;
 
 namespace RiskyMonkeyBase
 {
@@ -93,6 +94,7 @@ namespace RiskyMonkeyBase
     [BepInDependency("PlasmaCore.ForgottenRelics", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("prodzpod.TemplarSkins", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("zombieseatflesh7.ArtifactOfPotential", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("xyz.yekoc.PassiveAgression", BepInDependency.DependencyFlags.SoftDependency)]
 
     public class RiskyMonkeyBase : BaseUnityPlugin
     {
@@ -130,8 +132,13 @@ namespace RiskyMonkeyBase
             if (Reference.Mods("com.IkalaGaming.QuickRestart")) PauseButtonLangKeys.PatchQuickRestart();
             if (Reference.Mods("com.Dragonyck.PhotoMode")) PauseButtonLangKeys.PatchPhotoMode();
 
-            if (Reference.RadiantMalignance.Value) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "fixes.modpacklanguage"));
-            KRPatch.Patch();
+            if (Reference.RadiantMalignance.Value)
+            {
+                if (File.Exists(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "fixes.modpacklanguage"))) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "fixes.modpacklanguage"));
+                else if (File.Exists(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\fixes.modpacklanguage"))) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\fixes.modpacklanguage"));
+            }
+            if (File.Exists(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "krpatch.overlaylanguage"))) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "krpatch.overlaylanguage"));
+            else if (File.Exists(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\krpatch.overlaylanguage"))) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\krpatch.overlaylanguage"));
             if (!Reference.SeriousMode.Value) Memes.Patch();
             if (Reference.Mods("com.doctornoodlearms.huntressmomentum")) LanguageAPI.AddOverlay("NOODLE_HUNTRESSPASSIVE_DESC", $"Sprinting gives stacks of momentum.\nAt 10 stacks, the next attack will be a <style=cIsDamage>Critical Strike</style>.");
             if (Reference.Mods("com.xoxfaby.BetterUI")) BetterUIStatsLangKey.Patch();

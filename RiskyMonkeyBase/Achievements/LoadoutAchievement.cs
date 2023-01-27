@@ -31,6 +31,19 @@ namespace RiskyMonkeyBase.Achievements
                 MakeUnlockable("TEMPLAR_UTILITY_DODGE_NAME");
                 MakeUnlockable("TEMPLAR_SPECIAL_SWAP_NAME");
             }
+            if (Reference.Mods("xyz.yekoc.PassiveAgression"))
+            {
+                MakeUnlockable("PASSIVEAGRESSION_COMMANDOSTIM");
+                MakeUnlockable("PASSIVEAGRESSION_BANDITSTARCH");
+                MakeUnlockable("PASSIVEAGRESSION_PALADINRESOLVE");
+                MakeUnlockable("PASSIVEAGRESSION_MAGEBLOODRITE");
+                MakeUnlockable("PASSIVEAGRESSION_MAGEBLOODBOLT");
+                MakeUnlockable("PASSIVEAGRESSION_MAGEICEARMOR");
+                MakeUnlockable("PASSIVEAGRESSION_LOADERELEC");
+                MakeUnlockable("PASSIVEAGRESSION_CROCSPREAD");
+                MakeUnlockable("PASSIVEAGRESSION_VIENDBUG");
+                MakeUnlockable("PASSIVEAGRESSION_VIENDTEAR");
+            }
             AchievementManager.onAchievementsRegistered += PostPatch;
         }
 
@@ -51,6 +64,19 @@ namespace RiskyMonkeyBase.Achievements
                 AddUnlockable("TEMPLAR_SECONDARY_SHOTGUN_NAME");
                 AddUnlockable("TEMPLAR_UTILITY_DODGE_NAME");
                 AddUnlockable("TEMPLAR_SPECIAL_SWAP_NAME");
+            }
+            if (Reference.Mods("xyz.yekoc.PassiveAgression"))
+            {
+                AddUnlockable("PASSIVEAGRESSION_COMMANDOSTIM");
+                AddUnlockable("PASSIVEAGRESSION_BANDITSTARCH");
+                AddUnlockable("PASSIVEAGRESSION_PALADINRESOLVE");
+                AddUnlockable("PASSIVEAGRESSION_MAGEBLOODRITE");
+                AddUnlockable("PASSIVEAGRESSION_MAGEBLOODBOLT");
+                AddUnlockable("PASSIVEAGRESSION_MAGEICEARMOR");
+                AddUnlockable("PASSIVEAGRESSION_LOADERELEC");
+                AddUnlockable("PASSIVEAGRESSION_CROCSPREAD");
+                AddUnlockable("PASSIVEAGRESSION_VIENDBUG");
+                AddUnlockable("PASSIVEAGRESSION_VIENDTEAR");
             }
         }
 
@@ -77,6 +103,17 @@ namespace RiskyMonkeyBase.Achievements
             while (families.MoveNext()) for (var i = 0; i < families.Current.variants.Length; i++) if (families.Current.variants[i].skillDef == def) families.Current.variants[i].unlockableDef = unlockableDef;
         }
 
+        public static bool hasDebuffs(BuffIndex[] buffs, int count)
+        {
+            int _count = 0;
+            for (var i = 0; i < buffs.Length; i++)
+            {
+                BuffDef buff = BuffCatalog.GetBuffDef(buffs[i]);
+                if (buff != null && buff.isDebuff) _count++;
+            }
+            return _count >= count;
+        }
+
         [RegisterModdedAchievement("RiskyMonkey_Skills_AutoShot", "Skills.AutoShot", null, null, "com.lodington.AutoShot")]
         public class AutoShotAchievement : BaseAchievement
         {
@@ -98,9 +135,9 @@ namespace RiskyMonkeyBase.Achievements
             public override void OnBodyRequirementMet()  {  base.OnBodyRequirementMet(); On.RoR2.CharacterBody.AddBuff_BuffDef += AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex += AddBuff; }
             public override void OnBodyRequirementBroken() { On.RoR2.CharacterBody.AddBuff_BuffDef -= AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex -= AddBuff; base.OnBodyRequirementBroken();  }
             public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffDef orig, CharacterBody self, BuffDef buff) { 
-                if ((bool)self && self.activeBuffsList != null && self.activeBuffsListCount >= 6) Grant(); orig(self, buff); }
+                if ((bool)self && self.teamComponent.teamIndex != TeamIndex.Player && self.activeBuffsList != null && hasDebuffs(self.activeBuffsList, 6)) Grant(); orig(self, buff); }
             public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffIndex orig, CharacterBody self, BuffIndex buff) { 
-                if ((bool)self && self.activeBuffsList != null && self.activeBuffsListCount >= 6) Grant(); orig(self, buff); }
+                if ((bool)self && self.teamComponent.teamIndex != TeamIndex.Player && self.activeBuffsList != null && hasDebuffs(self.activeBuffsList, 6)) Grant(); orig(self, buff); }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skills_ENGIPLUS_PLASMAGRENADES_NAMETOKEN", "Skills.ENGIPLUS_PLASMAGRENADES_NAMETOKEN", null, null, "com.macawesone.EngiShotgun")]
@@ -234,6 +271,167 @@ namespace RiskyMonkeyBase.Achievements
             public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); RoR2Application.onUpdate += OnUpdate; }
             public override void OnBodyRequirementBroken() { RoR2Application.onUpdate -= OnUpdate; base.OnBodyRequirementBroken(); }
             public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.healthComponent.health >= 3000) Grant(); }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_COMMANDOSTIM", "Skills.PASSIVEAGRESSION_COMMANDOSTIM", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_COMMANDOSTIMAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("CommandoBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); RoR2Application.onUpdate += OnUpdate; }
+            public override void OnBodyRequirementBroken() { RoR2Application.onUpdate -= OnUpdate; base.OnBodyRequirementBroken(); }
+            public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.attackSpeed >= 6f) Grant(); }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_BANDITSTARCH", "Skills.PASSIVEAGRESSION_BANDITSTARCH", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_BANDITSTARCHAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Bandit2Body");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); On.RoR2.CharacterBody.AddBuff_BuffDef += AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex += AddBuff; }
+            public override void OnBodyRequirementBroken() { On.RoR2.CharacterBody.AddBuff_BuffDef -= AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex -= AddBuff; base.OnBodyRequirementBroken(); }
+            public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffDef orig, CharacterBody self, BuffDef buff)
+            {
+                if ((bool)self && self == localUser.cachedBody && self.activeBuffsList != null && hasDebuffs(self.activeBuffsList, 4)) Grant(); orig(self, buff);
+            }
+            public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffIndex orig, CharacterBody self, BuffIndex buff)
+            {
+                if ((bool)self && self == localUser.cachedBody && self.activeBuffsList != null && hasDebuffs(self.activeBuffsList, 4)) Grant(); orig(self, buff);
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_PALADINRESOLVE", "Skills.PASSIVEAGRESSION_PALADINRESOLVE", null, null, "xyz.yekoc.PassiveAgression", "com.rob.Paladin")]
+        public class PASSIVEAGRESSION_PALADINRESOLVEAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("RobPaladinBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); RoR2Application.onUpdate += OnUpdate; }
+            public override void OnBodyRequirementBroken() { RoR2Application.onUpdate -= OnUpdate; base.OnBodyRequirementBroken(); }
+            public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.armor >= 200f) Grant(); }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_MAGEBLOODRITE", "Skills.PASSIVEAGRESSION_MAGEBLOODRITE", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_MAGEBLOODRITEAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MageBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); On.RoR2.CharacterBody.AddBuff_BuffDef += AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex += AddBuff; }
+            public override void OnBodyRequirementBroken() { On.RoR2.CharacterBody.AddBuff_BuffDef -= AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex -= AddBuff; base.OnBodyRequirementBroken(); }
+            public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffDef orig, CharacterBody self, BuffDef buff)
+            {
+                if ((bool)self && self.teamComponent.teamIndex != TeamIndex.Player && self.activeBuffsList != null && self.GetBuffCount(RoR2Content.Buffs.OnFire) >= 25) Grant(); orig(self, buff);
+            }
+            public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffIndex orig, CharacterBody self, BuffIndex buff)
+            {
+                if ((bool)self && self.teamComponent.teamIndex != TeamIndex.Player && self.activeBuffsList != null && self.GetBuffCount(RoR2Content.Buffs.OnFire) >= 25) Grant(); orig(self, buff);
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_MAGEBLOODBOLT", "Skills.PASSIVEAGRESSION_MAGEBLOODBOLT", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_MAGEBLOODBOLTAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MageBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); On.RoR2.CharacterBody.AddBuff_BuffDef += AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex += AddBuff; }
+            public override void OnBodyRequirementBroken() { On.RoR2.CharacterBody.AddBuff_BuffDef -= AddBuff; On.RoR2.CharacterBody.AddBuff_BuffIndex -= AddBuff; base.OnBodyRequirementBroken(); }
+            public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffDef orig, CharacterBody self, BuffDef buff)
+            {
+                if ((bool)self && self.teamComponent.teamIndex != TeamIndex.Player && self.activeBuffsList != null && self.GetBuffCount(RoR2Content.Buffs.Bleeding) >= 50) Grant(); orig(self, buff);
+            }
+            public void AddBuff(On.RoR2.CharacterBody.orig_AddBuff_BuffIndex orig, CharacterBody self, BuffIndex buff)
+            {
+                if ((bool)self && self.teamComponent.teamIndex != TeamIndex.Player && self.activeBuffsList != null && self.GetBuffCount(RoR2Content.Buffs.Bleeding) >= 50) Grant(); orig(self, buff);
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_MAGEICEARMOR", "Skills.PASSIVEAGRESSION_MAGEICEARMOR", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_MAGEICEARMORAchievement : BaseAchievement
+        {
+            public static float stopwatch = 0;
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MageBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); On.RoR2.RoR2Application.FixedUpdate += OnUpdate; On.RoR2.Stage.Start += OnStart; Run.onRunDestroyGlobal += OnGameOver; }
+            public override void OnBodyRequirementBroken() { On.RoR2.RoR2Application.FixedUpdate -= OnUpdate; On.RoR2.Stage.Start -= OnStart; Run.onRunDestroyGlobal -= OnGameOver; base.OnBodyRequirementBroken(); }
+            public void OnStart(On.RoR2.Stage.orig_Start orig, Stage self) { orig(self); stopwatch = 0; }
+            public void OnGameOver(Run run) { stopwatch = -1; }
+            public void OnUpdate(On.RoR2.RoR2Application.orig_FixedUpdate orig, RoR2Application self)
+            {
+                orig(self);
+                if (stopwatch >= 0) stopwatch += Time.fixedDeltaTime;
+                if (stopwatch >= 600f) Grant();
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_LOADERELEC", "Skills.PASSIVEAGRESSION_LOADERELEC", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_LOADERELECAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("LoaderBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); Run.onClientGameOverGlobal += OnGameOver; }
+            public override void OnBodyRequirementBroken() { Run.onClientGameOverGlobal -= OnGameOver; base.OnBodyRequirementBroken(); }
+            public void OnGameOver(Run self, RunReport report)
+            {
+                if (report != null && !report.gameEnding.isWin) return;
+                int count = 0;
+                foreach (var art in AccessTools.StaticFieldRefAccess<ArtifactDef[]>(typeof(ArtifactCatalog), "artifactDefs"))
+                {
+                    var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);
+                    if (report.ruleBook.IsChoiceActive(rule.FindChoice("On"))) count++;
+                }
+                if (count >= 5) Grant();
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_CROCSPREAD", "Skills.PASSIVEAGRESSION_CROCSPREAD", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_CROCSPREADAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("CrocoBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporter; }
+            public override void OnBodyRequirementBroken() { TeleporterInteraction.onTeleporterChargedGlobal -= OnTeleporter; base.OnBodyRequirementBroken(); }
+            public void OnTeleporter(TeleporterInteraction tp)
+            {
+                if (localUser == null || localUser.cachedBody == null) return;
+                foreach (HurtBox hurtBox in new SphereSearch() { origin = localUser.cachedBody.footPosition, radius = 50000f, mask = LayerIndex.entityPrecise.mask }.RefreshCandidates().FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes())
+                {
+                    CharacterBody body = hurtBox.healthComponent.body;
+                    if (body.GetBuffCount(RoR2Content.Buffs.Poisoned) <= 0 && body.GetBuffCount(RoR2Content.Buffs.Blight) <= 0) return;
+                }
+                Grant();
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_VIENDBUG", "Skills.PASSIVEAGRESSION_VIENDBUG", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_VIENDBUGAchievement : BaseAchievement
+        {
+            public static bool win = false;
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("VoidSurvivorBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); On.RoR2.RoR2Application.FixedUpdate += OnUpdate; TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporter; On.RoR2.Stage.Start += OnStart; Run.onRunDestroyGlobal += OnGameOver; }
+            public override void OnBodyRequirementBroken() { On.RoR2.RoR2Application.FixedUpdate -= OnUpdate; TeleporterInteraction.onTeleporterChargedGlobal -= OnTeleporter; On.RoR2.Stage.Start -= OnStart; Run.onRunDestroyGlobal -= OnGameOver; base.OnBodyRequirementBroken(); }
+            public void OnStart(On.RoR2.Stage.orig_Start orig, Stage self) { orig(self); win = true; }
+            public void OnGameOver(Run self) { win = false; }
+            public void OnUpdate(On.RoR2.RoR2Application.orig_FixedUpdate orig, RoR2Application self)
+            {
+                orig(self);
+                if (win && localUser != null && localUser.cachedBody != null && localUser.cachedBody.GetBuffCount(DLC1Content.Buffs.VoidSurvivorCorruptMode) > 0) win = false;
+            }
+            public void OnTeleporter(TeleporterInteraction tp)
+            {
+                if (win) Grant();
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skills_PASSIVEAGRESSION_VIENDTEAR", "Skills.PASSIVEAGRESSION_VIENDTEAR", null, null, "xyz.yekoc.PassiveAgression")]
+        public class PASSIVEAGRESSION_VIENDTEARAchievement : BaseAchievement
+        {
+            public static bool win = false;
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("VoidSurvivorBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); On.RoR2.RoR2Application.FixedUpdate += OnUpdate; Run.onClientGameOverGlobal += OnGameOver; Run.onRunStartGlobal += OnStart; Run.onRunDestroyGlobal += OnEnd; }
+            public override void OnBodyRequirementBroken() { On.RoR2.RoR2Application.FixedUpdate -= OnUpdate; Run.onClientGameOverGlobal -= OnGameOver; Run.onRunStartGlobal -= OnStart; Run.onRunDestroyGlobal -= OnEnd; base.OnBodyRequirementBroken(); }
+            public void OnStart(Run self) { win = true; }
+            public void OnEnd(Run self) { win = false; }
+            public void OnUpdate(On.RoR2.RoR2Application.orig_FixedUpdate orig, RoR2Application self)
+            {
+                orig(self);
+                if (!win || localUser == null || localUser.cachedBody == null) return;
+                if (hasDebuffs(localUser.cachedBody.activeBuffsList, 1)) win = false;
+            }
+            public void OnGameOver(Run self, RunReport report)
+            {
+                if (win && report.gameEnding.isWin) Grant();
+            }
         }
     }
 }

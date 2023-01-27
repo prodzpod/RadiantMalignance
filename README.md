@@ -39,6 +39,18 @@ Add unlocks for:
     - Blunderbuss
     - Sidestep
     - Weapon Swap
+  - [PassiveAgression](https://thunderstore.io/package/RandomlyAwesome/PassiveAgression/):
+    - Stim Shot
+    - Starch Bomb
+    - Carrier Pathogen
+    - Power Pack Discharge
+    - Unorthodox Rituals
+    - Excise
+    - Snowsculpt
+    - Incessant Infestation
+    - 「T?ea?r】
+    - Steel Resolve
+    - Heart of the Forge
 - Skins (Skin renames are Modpack Mode only)
   - Add skin categories similar to Mastery
     - Nemesis: Kill n enemies in a run (subject to change)
@@ -176,6 +188,7 @@ Add unlocks for:
 - [DiscordRichPresence](https://thunderstore.io/package/Cuno/DiscordRichPresence/): Removes log spam.
 - togglable tweak to H3AD-5T v2, removes cooldown and stack increases damage instead. also affects [Empyrean Braces](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics/).
 - Ability to see all artifacts, as well as display hints. (Vanilla artifact hints from [RoR2 Wiki](https://riskofrain2.fandom.com/wiki/Artifact_Hints)). Hint level configurable.
+- [PassiveAgression](https://thunderstore.io/package/RandomlyAwesome/PassiveAgression/): Fixes puncuations and capitalizations on skill, and removes "None" for Engineer's passive (why would you Not have a buff).
 
 ### Logbook
 Added logbook entries for missing things. may change as mods gets updates.

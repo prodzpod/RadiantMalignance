@@ -32,11 +32,7 @@ namespace RiskyMonkeyBase.Achievements
                 c.Emit(OpCodes.Ldloc, 11);
                 c.EmitDelegate<Func<Type, RegisterAchievementAttribute, RegisterAchievementAttribute>>((type, achievementAttribute) =>
                 {
-                    if (achievementAttribute != null)
-                    {
-                        if (achievementAttribute.identifier == "MINER_BLACKSMITHUNLOCKABLE_REWARD_ID" || achievementAttribute.identifier == "MINER_TUNDRAUNLOCKABLE_REWARD_ID" || achievementAttribute.identifier == "MINER_PUPLEUNLOCKABLE_REWARD_ID") return null;
-                        return achievementAttribute;
-                    }
+                    if (achievementAttribute != null) return achievementAttribute;
                     RegisterModdedAchievementAttribute moddedAttribute = (RegisterModdedAchievementAttribute)Enumerable.FirstOrDefault(type.GetCustomAttributes(false), v => v is RegisterModdedAchievementAttribute);
                     if (moddedAttribute == null || !Reference.Mods(moddedAttribute.mods)) return null;
                     RiskyMonkeyBase.Log.LogDebug("Found Modded Achievement: " + moddedAttribute.identifier);

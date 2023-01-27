@@ -54,7 +54,11 @@
     "DOTFLARE_SKIN_DVIEND_NAME": "Submerged",
     "EMNOX_SKIN_DEFVOIDSKIN_NAME": "Malignance",
     "SUSSYBNUUY_SKIN_PEPSIMANSKINDEF_NAME": "Caffeinated",
-    "SUSSYBNUUY_SKIN_PEPSIMANCLASSIC_NAME": "Crystal"
+    "SUSSYBNUUY_SKIN_PEPSIMANCLASSIC_NAME": "Crystal",
+    "SHOPKEEPER_BODY_LORE": "Hello! This is prod. Thank you so much for playing Radiance Malignance / Risky Monkey 3 / Other Name Here.\r\n\r\nThe modpack started as a small pack made for my friend group, as all modpacks tend to do. However, the scope grew more and more as I pushed PR requests for some mods and wanted to modify some aspects of each mods to be more compatible with each other / vanilla game.\r\n\r\nWhile this is nowhere near perfect, and I'm sure it won't be for everyone, I'm personally really proud of how it came out and I hope you enjoyed playing it as much as I was making it. This was a great experience and I'm thankful for all the mod creators that constitutes this giant modpack. The modpack would not exist without them. (Consider supporting them lol)\r\n\r\nAlso, I'd like to thank my friends at RDL and REDOCCULT for emotional support and help with some non-code things. Check the full credits at the RM website.\r\n\r\n(imagine if a new modpack project come out right before this one lol god)",
+    "PASSIVEAGRESSION_COMMANDOSTIM_DESC": "Administer a cocktail which instantly heals for <style=cIsHealing>20% of missing health</style> and boosts attack and move speed by <style=cIsUtility>+25%</style>.",
+    "PASSIVEAGRESSION_MAGEBLOODRITE_DESC": "Whenever a tick of <style=cDeath>Bleed</style> occurs nearby, heals for <style=cIsHealing>1</style>.",
+    "PASSIVEAGRESSION_MAGEBLOODBOLT_DESC": "Fire a bolt that deals <style=cIsDamage>100% damage</style> and bleeds. Can be used while on cooldown. <style=cDeath>You cannot regenerate health while this skill is on cooldown.</style>"
   },
   "ko": {
     "INTERACTABLE_SHRINE_REPAIR_NAME": "시간의 성소",

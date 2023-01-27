@@ -37,8 +37,9 @@ namespace RiskyMonkeyBase.Tutorials
                     shownStuffAlready = true;
                     if (!Reference.RadiantMalignance.Value)
                     { // disable tutorials
-                        Reference.ResetTutorial.Value = false;
                         Reference.SetAllTutorials(true);
+                        Reference.ResetTutorial.Value = false;
+                        Reference.GetChangelog.Value = false;
                     }
                     if (Reference.ResetTutorial.Value)
                     {
@@ -49,10 +50,10 @@ namespace RiskyMonkeyBase.Tutorials
                         box.box.AddActionButton(() => { TutorialHelper.DefaultCancel(box.events); Reference.FirstRun.Value = false; Reference.SetAllTutorials(true); Reference.Config.Save(); }, "RISKYMONKEY_TUTORIAL_RESET_MODPACK");
                         box.box.AddActionButton(() => { TutorialHelper.DefaultCancel(box.events); Reference.FirstRun.Value = false; Reference.SetAllTutorials(true); Reference.SetModdedTutorials(false); Reference.Config.Save(); }, "RISKYMONKEY_TUTORIAL_RESET_NONE");
                     }
-                    if (Reference.GetChangelog.Value && Reference.LastVersion.Value < Reference.Releases[0])
+                    if (Reference.GetChangelog.Value && Reference.LastVersion.Value != Reference.Releases[0])
                     {
                         string txt = "";
-                        for (var i = 0; i < Reference.Releases.Length; i++) if (Reference.LastVersion.Value < Reference.Releases[i]) txt += Language.GetString("RISKYMONKEY_CHANGELOG_" + Reference.Releases[i]) + "\n\n";
+                        for (var i = 0; i < Reference.Releases.Length; i++) if (Reference.LastVersion.Value != Reference.Releases[i]) txt += Language.GetString("RISKYMONKEY_CHANGELOG_" + Reference.Releases[i]) + "\n\n";
                         string[] lines = txt.Split('\n');
                         txt = "";
                         for (var i = 0; i < Math.Min(20, lines.Length); i++) txt += lines[i] + "\n";

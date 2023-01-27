@@ -7,6 +7,12 @@ a, span, div, p, em, b, c, ul, li, h1, h2, h3, h4, h5, h6, small, td, input, but
     font-family: 'Noto Sans CJK', 'Noto Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+h2 {
+    font-weight: bold;
+    font-size: 125%;
+    margin: 16px;
+}
+
 a {
     font-weight: normal;
 }

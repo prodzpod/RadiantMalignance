@@ -9,7 +9,7 @@
 
 Refer to the [official page](https://prodzpod.github.io/RadiantMalignance/index.html) for credits and changelog.
 
-**Profile Code**: `0185efcc-feda-2425-8f5e-a5f6c9b9648e`  
+**Profile Code**: `0185f269-7391-a82a-6517-2b700bf259f8`  
 **Profile File**: [Download](https://prodzpod.github.io/RadiantMalignance/RadiantMalignance.r2z)
 
 ## Note: Survivors of the Void

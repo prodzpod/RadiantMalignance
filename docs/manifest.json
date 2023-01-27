@@ -1,6 +1,6 @@
 {
 	"name": "Radiant_Malignance",
-	"version_number": "0.9.1",
+	"version_number": "0.9.3",
 	"website_url": "https://github.com/prodzpod/RadiantMalignance",
 	"description": "Kitchen Sink Modpack pushed to its extreme.",
 	"dependencies": [
@@ -8,7 +8,7 @@
         "RiskofThunder-HookGenPatcher-1.2.3",
         "tristanmcpherson-R2API-5.0.3",
         "XoXFaby-BetterUI-2.7.6",
-        "duckduckgreyduck-ArtificerExtended-3.4.1",
+        "RandomlyAwesome-PassiveAgression-1.0.4",
         "William758-ZetAspects-2.7.25",
         "wildbook-TooManyFriends-1.2.1",
         "Rune580-Risk_Of_Options-2.5.3",
@@ -207,6 +207,6 @@
         "HIFU-ArtifactOfBlindness-1.1.0",
         "Zenithrium-VanillaVoid-1.4.4",
         "Nuxlar-TweakAWU-1.0.0",
-        "prodzpod-RadiantMalignance-0.9.1"
+        "prodzpod-RadiantMalignance-0.9.3"
 	]
 }

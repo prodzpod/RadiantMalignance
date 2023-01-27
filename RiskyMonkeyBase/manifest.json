@@ -1,6 +1,6 @@
 ﻿{
 	"name": "RadiantMalignance",
-	"version_number": "0.9.1",
+	"version_number": "0.9.3",
 	"website_url": "https://github.com/prodzpod/RadiantMalignance",
 	"description": "Basemod for Radiant Malignance.",
 	"dependencies": [

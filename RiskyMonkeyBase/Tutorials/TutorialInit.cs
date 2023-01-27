@@ -47,8 +47,8 @@ namespace RiskyMonkeyBase.Tutorials
                         Reference.SetAllTutorials(false);
                         TutorialHelper.ComplexDialogBox box = TutorialHelper.ShowPopup("RISKYMONKEY_TUTORIAL_RESET_TITLE", "RISKYMONKEY_TUTORIAL_RESET_DESC", true);
                         box.box.AddActionButton(() => TutorialHelper.DefaultCancel(box.events), "RISKYMONKEY_TUTORIAL_RESET_ALL");
-                        box.box.AddActionButton(() => { TutorialHelper.DefaultCancel(box.events); Reference.FirstRun.Value = false; Reference.SetAllTutorials(true); Reference.Config.Save(); }, "RISKYMONKEY_TUTORIAL_RESET_MODPACK");
-                        box.box.AddActionButton(() => { TutorialHelper.DefaultCancel(box.events); Reference.FirstRun.Value = false; Reference.SetAllTutorials(true); Reference.SetModdedTutorials(false); Reference.Config.Save(); }, "RISKYMONKEY_TUTORIAL_RESET_NONE");
+                        box.box.AddActionButton(() => { TutorialHelper.DefaultCancel(box.events); Reference.FirstRun.Value = false; Reference.SetAllTutorials(true); Reference.SetModdedTutorials(false); Reference.Config.Save(); }, "RISKYMONKEY_TUTORIAL_RESET_MODPACK");
+                        box.box.AddActionButton(() => { TutorialHelper.DefaultCancel(box.events); Reference.FirstRun.Value = false; Reference.SetAllTutorials(true); Reference.Config.Save(); }, "RISKYMONKEY_TUTORIAL_RESET_NONE");
                     }
                     if (Reference.GetChangelog.Value && Reference.LastVersion.Value != Reference.Releases[0])
                     {

@@ -50,50 +50,58 @@ namespace RiskyMonkeyBase.Achievements
 
         public static void PostPatch()
         {
-            if (Reference.Mods("zombieseatflesh7.ArtifactOfPotential"))
-            {
-                AddCode(ArtifactOfPotential.PotentialArtifact.Potential, 7, 3, 3, 7, 5, 7, 3, 3, 7);
-                AddUnlockable(ArtifactOfPotential.PotentialArtifact.Potential, "Potential");
-            }
-            if (Reference.Mods("CuteDoge.ArtifactOfChosen"))
-            {
-                AddCode(AOCMod.Artifact.MyArtifactDef, 1, 5, 1, 1, 7, 7, 7, 7, 7);
-                AddUnlockable(AOCMod.Artifact.MyArtifactDef, "Chosen");
-            }
-            if (Reference.Mods("com.TPDespair.ZetArtifacts"))
-            {
-                AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetDropifact, 1, 5, 1, 7, 5, 7, 1, 7, 1);
-                AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetDropifact, "Tossing");
-                AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEarlifact, 7, 5, 7, 1, 7, 1, 7, 5, 7);
-                AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEarlifact, "Sanction");
-                AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEclifact, 1, 7, 1, 7, 7, 7, 1, 1, 1);
-                AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEclifact, "Eclipse");
-                AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetHoardifact, 7, 5, 7, 1, 7, 1, 7, 7, 7);
-                AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetHoardifact, "Accumulation");
-                AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetLoopifact, 3, 5, 3, 3, 7, 3, 3, 3, 3);
-                AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetLoopifact, "Escalation");
-                AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetMultifact, 1, 1, 7, 1, 7, 7, 7, 7, 7);
-                AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetMultifact, "Multitudes");
-                AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetRevivifact, 7, 7, 7, 7, 7, 7, 3, 7, 3);
-                AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetRevivifact, "Revival");
-            }
-            if (Reference.Mods("com.Wolfo.ArtifactOfDissimilarity"))
-            {
-                AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Wander, "Wander");
-                AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Dissimilarity, "Dissimilarity");
-                AddCode(ArtifactDissimilarity.ArtifactDissimilarity.Transpose, 3, 1, 3, 5, 7, 5, 3, 1, 3);
-                AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Transpose, "Transpose");
-                AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Remodeling, "Remodeling");
-                AddCode(ArtifactDissimilarity.ArtifactDissimilarity.Brigade, 1, 3, 1, 3, 3, 3, 3, 1, 3);
-                AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Brigade, "Brigade");
-                AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Kith, "Kith");
-                AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Spiriting, "Spiriting");
-            }
+            if (Reference.Mods("zombieseatflesh7.ArtifactOfPotential")) AddPotential();
+            if (Reference.Mods("CuteDoge.ArtifactOfChosen")) AddChosen();
+            if (Reference.Mods("com.TPDespair.ZetArtifacts")) AddZetArtifacts();
+            if (Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) AddArtifactOfDissimilarity();
             if (Reference.Mods("HIFU.ArtifactOfBlindness"))
             {
                 AddCode(blindness, 1, 3, 1, 3, 5, 3, 1, 3, 1);
                 AddUnlockable(blindness, "Blindness");
             }
+        }
+
+        public static void AddPotential()
+        {
+            AddCode(ArtifactOfPotential.PotentialArtifact.Potential, 7, 3, 3, 7, 5, 7, 3, 3, 7);
+            AddUnlockable(ArtifactOfPotential.PotentialArtifact.Potential, "Potential");
+        }
+
+        public static void AddChosen()
+        {
+            AddCode(AOCMod.Artifact.MyArtifactDef, 1, 5, 1, 1, 7, 7, 7, 7, 7);
+            AddUnlockable(AOCMod.Artifact.MyArtifactDef, "Chosen");
+        }
+
+        public static void AddZetArtifacts()
+        {
+            AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetDropifact, 1, 5, 1, 7, 5, 7, 1, 7, 1);
+            AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetDropifact, "Tossing");
+            AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEarlifact, 7, 5, 7, 1, 7, 1, 7, 5, 7);
+            AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEarlifact, "Sanction");
+            AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEclifact, 1, 7, 1, 7, 7, 7, 1, 1, 1);
+            AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEclifact, "Eclipse");
+            AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetHoardifact, 7, 5, 7, 1, 7, 1, 7, 7, 7);
+            AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetHoardifact, "Accumulation");
+            AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetLoopifact, 3, 5, 3, 3, 7, 3, 3, 3, 3);
+            AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetLoopifact, "Escalation");
+            AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetMultifact, 1, 1, 7, 1, 7, 7, 7, 7, 7);
+            AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetMultifact, "Multitudes");
+            AddCode(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetRevivifact, 7, 7, 7, 7, 7, 7, 3, 7, 3);
+            AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetRevivifact, "Revival");
+        }
+
+        public static void AddArtifactOfDissimilarity()
+        {
+            AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Wander, "Wander");
+            AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Dissimilarity, "Dissimilarity");
+            AddCode(ArtifactDissimilarity.ArtifactDissimilarity.Transpose, 3, 1, 3, 5, 7, 5, 3, 1, 3);
+            AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Transpose, "Transpose");
+            AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Remodeling, "Remodeling");
+            AddCode(ArtifactDissimilarity.ArtifactDissimilarity.Brigade, 1, 3, 1, 3, 3, 3, 3, 1, 3);
+            AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Brigade, "Brigade");
+            AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Kith, "Kith");
+            AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Spiriting, "Spiriting");
         }
 
         public static void MakeUnlockable(string name)

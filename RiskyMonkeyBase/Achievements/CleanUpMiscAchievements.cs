@@ -37,35 +37,7 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("com.12GaugeAwayFromFace.TeamFortress2_Engineer_Engineer_Skin")) AddUnlockable("TF2EngiSkinMonsoon", UnlockableCatalog.GetUnlockableDef("Skins.Engi.Alt1"));
             if (Reference.Mods("com.Heyimnoob.BioDroneAcrid")) AddUnlockable("RedDroneAcrid", UnlockableCatalog.GetUnlockableDef("Skins.Croco.Alt1"));
             if (Reference.Mods("com.SussyBnuuy.PEPSIMANVoidFiend")) AddUnlockable("PepsimanClassic", UnlockableCatalog.GetUnlockableDef("Skins.VoidSurvivor.Alt1"));
-            if (Reference.Mods("com.rob.DiggerUnearthed"))
-            {
-                SkillFamily.Variant[] variants = DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponent<SkillLocator>().special.skillFamily.variants;
-                for (var i = 0; i < variants.Length; i++)
-                {
-                    if (variants[i].skillDef.skillNameToken == "MINER_SPECIAL_TOTHESTARSCLASSIC_NAME")
-                    {
-                        DiggerPlugin.Unlockables.pupleUnlockableDef.achievementIcon = variants[i].skillDef.icon;
-                        IEnumerator<SkillFamily> families = SkillCatalog.allSkillFamilies.GetEnumerator();
-                        DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponent<SkillLocator>().special.skillFamily.variants[i].unlockableDef = DiggerPlugin.Unlockables.pupleUnlockableDef;
-                        AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.pupleUnlockableDef.cachedName)) = variants[i].skillDef.icon;
-                    }
-                }
-                GenericSkill[] skls = DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponents<GenericSkill>();
-                for (var i = 0; i < skls.Length; i++)
-                {
-                    if (SkillCatalog.GetSkillFamilyName(skls[i].skillFamily.catalogIndex) == "MinerBodyPassive")
-                    {
-                        for (var j = 0; j < skls[i].skillFamily.variants.Length; j++)
-                        {
-                            if (skls[i].skillFamily.variants[j].skillDef.skillNameToken == "PASSIVEAGRESSION_DIGGERFLAME")
-                            {
-                                DiggerPlugin.Unlockables.blacksmithUnlockableDef.achievementIcon = skls[i].skillFamily.variants[j].skillDef.icon;
-                                AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.blacksmithUnlockableDef.cachedName)) = skls[i].skillFamily.variants[j].skillDef.icon;
-                            }
-                        }
-                    }
-                }
-            }
+            if (Reference.Mods("com.rob.DiggerUnearthed")) AddMinerStuff();
             if (Reference.Mods("xyz.yekoc.PassiveAgression"))
             {
                 GenericSkill[] skls = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiBody").GetComponents<GenericSkill>();
@@ -106,6 +78,36 @@ namespace RiskyMonkeyBase.Achievements
                     RoR2Application.onUpdate -= () => OnUpdate(self);
                     orig(self);
                 };
+            }
+        }
+
+        public static void AddMinerStuff()
+        {
+            SkillFamily.Variant[] variants = DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponent<SkillLocator>().special.skillFamily.variants;
+            for (var i = 0; i < variants.Length; i++)
+            {
+                if (variants[i].skillDef.skillNameToken == "MINER_SPECIAL_TOTHESTARSCLASSIC_NAME")
+                {
+                    DiggerPlugin.Unlockables.pupleUnlockableDef.achievementIcon = variants[i].skillDef.icon;
+                    IEnumerator<SkillFamily> families = SkillCatalog.allSkillFamilies.GetEnumerator();
+                    DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponent<SkillLocator>().special.skillFamily.variants[i].unlockableDef = DiggerPlugin.Unlockables.pupleUnlockableDef;
+                    AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.pupleUnlockableDef.cachedName)) = variants[i].skillDef.icon;
+                }
+            }
+            GenericSkill[] skls = DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponents<GenericSkill>();
+            for (var i = 0; i < skls.Length; i++)
+            {
+                if (SkillCatalog.GetSkillFamilyName(skls[i].skillFamily.catalogIndex) == "MinerBodyPassive")
+                {
+                    for (var j = 0; j < skls[i].skillFamily.variants.Length; j++)
+                    {
+                        if (skls[i].skillFamily.variants[j].skillDef.skillNameToken == "PASSIVEAGRESSION_DIGGERFLAME")
+                        {
+                            DiggerPlugin.Unlockables.blacksmithUnlockableDef.achievementIcon = skls[i].skillFamily.variants[j].skillDef.icon;
+                            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.blacksmithUnlockableDef.cachedName)) = skls[i].skillFamily.variants[j].skillDef.icon;
+                        }
+                    }
+                }
             }
         }
 

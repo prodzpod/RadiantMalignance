@@ -586,6 +586,7 @@
     "RISKYMONKEY_CHANGELOG_91": "0.9.1: Fixed langkey directory",
     "RISKYMONKEY_CHANGELOG_92": "0.9.2: Support for PassiveAgression (with a single g).",
     "RISKYMONKEY_CHANGELOG_93": "0.9.3: Fixed tutorial buttons being mixed up",
+    "RISKYMONKEY_CHANGELOG_94": "0.9.4: Few new mods, also fixed basemod",
     "RISKYMONKEY_CHANGELOG_FOOTER": "See full changelog at cutt.ly/RMChangelog"
   },
   "ko": {

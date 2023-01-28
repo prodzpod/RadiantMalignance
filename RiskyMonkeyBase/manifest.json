@@ -1,7 +1,7 @@
 ﻿{
 	"name": "RadiantMalignance",
-	"version_number": "0.9.3",
-	"website_url": "https://github.com/prodzpod/RadiantMalignance",
+	"version_number": "0.9.4",
+	"website_url": "https://thunderstore.io/package/prodzpod/Radiant_Malignance/",
 	"description": "Basemod for Radiant Malignance.",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2103",

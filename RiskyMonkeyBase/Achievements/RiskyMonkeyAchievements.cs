@@ -2,11 +2,11 @@
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using RoR2;
-using RoR2.Achievements;
+using RoR2BepInExPack.VanillaFixes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Mono.Cecil.Cil;
 
 namespace RiskyMonkeyBase.Achievements
 {
@@ -14,11 +14,11 @@ namespace RiskyMonkeyBase.Achievements
     {
         public static void Patch()
         {
-            AchievementManager.onAchievementsRegistered += () => RiskyMonkeyBase.Log.LogDebug(AchievementManager.readOnlyAchievementIdentifiers.Join());
+            AchievementManager.onAchievementsRegistered += () => RiskyMonkeyBase.Log.LogDebug("Achievements: " + AchievementManager.readOnlyAchievementIdentifiers.Join());
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchAchievementDefs));
         }
 
-        [HarmonyPatch(typeof(RoR2BepInExPack.VanillaFixes.SaferAchievementManager), "SaferCollectAchievementDefs")]
+        [HarmonyPatch(typeof(SaferAchievementManager), "SaferCollectAchievementDefs")]
         public class PatchAchievementDefs
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel retLabel) 

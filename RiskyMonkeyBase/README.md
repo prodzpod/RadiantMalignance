@@ -139,7 +139,7 @@ Add unlocks for:
     - Survival: [Scorched](https://thunderstore.io/package/prodzpod/TemplarSkins/)
   - Railgunner
     - Special Achievement: [Invis](https://thunderstore.io/package/Takrak/RailgunnerAltTextures/), renamed to "Cloaked"
-    - Nemesis (Alloy Worship Unit): [Solus](https://thunderstore.io/package/KrononConspirator/Solus_RailGunner/)
+    - Nemesis (Alloy Worship Unit): [Solus](https://thunderstore.io/package/KrononConspirator/Solus_RailGunner/), renamed to "Alloy"
     - Simulated: [Night Ops](https://thunderstore.io/package/RetroInspired/Railgunner_Skins/)
     - Providence: [Aviator](https://thunderstore.io/package/KrononConspirator/MadVeteran_Skinpack/)
     - No Achievement: [White Death](https://thunderstore.io/package/dotflare/LostThroughTimeSkinPack/), renamed to "[Rallypoint](https://thunderstore.io/package/RetroInspired/Railgunner_Skins/)"
@@ -152,9 +152,9 @@ Add unlocks for:
 - Artifacts: Added trials and codes for all artifacts in:
   - [Artifact of Dissimilarity](https://thunderstore.io/package/Wolfo/ArtifactOfDissimilarity/)
   - [ZetArtifacts](https://thunderstore.io/package/William758/ZetArtifacts/)
-  - [Artifact of Potential](https://thunderstore.io/package/zombieseatflesh7/Artifact_of_Potential/)
-  - [Artifact of Blindness](https://thunderstore.io/package/HIFU/ArtifactOfBlindness/)
-  - [Artifact of Chosen](https://thunderstore.io/package/DogeTeam/ArtifactOfChosen/)
+  - `●◆●` [Artifact of Potential](https://thunderstore.io/package/zombieseatflesh7/Artifact_of_Potential/)
+  - `●■■` [Artifact of Blindness](https://thunderstore.io/package/HIFU/ArtifactOfBlindness/)
+  - `■■■` [Artifact of Chosen](https://thunderstore.io/package/DogeTeam/ArtifactOfChosen/)
   - You are expected to have [CoolerLocus](https://thunderstore.io/package/Nuxlar/CoolerLocus/), [Forgotten Relics](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics/) and [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon/) to see all codes. EVERY stage now contains a code.
 
 ### Contents

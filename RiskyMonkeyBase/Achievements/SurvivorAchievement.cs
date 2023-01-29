@@ -14,19 +14,26 @@ namespace RiskyMonkeyBase.Achievements
         public static void Patch()
         {
             unlockables = new();
-            if (Reference.Mods("PlasmaCore.ForgottenRelics"))
-            {
-                MakeUnlockable("Railgunner");
-                RiskyMonkeyBase.Harmony.PatchAll(typeof(ForgottenRelicsTweaks.PatchBatteryContainer));
-            }
+            if (Reference.Mods("PlasmaCore.ForgottenRelics")) MakeForgottenRelics();
             if (Reference.Mods("com.Tymmey.Templar")) MakeUnlockable("Templar");
             AchievementManager.onAchievementsRegistered += PostPatch;
         }
 
+        public static void MakeForgottenRelics()
+        {
+            if (!FRCSharp.VF2ConfigManager.disableForgottenHaven.Value) MakeUnlockable("Railgunner");
+            RiskyMonkeyBase.Harmony.PatchAll(typeof(ForgottenRelicsTweaks.PatchBatteryContainer));
+        }
+
         public static void PostPatch()
         {
-            if (Reference.Mods("PlasmaCore.ForgottenRelics")) AddUnlockable("RailgunnerBody", "Railgunner");
+            if (Reference.Mods("PlasmaCore.ForgottenRelics")) AddForgottenRelics();
             if (Reference.Mods("com.Tymmey.Templar")) AddUnlockable("Templar_Survivor", "Templar");
+        }
+
+        public static void AddForgottenRelics()
+        {
+            if (!FRCSharp.VF2ConfigManager.disableForgottenHaven.Value) AddUnlockable("RailgunnerBody", "Railgunner");
         }
 
         public static void MakeUnlockable(string name)

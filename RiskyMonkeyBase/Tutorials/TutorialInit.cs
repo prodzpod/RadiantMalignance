@@ -52,8 +52,11 @@ namespace RiskyMonkeyBase.Tutorials
                     }
                     if (Reference.GetChangelog.Value && Reference.LastVersion.Value != Reference.Releases[0])
                     {
+                        List<int> releases = new(Reference.Releases);
+                        int idx = releases.IndexOf(Reference.LastVersion.Value);
+                        if (idx == -1) idx = Reference.Releases.Length - 1;
                         string txt = "";
-                        for (var i = 0; i < Reference.Releases.Length; i++) if (Reference.LastVersion.Value != Reference.Releases[i]) txt += Language.GetString("RISKYMONKEY_CHANGELOG_" + Reference.Releases[i]) + "\n\n";
+                        for (var i = idx; i >= 0; i--) if (Reference.LastVersion.Value != Reference.Releases[i]) txt += Language.GetString("RISKYMONKEY_CHANGELOG_" + Reference.Releases[i]) + "\n\n";
                         string[] lines = txt.Split('\n');
                         txt = "";
                         for (var i = 0; i < Math.Min(20, lines.Length); i++) txt += lines[i] + "\n";

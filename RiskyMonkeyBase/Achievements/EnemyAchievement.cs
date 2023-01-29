@@ -18,13 +18,18 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("com.TailLover.DinoMulT", "com.rob.Direseeker")) MakeUnlockable("MulT");
             if (Reference.Mods("com.marklow.HellfireCaptain")) MakeUnlockable("Captain");
             if (Reference.Mods("com.FrostRay.FrostRaySkinPack", "com.Anreol.ReleasedFromTheVoid")) MakeUnlockable("Mercenary");
-            if (Reference.Mods("HIFU.Inferno", "com.EmnoX.LightDreamer")) MakeUnlockable("Artificer");
+            if (Reference.Mods("HIFU.Inferno", "PlasmaCore.ForgottenRelics")) MakeForgottenRelics();
             if (Reference.Mods("com.Rero.MasquePack")) MakeUnlockable("Acrid");
             if (Reference.Mods("com.KrononConspirator.ScavangerLoader")) MakeUnlockable("Loader");
             if (Reference.Mods("prodzpod.TemplarSkins")) MakeUnlockable("Templar");
             if (Reference.Mods("com.KrononConspirator.Solus_RailGunner")) MakeUnlockable("Railgunner");
             if (Reference.Mods("com.TailLover.VoidJailerFiend")) MakeUnlockable("VoidFiend");
             AchievementManager.onAchievementsRegistered += PostPatch;
+        }
+
+        public static void MakeForgottenRelics()
+        {
+            if (!FRCSharp.VF2ConfigManager.disableFrostWisp.Value) MakeUnlockable("Artificer");
         }
 
         public static void PostPatch()
@@ -34,12 +39,17 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("com.TailLover.DinoMulT", "com.rob.Direseeker")) AddUnlockable("DinoMul-TSkin", "MulT");
             if (Reference.Mods("com.marklow.HellfireCaptain")) AddUnlockable("Hellfire Captain", "Captain");
             if (Reference.Mods("com.FrostRay.FrostRaySkinPack", "com.Anreol.ReleasedFromTheVoid")) AddUnlockable("MercKitsune", "Mercenary");
-            if (Reference.Mods("HIFU.Inferno", "com.EmnoX.LightDreamer")) AddUnlockable("CArti", "Artificer");
+            if (Reference.Mods("HIFU.Inferno", "PlasmaCore.ForgottenRelics")) AddForgottenRelics();
             if (Reference.Mods("com.Rero.MasquePack")) AddUnlockable("AcridBlind", "Acrid");
             if (Reference.Mods("com.KrononConspirator.ScavangerLoader")) AddUnlockable("ScavLoaderY", "Loader");
             if (Reference.Mods("prodzpod.TemplarSkins")) AddUnlockable("skinTemplarGoldAlt", "Templar");
             if (Reference.Mods("com.KrononConspirator.Solus_RailGunner")) AddUnlockable("SolusGunner", "Railgunner");
             if (Reference.Mods("com.TailLover.VoidJailerFiend")) AddUnlockable("VoidJailerFiendSkin", "VoidFiend");
+        }
+
+        public static void AddForgottenRelics()
+        {
+            if (!FRCSharp.VF2ConfigManager.disableFrostWisp.Value) AddUnlockable("CArti", "Artificer");
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Commando", "Skins.Commando.Enemy", null, typeof(CommandoEnemySkinServerAchievement), "com.RetroInspired.Gupmando")]
@@ -82,9 +92,10 @@ namespace RiskyMonkeyBase.Achievements
             { public override BodyIndex body => BodyCatalog.FindBodyIndex("Assassin2Body"); public override int reqKills => 50; }
         }
 
-        [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Artificer", "Skins.Artificer.Enemy", null, typeof(ArtificerEnemySkinServerAchievement), "HIFU.Inferno", "com.EmnoX.LightDreamer")]
+        [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Artificer", "Skins.Artificer.Enemy", null, typeof(ArtificerEnemySkinServerAchievement), "HIFU.Inferno", "PlasmaCore.ForgottenRelics")]
         public class ArtificerEnemySkinAchievement : BasePerSurvivorEnemySkinAchievement
         {
+            public static bool OnlyRegisterIf() { return !FRCSharp.VF2ConfigManager.disableFrostWisp.Value; }
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MageBody");
             public class ArtificerEnemySkinServerAchievement : BasePerSurvivorEnemySkinServerAchievement
             { public override BodyIndex body => BodyCatalog.FindBodyIndex("FrostWispBody"); public override int reqKills => 100; }

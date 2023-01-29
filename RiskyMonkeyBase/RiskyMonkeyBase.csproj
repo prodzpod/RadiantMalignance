@@ -71,6 +71,9 @@
     <Reference Include="FHCSharp">
       <HintPath>libs\FHCSharp.dll</HintPath>
     </Reference>
+    <Reference Include="HolyCrapForkIsBack">
+      <HintPath>libs\HolyCrapForkIsBack.dll</HintPath>
+    </Reference>
     <Reference Include="Inferno">
       <HintPath>libs\Inferno.dll</HintPath>
     </Reference>
@@ -145,6 +148,9 @@
     </Reference>
     <Reference Include="Templar">
       <HintPath>libs\Templar.dll</HintPath>
+    </Reference>
+    <Reference Include="TemplarSkins">
+      <HintPath>libs\TemplarSkins.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Addressables">
       <HintPath>libs\Unity.Addressables.dll</HintPath>

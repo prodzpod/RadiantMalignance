@@ -139,7 +139,7 @@ Add unlocks for:
     - Survival: [Scorched](https://thunderstore.io/package/prodzpod/TemplarSkins/)
   - Railgunner
     - Special Achievement: [Invis](https://thunderstore.io/package/Takrak/RailgunnerAltTextures/), renamed to "Cloaked"
-    - Nemesis (Alloy Worship Unit): [Solus](https://thunderstore.io/package/KrononConspirator/Solus_RailGunner/)
+    - Nemesis (Alloy Worship Unit): [Solus](https://thunderstore.io/package/KrononConspirator/Solus_RailGunner/), renamed to "Alloy"
     - Simulated: [Night Ops](https://thunderstore.io/package/RetroInspired/Railgunner_Skins/)
     - Providence: [Aviator](https://thunderstore.io/package/KrononConspirator/MadVeteran_Skinpack/)
     - No Achievement: [White Death](https://thunderstore.io/package/dotflare/LostThroughTimeSkinPack/), renamed to "[Rallypoint](https://thunderstore.io/package/RetroInspired/Railgunner_Skins/)"

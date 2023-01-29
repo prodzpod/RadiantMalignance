@@ -36,6 +36,8 @@ namespace RiskyMonkeyBase.Achievements
                     RegisterModdedAchievementAttribute moddedAttribute = (RegisterModdedAchievementAttribute)Enumerable.FirstOrDefault(type.GetCustomAttributes(false), v => v is RegisterModdedAchievementAttribute);
                     if (moddedAttribute == null || !Reference.Mods(moddedAttribute.mods)) return null;
                     RiskyMonkeyBase.Log.LogDebug("Found Modded Achievement: " + moddedAttribute.identifier);
+                    MethodInfo m = type.GetMethod("OnlyRegisterIf");
+                    if (m != null && !(bool)m.Invoke(null, null)) return null;
                     return new RegisterAchievementAttribute(moddedAttribute.identifier, moddedAttribute.unlockableRewardIdentifier, moddedAttribute.prerequisiteAchievementIdentifier, moddedAttribute.serverTrackerType);
                 });
                 c.Emit(OpCodes.Stloc, 11);

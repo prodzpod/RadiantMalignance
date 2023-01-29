@@ -3,6 +3,7 @@ using R2API;
 using RiskyMonkeyBase.Tweaks;
 using RoR2;
 using RoR2.Achievements;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,49 +15,67 @@ namespace RiskyMonkeyBase.Achievements
         public static void Patch()
         {
             unlockables = new();
-            if (Reference.Mods("com.Ner0ls.HolyCrapForkIsBack"))
-            {
-                MakeUnlockable("HCFB_ITEM_KNIFE");
-                MakeUnlockable("HCFB_ITEM_CHOPSTICKS");
-            }
-            if (Reference.Mods("bubbet.bubbetsitems"))
-            {
-                MakeUnlockable("ItemDefGemCarapace");
-                MakeUnlockable("ItemDefEternalSlug");
-                MakeUnlockable("ItemDefBunnyFoot");
-                MakeUnlockable("ItemDefEscapePlan");
-                MakeUnlockable("EquipmentDefWildlifeCamera");
-            }
-            if (Reference.Mods("com.Viliger.ShrineOfRepair")) MakeUnlockable("RM_reprogrammer"); // tfw you hack your own item !!! why
+            if (Reference.Mods("com.Ner0ls.HolyCrapForkIsBack")) MakeHCFB();
+            if (Reference.Mods("bubbet.bubbetsitems")) MakeBubbets();
+            if (Reference.Mods("com.Viliger.ShrineOfRepair") && Reference.ReprogrammerActivate.Value) MakeUnlockable("RM_reprogrammer"); // tfw you hack your own item !!! why
             AchievementManager.onAchievementsRegistered += PostPatch;
+        }
+
+        public static void MakeHCFB()
+        {
+            if (HasHCFBType(typeof(HolyCrapForkIsBack.Items.Knife))) MakeUnlockable("HCFB_ITEM_KNIFE");
+            if (HasHCFBType(typeof(HolyCrapForkIsBack.Items.Chopsticks))) MakeUnlockable("HCFB_ITEM_CHOPSTICKS");
+        }
+
+        public static bool HasHCFBType(Type type)
+        {
+            return ((HolyCrapForkIsBack.Main)HolyCrapForkIsBack.Main.PInfo.Instance).Items.Exists(item => item.GetType() == type);
+        }
+
+        public static void MakeBubbets()
+        {
+            if (HasBubbetsType(typeof(BubbetsItems.Items.BarrierItems.GemCarapace))) MakeUnlockable("ItemDefGemCarapace");
+            if (HasBubbetsType(typeof(BubbetsItems.Items.BarrierItems.EternalSlug))) MakeUnlockable("ItemDefEternalSlug");
+            if (HasBubbetsType(typeof(BubbetsItems.Items.BunnyFoot))) MakeUnlockable("ItemDefBunnyFoot");
+            if (HasBubbetsType(typeof(BubbetsItems.Items.EscapePlan))) MakeUnlockable("ItemDefEscapePlan");
+            foreach (var equipment in BubbetsItems.EquipmentBase.Equipments) if (equipment is BubbetsItems.Equipments.WildlifeCamera && equipment.Enabled.Value) MakeUnlockable("EquipmentDefWildlifeCamera");
+        }
+
+        public static bool HasBubbetsType(Type type)
+        {
+            foreach (var item in BubbetsItems.ItemBase.Items) if (item.GetType() == type) return item.Enabled.Value;
+            return false;
         }
 
         public static void PostPatch()
         {
             if (Reference.Mods("com.Ner0ls.HolyCrapForkIsBack"))
             {
-                AddUnlockable("HCFB_ITEM_KNIFE");
-                AddUnlockable("HCFB_ITEM_CHOPSTICKS");
+                if (ItemCatalog.FindItemIndex("HCFB_ITEM_KNIFE") != ItemIndex.None) AddUnlockable("HCFB_ITEM_KNIFE");
+                if (ItemCatalog.FindItemIndex("HCFB_ITEM_CHOPSTICKS") != ItemIndex.None) AddUnlockable("HCFB_ITEM_CHOPSTICKS");
             }
             if (Reference.Mods("bubbet.bubbetsitems"))
             {
-                AddUnlockable("ItemDefGemCarapace");
-                AddUnlockable("ItemDefEternalSlug");
-                AddUnlockable("ItemDefBunnyFoot");
-                AddUnlockable("ItemDefEscapePlan");
-                Sprite icon = RiskyMonkeyBase.AssetBundle.LoadAsset<Sprite>("Assets/unlocks/texItemEquipmentDefWildlifeCamera.png");
-                EquipmentDef def = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex("EquipmentDefWildlifeCamera"));
-                UnlockableDef unlockableDef = unlockables["EquipmentDefWildlifeCamera"];
-                RiskyMonkeyBase.Log.LogDebug("Fetched Unlockable EquipmentDefWildlifeCamera");
-                unlockableDef.nameToken = def.nameToken;
-                unlockableDef.achievementIcon = icon;
-                def.unlockableDef = unlockableDef;
-                PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(def.equipmentIndex)).unlockableDef = unlockableDef;
-                AchievementIndex idx = AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).index;
-                ref AchievementDef achievement = ref AccessTools.StaticFieldRefAccess<AchievementDef[]>(typeof(AchievementManager), "achievementDefs")[idx.intValue];
-                AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(achievement) = icon;
+                if (ItemCatalog.FindItemIndex("ItemDefGemCarapace") != ItemIndex.None) AddUnlockable("ItemDefGemCarapace");
+                if (ItemCatalog.FindItemIndex("ItemDefEternalSlug") != ItemIndex.None) AddUnlockable("ItemDefEternalSlug");
+                if (ItemCatalog.FindItemIndex("ItemDefBunnyFoot") != ItemIndex.None) AddUnlockable("ItemDefBunnyFoot");
+                if (ItemCatalog.FindItemIndex("ItemDefEscapePlan") != ItemIndex.None) AddUnlockable("ItemDefEscapePlan");
+                if (EquipmentCatalog.FindEquipmentIndex("EquipmentDefWildlifeCamera") != EquipmentIndex.None)
+                {
+                    Sprite icon = RiskyMonkeyBase.AssetBundle.LoadAsset<Sprite>("Assets/unlocks/texItemEquipmentDefWildlifeCamera.png");
+                    EquipmentDef def = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex("EquipmentDefWildlifeCamera"));
+                    UnlockableDef unlockableDef = unlockables["EquipmentDefWildlifeCamera"];
+                    RiskyMonkeyBase.Log.LogDebug("Fetched Unlockable EquipmentDefWildlifeCamera");
+                    unlockableDef.nameToken = def.nameToken;
+                    unlockableDef.achievementIcon = icon;
+                    def.unlockableDef = unlockableDef;
+                    PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(def.equipmentIndex)).unlockableDef = unlockableDef;
+                    AchievementIndex idx = AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).index;
+                    ref AchievementDef achievement = ref AccessTools.StaticFieldRefAccess<AchievementDef[]>(typeof(AchievementManager), "achievementDefs")[idx.intValue];
+                    AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(achievement) = icon;
+                }
             }
-            if (Reference.Mods("com.Viliger.ShrineOfRepair"))
+            if (Reference.Mods("com.Viliger.ShrineOfRepair") && Reference.ReprogrammerActivate.Value)
             {
                 Sprite icon = RiskyMonkeyBase.AssetBundle.LoadAsset<Sprite>("Assets/unlocks/texItemReprogrammer.png");
                 EquipmentDef def = EquipmentCatalog.GetEquipmentDef(EquipmentCatalog.FindEquipmentIndex("RM_reprogrammer"));
@@ -97,6 +116,7 @@ namespace RiskyMonkeyBase.Achievements
     [RegisterModdedAchievement("RiskyMonkey_Items_HCFB_ITEM_KNIFE", "Items.HCFB_ITEM_KNIFE", null, null, "com.Ner0ls.HolyCrapForkIsBack")]
     public class HCFB_ITEM_KNIFEAchievement : BaseAchievement
     {
+        public static bool OnlyRegisterIf() { return ItemAchievement.HasHCFBType(typeof(HolyCrapForkIsBack.Items.Knife)); }
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
         public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.crit >= 111f) Grant(); }
     }
@@ -104,6 +124,7 @@ namespace RiskyMonkeyBase.Achievements
     [RegisterModdedAchievement("RiskyMonkey_Items_HCFB_ITEM_CHOPSTICKS", "Items.HCFB_ITEM_CHOPSTICKS", null, null, "com.Ner0ls.HolyCrapForkIsBack")]
     public class HCFB_ITEM_CHOPSTICKSAchievement : BaseAchievement
     {
+        public static bool OnlyRegisterIf() { return ItemAchievement.HasHCFBType(typeof(HolyCrapForkIsBack.Items.Chopsticks)); }
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
         public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.critMultiplier >= 4f) Grant(); }
     }
@@ -111,6 +132,7 @@ namespace RiskyMonkeyBase.Achievements
     [RegisterModdedAchievement("RiskyMonkey_Items_ItemDefGemCarapace", "Items.ItemDefGemCarapace", null, null, "bubbet.bubbetsitems")]
     public class ItemDefGemCarapaceAchievement : BaseAchievement
     {
+        public static bool OnlyRegisterIf() { return ItemAchievement.HasBubbetsType(typeof(BubbetsItems.Items.BarrierItems.GemCarapace)); }
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
         public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (!localUser.cachedBody.healthComponent.godMode && localUser.cachedBody.healthComponent.barrier >= localUser.cachedBody.maxBarrier) Grant(); }
     }
@@ -119,6 +141,7 @@ namespace RiskyMonkeyBase.Achievements
     public class ItemDefEternalSlugAchievement : BaseAchievement
     {
         public float time = 60f;
+        public static bool OnlyRegisterIf() { return ItemAchievement.HasBubbetsType(typeof(BubbetsItems.Items.BarrierItems.EternalSlug)); }
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
         public void OnUpdate() 
         { 
@@ -135,6 +158,7 @@ namespace RiskyMonkeyBase.Achievements
     [RegisterModdedAchievement("RiskyMonkey_Items_ItemDefBunnyFoot", "Items.ItemDefBunnyFoot", null, null, "bubbet.bubbetsitems")]
     public class ItemDefBunnyFootAchievement : BaseAchievement
     {
+        public static bool OnlyRegisterIf() { return ItemAchievement.HasBubbetsType(typeof(BubbetsItems.Items.BunnyFoot)); }
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
         public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.maxJumpCount >= 5f) Grant(); }
     }
@@ -142,6 +166,7 @@ namespace RiskyMonkeyBase.Achievements
     [RegisterModdedAchievement("RiskyMonkey_Items_ItemDefEscapePlan", "Items.ItemDefEscapePlan", null, null, "bubbet.bubbetsitems")]
     public class ItemDefEscapePlanAchievement : BaseAchievement
     {
+        public static bool OnlyRegisterIf() { return ItemAchievement.HasBubbetsType(typeof(BubbetsItems.Items.EscapePlan)); }
         public override void OnInstall() { base.OnInstall(); On.RoR2.HealthComponent.TakeDamage += OnDamageTaken; } public override void OnUninstall() { On.RoR2.HealthComponent.TakeDamage -= OnDamageTaken; base.OnUninstall(); }
         public void OnDamageTaken(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo info)
         {
@@ -154,6 +179,7 @@ namespace RiskyMonkeyBase.Achievements
     [RegisterModdedAchievement("RiskyMonkey_Items_EquipmentDefWildlifeCamera", "Items.EquipmentDefWildlifeCamera", null, null, "bubbet.bubbetsitems")]
     public class EquipmentDefWildlifeCameraAchievement : BaseAchievement
     {
+        public static bool OnlyRegisterIf() { foreach (var equipment in BubbetsItems.EquipmentBase.Equipments) if (equipment is BubbetsItems.Equipments.WildlifeCamera) return equipment.Enabled.Value; return false; }
         public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
         public void OnUpdate() { if (Input.GetKeyDown(KeyCode.F12)) Grant(); }
     }
@@ -161,6 +187,7 @@ namespace RiskyMonkeyBase.Achievements
     [RegisterModdedAchievement("RiskyMonkey_Items_RM_reprogrammer", "Items.RM_reprogrammer", null, null, "com.Viliger.ShrineOfRepair")]
     public class EquipmentDefRM_reprogrammer : BaseAchievement
     {
+        public static bool OnlyRegisterIf() { return Reference.ReprogrammerActivate.Value; }
         public override void OnInstall() { base.OnInstall(); ShrineOfRepairHook.onRepair += OnRepair; } public override void OnUninstall() { ShrineOfRepairHook.onRepair -= OnRepair; base.OnUninstall(); }
         public void OnRepair(Interactor interactor, PickupIndex idx) { if (PickupCatalog.GetPickupDef(idx).itemIndex != ItemIndex.None && interactor.GetComponent<CharacterBody>() == localUser.cachedBody && localUser.cachedBody.inventory.GetItemCount(PickupCatalog.GetPickupDef(idx).itemIndex) >= 10) Grant(); }
     }

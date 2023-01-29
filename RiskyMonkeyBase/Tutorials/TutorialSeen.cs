@@ -165,7 +165,7 @@ namespace RiskyMonkeyBase.Tutorials
                     if (Reference.TutorialStacking.Value) TutorialHelper.Tutorial(Reference.TutorialRebalance, "rebalance");
                     else Reference.TutorialRebalance.Value = true;
                     if (self.master.inventory.GetItemCount(itemDef) >= 2) TutorialHelper.Tutorial(Reference.TutorialStacking, "stacking");
-                    if (new List<string>(new string[] { "ItemDefVoidJunkToScrapTier1", "RegeneratingScrapConsumed", "ScrapGreen", "ScrapRed", "ScrapWhite", "ScrapYellow", "ItemDefVoidJunkToScrapTier1" }).Contains(itemDef.name))
+                    if (new List<string>(new string[] { "ItemDefVoidJunkToScrapTier1", "RegeneratingScrap", "RegeneratingScrapConsumed", "ScrapGreen", "ScrapRed", "ScrapWhite", "ScrapYellow" }).Contains(itemDef.name))
                         TutorialHelper.Tutorial(Reference.TutorialScrapper, "scrapper");
                     else if (itemDef.name == "RelicOfEnergy") TutorialHelper.Tutorial(Reference.TutorialRelicEnergy, "relicenergy");
                 }

@@ -1,8 +1,12 @@
 ﻿using HarmonyLib;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using R2API;
+using R2API.Utils;
 using RoR2;
 using RoR2.DirectionalSearch;
 using ShrineOfRepair.Modules.Interactables;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,12 +19,12 @@ namespace RiskyMonkeyBase.Contents
     {
         public static EquipmentDef reprogrammer;
         public static GameObject reprogrammerBig;
-        public static Dictionary<EquipmentSlot, PurchaseInteraction> targets;
         public static GameObject hover;
+        public static GameObject _target = null;
+        public static bool detected = false;
         public static float frame = 0;
         public static void Patch()
         {
-            targets = new();
             hover = LegacyResourcesAPI.Load<GameObject>("Prefabs/RecyclerIndicator");
             GameObject display = RiskyMonkeyBase.AssetBundle.LoadAsset<GameObject>("Assets/DisplayReprogrammer.fbx");
             display.transform.GetChild(0).localScale = new Vector3(100, 100, 100); // try big
@@ -193,12 +197,55 @@ namespace RiskyMonkeyBase.Contents
                 if (self.modelPrefab != null && self.enabled && self.modelPrefab.name.Contains("PickupReprogrammer")) self.modelPrefab.transform.localScale = new Vector3(200, 200, 200);
                 orig(self);
             };
-            CustomEquipment eq = new CustomEquipment("RM_reprogrammer", 
-                "RISKYMONKEY_ITEM_REPROGRAMMER_NAME", 
-                "RISKYMONKEY_ITEM_REPROGRAMMER_DESC", 
-                "RISKYMONKEY_ITEM_REPROGRAMMER_LORE", 
-                Reference.UseFullDescForPickup.Value ? "RISKYMONKEY_ITEM_REPROGRAMMER_DESC" : "RISKYMONKEY_ITEM_REPROGRAMMER_PICKUP", 
-                RiskyMonkeyBase.AssetBundle.LoadAsset<Sprite>("Assets/texReprogrammer.png"), model, 
+            IL.RoR2.InteractionDriver.FindBestInteractableObject += (il) =>
+            {
+                ILCursor c = new(il);
+                c.GotoNext(x => x.MatchLdarg(0), x => x.MatchCallOrCallvirt(typeof(InteractionDriver), "get_interactor"));
+                c.Emit(OpCodes.Ldarg_0);
+                c.Emit(OpCodes.Ldfld, typeof(InteractionDriver).GetFieldCached("equipmentSlot"));
+                c.Emit(OpCodes.Ldloc_3);
+                c.EmitDelegate<Func<EquipmentSlot, float, float>>((slot, dist) =>
+                {
+                    if (slot.equipmentIndex == reprogrammer.equipmentIndex) return dist * 2;
+                    return dist;
+                });
+                c.Emit(OpCodes.Stloc_3);
+                c.GotoNext(x => x.MatchRet());
+                c.Emit(OpCodes.Dup);
+                c.Emit(OpCodes.Ldarg_0);
+                c.Emit(OpCodes.Ldfld, typeof(InteractionDriver).GetFieldCached("equipmentSlot"));
+                c.EmitDelegate<Action<GameObject, EquipmentSlot>>((obj, self) =>
+                {
+                    if (_target == obj || self == null || self.equipmentIndex != reprogrammer.equipmentIndex) return;
+                    ref Indicator targetIndicator = ref AccessTools.FieldRefAccess<EquipmentSlot, Indicator>(self, "targetIndicator");
+                    if (targetIndicator == null) return;
+                    targetIndicator.visualizerPrefab = hover;
+                    _target = obj; 
+                    if (obj == null || !obj.name.Contains("Duplicator"))
+                    {
+                        targetIndicator.active = false;
+                        targetIndicator.targetTransform = null;
+                        detected = false;
+                        return;
+                    }
+                    else
+                    {
+                        ref EquipmentSlot.UserTargetInfo currentTarget = ref AccessTools.FieldRefAccess<EquipmentSlot, EquipmentSlot.UserTargetInfo>("currentTarget")(self);
+                        currentTarget = new EquipmentSlot.UserTargetInfo();
+                        currentTarget.rootObject = obj;
+                        currentTarget.transformToIndicateAt = obj.transform;
+                        targetIndicator.active = true;
+                        targetIndicator.targetTransform = obj.transform;
+                        detected = true;
+                    }
+                });
+            };
+            CustomEquipment eq = new CustomEquipment("RM_reprogrammer",
+                "RISKYMONKEY_ITEM_REPROGRAMMER_NAME",
+                "RISKYMONKEY_ITEM_REPROGRAMMER_DESC",
+                "RISKYMONKEY_ITEM_REPROGRAMMER_LORE",
+                Reference.UseFullDescForPickup.Value ? "RISKYMONKEY_ITEM_REPROGRAMMER_DESC" : "RISKYMONKEY_ITEM_REPROGRAMMER_PICKUP",
+                RiskyMonkeyBase.AssetBundle.LoadAsset<Sprite>("Assets/texReprogrammer.png"), model,
                 Reference.ReprogrammerCooldown.Value, true, true, false, false, null, null, ColorCatalog.ColorIndex.Equipment, true, true, rules);
             ItemAPI.Add(eq);
             reprogrammer = eq.EquipmentDef;
@@ -208,30 +255,8 @@ namespace RiskyMonkeyBase.Contents
                 if (!ret && equipmentDef == reprogrammer) return Reprogram(self);
                 return ret;
             };
-            On.RoR2.EquipmentSlot.UpdateTargets += (orig, self, equipmentIndex, _) =>
-            {
-                if (equipmentIndex != reprogrammer.equipmentIndex) orig(self, equipmentIndex, _);
-                else
-                {
-                    frame -= Time.deltaTime;
-                    if (frame > 0) return;
-                    frame = Reference.ReprogrammerRefresh.Value;
-                    Ray aimRay = (Ray)AccessTools.Method(typeof(EquipmentSlot), "GetAimRay").Invoke(self, null);
-                    PurchaseInteraction target = FindPurchaseInteraction(self, aimRay, 10f, 30f, true, "Duplicator");
-                    ref EquipmentSlot.UserTargetInfo currentTarget = ref AccessTools.FieldRefAccess<EquipmentSlot, EquipmentSlot.UserTargetInfo>("currentTarget")(self);
-                    if (target != null)
-                    {
-                        currentTarget = new EquipmentSlot.UserTargetInfo();
-                        currentTarget.rootObject = target.gameObject;
-                        currentTarget.transformToIndicateAt = target.transform;
-                        if (!targets.ContainsKey(self)) targets.Add(self, target);
-                        else targets[self] = target;
-                    }
-                    ref Indicator targetIndicator = ref AccessTools.FieldRefAccess<EquipmentSlot, Indicator>(self, "targetIndicator");
-                    targetIndicator.visualizerPrefab = hover;
-                    targetIndicator.active = (bool)target;
-                    targetIndicator.targetTransform = (bool)target ? target.transform : null;
-                }
+            On.RoR2.EquipmentSlot.UpdateTargets += (orig, self, index, _) => {
+                if (index != reprogrammer.equipmentIndex) orig(self, index, _);
             };
             On.RoR2.Language.GetLocalizedStringByToken += (orig, self, token) =>
             {
@@ -243,9 +268,8 @@ namespace RiskyMonkeyBase.Contents
         public static bool Reprogram(EquipmentSlot self)
         {
             frame = 0;
-            AccessTools.Method(typeof(EquipmentSlot), "UpdateTargets").Invoke(self, new object[] { reprogrammer.equipmentIndex, false });
-            if (!targets.ContainsKey(self) || targets[self] == null) return false;
-            PurchaseInteraction target = targets[self];
+            if (!detected || _target == null) return false;
+            PurchaseInteraction target = _target.GetComponent<PurchaseInteraction>();
             PickupIndex initialPickupIndex = target.GetComponent<ShopTerminalBehavior>().NetworkpickupIndex;
             AccessTools.FieldRefAccess<EquipmentSlot, float>(self, "subcooldownTimer") = 0.2f;
             PickupIndex[] array = Enumerable.Where(PickupTransmutationManager.GetAvailableGroupFromPickupIndex(initialPickupIndex), pickupIndex => pickupIndex != initialPickupIndex).ToArray();
@@ -257,13 +281,15 @@ namespace RiskyMonkeyBase.Contents
                 spawnedInstance.transform.eulerAngles = target.transform.eulerAngles;
                 NetworkServer.Spawn(spawnedInstance);
                 target.gameObject.SetActive(false);
+                _target = null;
             } else target.GetComponent<ShopTerminalBehavior>().NetworkpickupIndex = Run.instance.treasureRng.NextElementUniform(array);
             EffectManager.SimpleEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniRecycleEffect"), target.transform.position, Quaternion.identity, true);
             AccessTools.Method(typeof(EquipmentSlot), "InvalidateCurrentTarget").Invoke(self, null);
-            targets.Remove(self);
             return true;
         }
 
+        /*
+         
         private static PurchaseInteraction FindPurchaseInteraction(
           EquipmentSlot self,
           Ray aimRay,
@@ -317,5 +343,7 @@ namespace RiskyMonkeyBase.Contents
             public string name;
             public bool PassesFilter(PurchaseInteraction purchaseInteraction) => purchaseInteraction.gameObject.activeInHierarchy && (name == null || purchaseInteraction.name.Contains(name));
         }
+
+        */
     }
 }

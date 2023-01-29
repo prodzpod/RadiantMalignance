@@ -44,6 +44,7 @@ namespace RiskyMonkeyBase.Tweaks
         [RegisterModdedAchievement("RiskyMonkey_Characters_Railgunner", "Characters.Railgunner", null, null, "PlasmaCore.ForgottenRelics")]
         public class RailgunnerAchievement : BaseAchievement
         {
+            public static bool OnlyRegisterIf() { return !VF2ConfigManager.disableForgottenHaven.Value; }
             public override void OnInstall() { base.OnInstall(); PatchBatteryContainer.onStaticPortalActivated += Grant; }
             public override void OnUninstall() { PatchBatteryContainer.onStaticPortalActivated -= Grant; base.OnUninstall(); }
         }

@@ -338,7 +338,7 @@ namespace RiskyMonkeyBase
 
         public void Start()
         {
-            RiskOfOptionsHideTweaks.Patch();
+            if (Reference.Mods("com.rune580.riskofoptions")) RiskOfOptionsHideTweaks.Patch();
             ReorderSkins.Patch();
             if (Reference.EnableDamageNumbers.Value) SettingsConVars.enableDamageNumbers.value = true;
             if (Reference.Mods("com.rob.Paladin", "com.KrononConspirator.Thy_Providence", "com.themysticsword.bulwarkshaunt") && Reference.EnablePaladinBulwark.Value) PaladinWinGhostWaveAchievement.PostPatch();

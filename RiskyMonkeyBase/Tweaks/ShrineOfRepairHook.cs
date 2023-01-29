@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using RiskyMonkeyBase.Contents;
 using RoR2;
 using ShrineOfRepair.Modules.Interactables;
 using System;
@@ -28,6 +29,7 @@ namespace RiskyMonkeyBase.Tweaks
                 foreach (KeyValuePair<ItemIndex, ItemIndex> pairedItems in ShrineOfRepairPurchase.RepairItemsDictionary)
                     if (body.inventory.GetItemCount(pairedItems.Key) > 0) onRepair(interactor, PickupCatalog.FindPickupIndex(pairedItems.Key));
                 if (ShrineOfRepairPurchase.RepairEquipmentsDictionary.ContainsKey(body.equipmentSlot.equipmentIndex)) onRepair(interactor, PickupCatalog.FindPickupIndex(body.equipmentSlot.equipmentIndex));
+                Reprogrammer.detected = false;
             }
         }
 
@@ -38,7 +40,7 @@ namespace RiskyMonkeyBase.Tweaks
             {
                 if (!NetworkServer.active) return;
                 Interactor interactor = AccessTools.FieldRefAccess<ShrineOfRepairPicker.ShrineRepairManager, Interactor>("interactor")(__instance);
-                if (interactor != null) onRepair(interactor, new PickupIndex(selection));
+                if (interactor != null && onRepair != null) onRepair(interactor, new PickupIndex(selection));
             }
         }
     }

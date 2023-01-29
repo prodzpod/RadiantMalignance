@@ -17,21 +17,31 @@ namespace RiskyMonkeyBase.Achievements
             unlockables = new();
             if (Reference.Mods("com.Borbo.LazyBastardEngineer")) MakeUnlockable("Skins.Engineer.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) MakeUnlockable("Skins.Captain.Extra1");
-            if (Reference.Mods("com.eyeknow.HighFashionLoader")) MakeUnlockable("Skins.Loader.Extra1");
+            if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) MakeForgottenRelics();
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) MakeUnlockable("Skins.Railgunner.Extra1");
             AchievementManager.onAchievementsRegistered += PostPatch;
+        }
+
+        public static void MakeForgottenRelics()
+        {
+            if (!FRCSharp.VF2ConfigManager.disableSlumberingSatellite.Value) MakeUnlockable("Skins.Loader.Extra1");
         }
         public static void PostPatch()
         {
             if (Reference.Mods("com.Borbo.LazyBastardEngineer")) AddUnlockable("LazyBastardEngineer", "Skins.Engineer.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) AddUnlockable("PCap", "Skins.Captain.Extra1");
-            if (Reference.Mods("com.eyeknow.HighFashionLoader")) AddUnlockable("SpaceCadet", "Skins.Loader.Extra1");
+            if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) AddForgottenRelics();
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) AddUnlockable("RailgunnerSkin 2", "Skins.Railgunner.Extra1");
         }
+        public static void AddForgottenRelics()
+        {
+            if (!FRCSharp.VF2ConfigManager.disableSlumberingSatellite.Value) AddUnlockable("SpaceCadet", "Skins.Loader.Extra1");
+        }
 
-        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Loader", "Skins.Loader.Extra1", null, null, "com.eyeknow.HighFashionLoader")] 
+        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Loader", "Skins.Loader.Extra1", null, null, "com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")] 
         public class LoaderExtra1SkinAchievement : BaseAchievement 
         { 
+            public static bool OnlyRegisterIf() { return !FRCSharp.VF2ConfigManager.disableSlumberingSatellite.Value; }
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("LoaderBody");
             public override void OnBodyRequirementMet()
             {

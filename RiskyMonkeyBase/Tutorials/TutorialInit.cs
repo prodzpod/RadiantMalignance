@@ -122,6 +122,7 @@ namespace RiskyMonkeyBase.Tutorials
                     foreach (var rule in rules) if (rulesToDisplay.Contains(rule)) rulesToDisplay.Remove(rule);
                     foreach (var art in AccessTools.StaticFieldRefAccess<ArtifactDef[]>(typeof(ArtifactCatalog), "artifactDefs"))
                     {
+                        if (art.cachedName == "ArtifactOfCorruption") continue;
                         var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);
                         if (self.currentCategory.displayToken == "RULE_HEADER_ARTIFACTS" && !Reference.FirstRun.Value && Reference.ShowAllArtifacts.Value && !rulesToDisplay.Contains(rule)) rulesToDisplay.Add(rule);
                     }
@@ -129,6 +130,7 @@ namespace RiskyMonkeyBase.Tutorials
                     List<ArtifactDef> _lockedArts = new();
                     foreach (var art in AccessTools.StaticFieldRefAccess<ArtifactDef[]>(typeof(ArtifactCatalog), "artifactDefs"))
                     {
+                        if (art.cachedName == "ArtifactOfCorruption") continue;
                         var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);
                         if (art.unlockableDef != null && !NetworkUser.readOnlyLocalPlayersList[0].unlockables.Contains(art.unlockableDef)) _lockedArts.Add(art);
                     }

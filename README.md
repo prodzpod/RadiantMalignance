@@ -166,6 +166,9 @@ Add unlocks for:
 
 ### Tweaks
 - Toggle option to use full description in item pickup text
+- Toggle option to guarantee lunar bud on stage 2
+- configurable max stack of items to scrap at once / configurable scrapper max uses / configurable scrapper spawn frequency
+- [Shrine of Repair](https://thunderstore.io/package/viliger/ShrineOfRepair/): configurable max stacks of items to repair at once (in a seperate list)
 - [Paladin](https://thunderstore.io/package/Paladin_Alliance/PaladinMod/), [Miner](https://thunderstore.io/package/EnforcerGang/MinerUnearthed/), [Sniper](https://thunderstore.io/package/EnforcerGang/SniperClassic/) and [Enforcer](https://thunderstore.io/package/EnforcerGang/Enforcer/): Option to change grand mastery requirement to any difficulty. Changes "Grand Mastery" to "Survival" if [Inferno](https://thunderstore.io/package/HIFU/Inferno/) is selected (default).
 - [Paladin](https://thunderstore.io/package/Paladin_Alliance/PaladinMod/): Fixed achievement names to be consistent with other survivors. (puts "Paladin: " in front of achievement names
 - [Eggs Skills](https://thunderstore.io/package/egpimp/EggsSkills/): Fixes puncuations and capitalizations on achievements.
@@ -189,6 +192,7 @@ Add unlocks for:
 - togglable tweak to H3AD-5T v2, removes cooldown and stack increases damage instead. also affects [Empyrean Braces](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics/).
 - Ability to see all artifacts, as well as display hints. (Vanilla artifact hints from [RoR2 Wiki](https://riskofrain2.fandom.com/wiki/Artifact_Hints)). Hint level configurable.
 - [PassiveAgression](https://thunderstore.io/package/RandomlyAwesome/PassiveAgression/): Fixes puncuations and capitalizations on skill, and removes "None" for Engineer's passive (why would you Not have a buff).
+- [WolfoQualityOfLife](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/): Compatibility for feather icon with [ZetAspects](https://thunderstore.io/package/William758/ZetAspects/) and [VanillaVoid](https://thunderstore.io/package/Zenithrium/VanillaVoid/).
 
 ### Logbook
 Added logbook entries for missing things. may change as mods gets updates.

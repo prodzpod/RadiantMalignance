@@ -10,8 +10,8 @@ namespace RiskyMonkeyBase
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RiskyMonkeyBase";
         public const string PluginDisplayName = "Radiant Malignance";
-        public const string PluginVersion = "0.9.5";
-        public static int[] Releases = { 95, 94, 93, 92, 91, 90 }; // prepend new releases
+        public const string PluginVersion = "0.9.6";
+        public static int[] Releases = { 96, 95, 94, 93, 92, 91, 90 }; // prepend new releases
         public static ConfigFile Config;
         public static ConfigEntry<bool> RadiantMalignance;
         public static ConfigEntry<bool> UseFullDescForPickup;
@@ -38,6 +38,12 @@ namespace RiskyMonkeyBase
         public static ConfigEntry<float> DownpourScaling;
         public static ConfigEntry<bool> ShowAllArtifacts;
         public static ConfigEntry<int> ArtifactUnlockHint;
+        public static ConfigEntry<int> ScrapperStackAtOnce;
+        public static ConfigEntry<int> ScrapperMaxUses;
+        public static ConfigEntry<float> ScrapperFrequency;
+        public static ConfigEntry<string> RepairRepairList;
+        public static ConfigEntry<int> RepairStackAtOnce;
+        public static ConfigEntry<bool> LunarBudOnStage2;
         public static ConfigEntry<bool> RFTVDisableVoidCoin;
         public static ConfigEntry<bool> RFTVDisableVoidSuppressor;
         public static ConfigEntry<bool> RFTVDisableItemEnable;
@@ -156,6 +162,12 @@ namespace RiskyMonkeyBase
             DownpourScaling = Config.Bind("General", "Downpour Scaling Per Minute", 5f, "in percents. set to 0 to disable.");
             ShowAllArtifacts = Config.Bind("General", "Unlock All Artifacts", false, "Set to true to access all artifacts.");
             ArtifactUnlockHint = Config.Bind("General", "Artifact Unlock Hint", 3, "Displays artifact hints from the wiki in number of lines, 0 to disable, 4 to give direct answers");
+            ScrapperStackAtOnce = Config.Bind("General", "Scrapper Stacks at Once", 0, "Max number of items to scrap at once. Set to 0 to disable.");
+            ScrapperMaxUses = Config.Bind("General", "Scrapper Max Uses", 0, "Max number of items to scrap per scrapper. Set to 0 to disable.");
+            ScrapperFrequency = Config.Bind("General", "Scrapper Frequency", 1f, "Multiplier for Scrapper spawn frequency.");
+            RepairRepairList = Config.Bind("General", "Shrine of Repair True Repair List", "ExtraLifeConsumed, ExtraLifeVoidConsumed, FragileDamageBonusConsumed, HealingPotionConsumed, RegeneratingScrapConsumed, BossHunterConsumed", "List of repairs to count in the following configs.");
+            RepairStackAtOnce = Config.Bind("General", "Shrine of Repair Stacks at Once", 0, "Max number of items to repair at once. Set to 0 to disable.");
+            LunarBudOnStage2 = Config.Bind("General", "Lunar bud on Stage 2", true, "Guaranteed Lunar bud on stage 2.");
 
             RFTVDisableVoidCoin = Config.Bind("RFTV Modules", "Disable Void Coins", false, "Set to true to disable Void Coins.");
             RFTVDisableVoidSuppressor = Config.Bind("RFTV Modules", "Disable Void Suppressors", false, "Set to true to disable Void Suppressors.");

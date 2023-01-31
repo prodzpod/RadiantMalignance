@@ -588,6 +588,7 @@
     "RISKYMONKEY_CHANGELOG_93": "0.9.3: Fixed tutorial buttons being mixed up",
     "RISKYMONKEY_CHANGELOG_94": "0.9.4: Few new mods, also fixed basemod",
     "RISKYMONKEY_CHANGELOG_95": "0.9.5: Fixed simulacrum achievement, reprog lag, etc",
+    "RISKYMONKEY_CHANGELOG_96": "0.9.6: Rebalanced everything, added hex3mod, limited scrapper uses, etc",
     "RISKYMONKEY_CHANGELOG_FOOTER": "See full changelog at cutt.ly/RMChangelog"
   },
   "ko": {

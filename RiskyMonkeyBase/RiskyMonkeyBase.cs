@@ -95,6 +95,7 @@ namespace RiskyMonkeyBase
     [BepInDependency("prodzpod.TemplarSkins", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("zombieseatflesh7.ArtifactOfPotential", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("xyz.yekoc.PassiveAgression", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Wolfo.WolfoQualityOfLife", BepInDependency.DependencyFlags.SoftDependency)]
 
     public class RiskyMonkeyBase : BaseUnityPlugin
     {
@@ -175,13 +176,19 @@ namespace RiskyMonkeyBase
             ReorderSurvivors.Patch();
             if (Reference.Mods("PlasmaCore.ForgottenRelics")) ForgottenRelicsTweaks.ForgottenRelics();
             if (Reference.Mods("com.justinderby.bossantisoftlock")) BATweaks.Patch();
+            if (Reference.ScrapperFrequency.Value != 1f) RepairTweaks.PatchFrequency();
+            if (Reference.ScrapperMaxUses.Value != 0) RepairTweaks.PatchUses();
+            if (Reference.ScrapperStackAtOnce.Value != 0) RepairTweaks.PatchScrapper();
             if (Reference.Mods("com.Viliger.ShrineOfRepair"))
             {
                 ShrineOfRepairHook.Patch();
                 if (Reference.ReprogrammerActivate.Value) Reprogrammer.Patch();
+                if (Reference.RepairStackAtOnce.Value != 0) RepairTweaks.PatchRepair();
             }
             if (Reference.Mods("com.cuno.discord")) FloodingTheyLogsLikeVoidSurvivor.Patch();
             if (Reference.HEADSTChanges.Value) HEADSTTweaks.Patch();
+            if (Reference.LunarBudOnStage2.Value) LunarBudTweaks.Patch();
+            if (Reference.Mods("com.Wolfo.WolfoQualityOfLife")) WolfoTweaksTweaks.Patch();
 
             // achievements
             RiskyMonkeyAchievements.Patch();

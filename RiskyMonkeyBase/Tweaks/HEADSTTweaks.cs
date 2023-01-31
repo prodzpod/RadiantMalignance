@@ -15,6 +15,11 @@ namespace RiskyMonkeyBase.Tweaks
         public static void Patch()
         {
             HeadstompersCooldown.baseDuration = 0f;
+            On.EntityStates.Headstompers.HeadstompersCooldown.OnEnter += (orig, self) =>
+            {
+                orig(self);
+                AccessTools.FieldRefAccess<HeadstompersCooldown, float>("duration")(self) = 0;
+            };
             RiskyMonkeyBase.Harmony.PatchAll(typeof(DoStompExplosionAuthorityTweaks));
             LanguageAPI.AddOverlay("ITEM_FALLBOOTS_DESC", "Increase <style=cIsUtility>jump height</style>. Creates a <style=cIsDamage>5m-100m</style> <style=cStack>(+20% per stack)</style> radius <style=cIsDamage>kinetic explosion</style> on hitting the ground, dealing <style=cIsDamage>1000%-10000%</style> <style=cStack>(+100% per stack)</style> base damage that scales up with <style=cIsDamage>fall distance</style>.");
             if (Reference.Mods("PlasmaCore.ForgottenRelics")) HEADSTVoidTweaks.Patch();

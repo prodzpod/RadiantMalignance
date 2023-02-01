@@ -18,7 +18,7 @@ namespace RiskyMonkeyBase.Achievements
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchAchievementDefs));
         }
 
-        [HarmonyPatch(typeof(SaferAchievementManager), "SaferCollectAchievementDefs")]
+        [HarmonyPatch(typeof(SaferAchievementManager), nameof(SaferAchievementManager.SaferCollectAchievementDefs))]
         public class PatchAchievementDefs
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel retLabel) 

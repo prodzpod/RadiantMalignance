@@ -26,14 +26,14 @@ namespace RiskyMonkeyBase.Tweaks
             };
             On.RoR2.Run.OnServerBossDefeated += (orig, self, bossGroup) =>
             {
-                State = AccessTools.StaticFieldRefAccess<int>(typeof(ZetRevivifact), "State");
+                State = ZetRevivifact.State;
                 if (Active)
                 {
-                    AccessTools.StaticFieldRefAccess<int>(typeof(ZetRevivifact), "State") = 0;
+                    ZetRevivifact.State = 0;
                     RiskyMonkeyBase.Log.LogDebug("No Revives!");
                 }
                 orig(self, bossGroup);
-                AccessTools.StaticFieldRefAccess<int>(typeof(ZetRevivifact), "State") = State;
+                ZetRevivifact.State = State;
             }; // its LIFO AND Janky Hack:tm:
         }
     }

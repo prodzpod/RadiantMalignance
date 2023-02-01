@@ -71,8 +71,7 @@ namespace RiskyMonkeyBase.Achievements
                     def.unlockableDef = unlockableDef;
                     PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(def.equipmentIndex)).unlockableDef = unlockableDef;
                     AchievementIndex idx = AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).index;
-                    ref AchievementDef achievement = ref AccessTools.StaticFieldRefAccess<AchievementDef[]>(typeof(AchievementManager), "achievementDefs")[idx.intValue];
-                    AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(achievement) = icon;
+                    AchievementManager.achievementDefs[idx.intValue].achievedIcon = icon;
                 }
             }
             if (Reference.Mods("com.Viliger.ShrineOfRepair") && Reference.ReprogrammerActivate.Value)
@@ -86,8 +85,7 @@ namespace RiskyMonkeyBase.Achievements
                 def.unlockableDef = unlockableDef;
                 PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(def.equipmentIndex)).unlockableDef = unlockableDef;
                 AchievementIndex idx = AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).index;
-                ref AchievementDef achievement = ref AccessTools.StaticFieldRefAccess<AchievementDef[]>(typeof(AchievementManager), "achievementDefs")[idx.intValue];
-                AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(achievement) = icon;
+                AchievementManager.achievementDefs[idx.intValue].achievedIcon = icon;
             }
         }
 
@@ -109,7 +107,7 @@ namespace RiskyMonkeyBase.Achievements
             unlockableDef.achievementIcon = icon;
             def.unlockableDef = unlockableDef;
             PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(def.itemIndex)).unlockableDef = unlockableDef;
-            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName)) = icon;
+            AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = icon;
         }
     }
     
@@ -117,8 +115,8 @@ namespace RiskyMonkeyBase.Achievements
     public class HCFB_ITEM_KNIFEAchievement : BaseAchievement
     {
         public static bool OnlyRegisterIf() { return ItemAchievement.HasHCFBType(typeof(HolyCrapForkIsBack.Items.Knife)); }
-        public override void OnInstall() { base.OnInstall(); RoR2Application.onUpdate += OnUpdate; } public override void OnUninstall() { RoR2Application.onUpdate -= OnUpdate; base.OnUninstall(); }
-        public void OnUpdate() { if (localUser == null || localUser.cachedBody == null) return; if (localUser.cachedBody.crit >= 111f) Grant(); }
+        public override void OnInstall() { base.OnInstall(); Run.onClientGameOverGlobal += OnClientGameOverGlobal; } public override void OnUninstall() { Run.onClientGameOverGlobal -= OnClientGameOverGlobal; base.OnUninstall(); }
+        public void OnClientGameOverGlobal(Run run, RunReport runReport) { if ((bool)runReport.gameEnding && runReport.gameEnding.isWin && localUser.cachedBody.crit <= 0) Grant(); }
     }
 
     [RegisterModdedAchievement("RiskyMonkey_Items_HCFB_ITEM_CHOPSTICKS", "Items.HCFB_ITEM_CHOPSTICKS", null, null, "com.Ner0ls.HolyCrapForkIsBack")]
@@ -189,6 +187,14 @@ namespace RiskyMonkeyBase.Achievements
     {
         public static bool OnlyRegisterIf() { return Reference.ReprogrammerActivate.Value; }
         public override void OnInstall() { base.OnInstall(); ShrineOfRepairHook.onRepair += OnRepair; } public override void OnUninstall() { ShrineOfRepairHook.onRepair -= OnRepair; base.OnUninstall(); }
-        public void OnRepair(Interactor interactor, PickupIndex idx) { if (PickupCatalog.GetPickupDef(idx).itemIndex != ItemIndex.None && interactor.GetComponent<CharacterBody>() == localUser.cachedBody && localUser.cachedBody.inventory.GetItemCount(PickupCatalog.GetPickupDef(idx).itemIndex) >= 10) Grant(); }
+        public void OnRepair(Interactor interactor, PickupIndex idx) 
+        { 
+            if (PickupCatalog.GetPickupDef(idx).itemIndex != ItemIndex.None 
+                && (!RepairTweaks.repairList.Contains(ItemCatalog.GetItemDef(PickupCatalog.GetPickupDef(idx).itemIndex).name) || Reference.RepairStackAtOnce.Value >= 10) 
+                && interactor.GetComponent<CharacterBody>() == localUser.cachedBody 
+                && localUser.cachedBody.inventory.GetItemCount(PickupCatalog.GetPickupDef(idx).itemIndex) >= 10) 
+                Grant(); 
+        }
     }
 }
+    

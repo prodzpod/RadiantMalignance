@@ -51,19 +51,14 @@ namespace RiskyMonkeyBase.Tweaks
             On.RoR2.ShrineCleanseBehavior.Init += (orig) =>
             {
                 orig();
-                List<ItemIndex> itemIndexList = new List<ItemIndex>(AccessTools.StaticFieldRefAccess<ShrineCleanseBehavior, ItemIndex[]>("cleansableItems"));
+                List<ItemIndex> itemIndexList = new(ShrineCleanseBehavior.cleansableItems);
                 ItemIndex itemIndex = ~ItemIndex.None;
                 for (ItemIndex itemCount = (ItemIndex)ItemCatalog.itemCount; itemIndex < itemCount; ++itemIndex)
                 {
                     ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
                     if (isVoidLunar(itemDef.tier)) itemIndexList.Add(itemIndex);
                 }
-                AccessTools.StaticFieldRefAccess<ShrineCleanseBehavior, ItemIndex[]>("cleansableItems") = itemIndexList.ToArray();
-            };
-            On.RoR2.ShrineCleanseBehavior.InventoryIsCleansable += (orig, self) =>
-            {
-                RiskyMonkeyBase.Log.LogDebug(AccessTools.StaticFieldRefAccess<ShrineCleanseBehavior, ItemIndex[]>("cleansableItems").Length);
-                return orig(self);
+                ShrineCleanseBehavior.cleansableItems = itemIndexList.ToArray();
             };
             On.RoR2.CostTypeCatalog.LunarItemOrEquipmentCostTypeHelper.Init += (orig) =>
             {
@@ -76,7 +71,7 @@ namespace RiskyMonkeyBase.Tweaks
                     ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
                     if (isVoidLunar(itemDef.tier)) indicies.Add(itemDef.itemIndex);
                 }
-                AccessTools.StaticFieldRefAccess<ItemIndex[]>(typeof(CostTypeCatalog.LunarItemOrEquipmentCostTypeHelper), "lunarItemIndices") = indicies.ToArray();
+                CostTypeCatalog.LunarItemOrEquipmentCostTypeHelper.lunarItemIndices = indicies.ToArray();
             };
         }
         public static void Donkey()
@@ -90,7 +85,7 @@ namespace RiskyMonkeyBase.Tweaks
         }
         public static void handleRepulsionMK2()
         {
-            var isReduction = AccessTools.StaticFieldRefAccess<ConfigEntry<bool>>(typeof(RepulsionPlateMk2), "_reductionOnTrue").Value; // private config value lol
+            var isReduction = RepulsionPlateMk2._reductionOnTrue.Value; // private config value lol
             RiskyMonkeyBase.Log.LogInfo("Repulsion Armor MK2 desc setting, Reduction: " + isReduction);
             BetterDesc.keyRepl.Add("REPULSION_ARMOR_MK2_PICKUP", isReduction ? "REPULSION_ARMOR_MK2_DESC_REDUCTION_SIMPLE" : "REPULSION_ARMOR_MK2_DESC_ARMOR_SIMPLE");
         }

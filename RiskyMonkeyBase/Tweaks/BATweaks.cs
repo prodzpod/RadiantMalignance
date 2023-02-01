@@ -16,7 +16,7 @@ namespace RiskyMonkeyBase.Tweaks
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchSendModHint));
         }
 
-        [HarmonyPatch(typeof(BossAntiSoftlock.BossAntiSoftlock), "SendModHint")]
+        [HarmonyPatch(typeof(BossAntiSoftlock.BossAntiSoftlock), nameof(BossAntiSoftlock.BossAntiSoftlock.SendModHint))]
         public class PatchSendModHint
         {
             public static bool Prefix()

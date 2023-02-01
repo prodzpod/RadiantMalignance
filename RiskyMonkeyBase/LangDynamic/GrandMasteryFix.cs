@@ -33,7 +33,7 @@ namespace RiskyMonkeyBase.LangDynamic
             if (Reference.Mods("com.EnforcerGang.Enforcer")) RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchEnforcer));
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(PaladinMod.Achievements.BaseMasteryUnlockable), nameof(PaladinMod.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchPaladin
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
@@ -49,14 +49,9 @@ namespace RiskyMonkeyBase.LangDynamic
                 });
                 RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
             }
-
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("PaladinMod.Achievements.BaseMasteryUnlockable"), "OnClientGameOverGlobal", new Type[] { typeof(Run), typeof(RunReport) });
-            }
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(DiggerPlugin.Achievements.BaseMasteryUnlockable), nameof(DiggerPlugin.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchMiner
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
@@ -72,14 +67,9 @@ namespace RiskyMonkeyBase.LangDynamic
                 });
                 RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
             }
-
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("DiggerPlugin.Achievements.BaseMasteryUnlockable"), "OnClientGameOverGlobal", new Type[] { typeof(Run), typeof(RunReport) });
-            }
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(SniperClassic.Modules.Achievements.BaseMasteryUnlockable), nameof(SniperClassic.Modules.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchSniper
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
@@ -95,14 +85,9 @@ namespace RiskyMonkeyBase.LangDynamic
                 });
                 RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
             }
-
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("SniperClassic.Modules.Achievements.BaseMasteryUnlockable"), "OnClientGameOverGlobal", new Type[] { typeof(Run), typeof(RunReport) });
-            }
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(EnforcerPlugin.Achievements.BaseMasteryUnlockable), nameof(EnforcerPlugin.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchEnforcer
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
@@ -117,11 +102,6 @@ namespace RiskyMonkeyBase.LangDynamic
                     if (def.nameToken == Reference.GrandDifficulty.Value) ((BaseAchievement)_self).Grant();
                 });
                 RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
-            }
-
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("EnforcerPlugin.Achievements.BaseMasteryUnlockable"), "OnClientGameOverGlobal", new Type[] { typeof(Run), typeof(RunReport) });
             }
         }
     }

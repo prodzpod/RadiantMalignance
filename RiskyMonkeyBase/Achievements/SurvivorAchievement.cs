@@ -53,7 +53,7 @@ namespace RiskyMonkeyBase.Achievements
             unlockableDef.nameToken = def.displayNameToken;
             unlockableDef.achievementIcon = icon;
             def.unlockableDef = unlockableDef;
-            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName)) = icon;
+            AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = icon;
         }
     }
 
@@ -65,7 +65,7 @@ namespace RiskyMonkeyBase.Achievements
 
         private void OnEnter(On.EntityStates.Missions.Goldshores.Exit.orig_OnEnter orig, EntityStates.Missions.Goldshores.Exit self)
         {
-            Grant();
+            if (localUser != null && localUser.cachedBody != null) Grant();
             orig(self);
         }
     }

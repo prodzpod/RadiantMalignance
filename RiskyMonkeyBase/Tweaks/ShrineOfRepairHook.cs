@@ -39,8 +39,7 @@ namespace RiskyMonkeyBase.Tweaks
             public static void Prefix(ShrineOfRepairPicker.ShrineRepairManager __instance, int selection)
             {
                 if (!NetworkServer.active) return;
-                Interactor interactor = AccessTools.FieldRefAccess<ShrineOfRepairPicker.ShrineRepairManager, Interactor>("interactor")(__instance);
-                if (interactor != null && onRepair != null) onRepair(interactor, new PickupIndex(selection));
+                if (__instance.interactor != null && onRepair != null) onRepair(__instance.interactor, new PickupIndex(selection));
             }
         }
     }

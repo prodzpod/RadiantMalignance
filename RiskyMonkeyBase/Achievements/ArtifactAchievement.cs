@@ -23,8 +23,8 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) MakeArtifactOfDissimilarity();
             if (Reference.Mods("HIFU.ArtifactOfBlindness"))
             {
-                ManagedSerializableContentPack cpack = AccessTools.StaticFieldRefAccess<Dictionary<string, ManagedSerializableContentPack>>(typeof(R2APIContentManager), "BepInModNameToSerializableContentPack")["HIFU.ArtifactOfBlindness"];
-                foreach (var def in cpack.serializableContentPack.artifactDefs) if (def.cachedName == "ARTIFACT_HIFU_ArtifactOfBlindness") blindness = def;
+                foreach (var def in R2APIContentManager.BepInModNameToSerializableContentPack["HIFU.ArtifactOfBlindness"].serializableContentPack.artifactDefs) 
+                    if (def.cachedName == "ARTIFACT_HIFU_ArtifactOfBlindness") blindness = def;
                 MakeUnlockable("Blindness");
             }
             AchievementManager.onAchievementsRegistered += PostPatch;
@@ -112,7 +112,7 @@ namespace RiskyMonkeyBase.Achievements
             def.unlockableDef = unlockableDef;
             PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(def.artifactIndex)).unlockableDef = unlockableDef;
             RuleCatalog.FindRuleDef("Artifacts." + def.cachedName).FindChoice("On").requiredUnlockable = unlockableDef;
-            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName)) = icon;
+            AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = icon;
         }
 
         public static void AddCode(ArtifactDef def, int e1, int e2, int e3, int e4, int e5, int e6, int e7, int e8, int e9)

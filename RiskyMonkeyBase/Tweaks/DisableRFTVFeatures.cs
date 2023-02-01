@@ -22,7 +22,7 @@ namespace RiskyMonkeyBase.Tweaks
             }
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(RulebookExtras), nameof(RulebookExtras.Init))]
         public class PatchRulebookExtras
         {
             static bool Prefix()
@@ -30,27 +30,19 @@ namespace RiskyMonkeyBase.Tweaks
                 RiskyMonkeyBase.Log.LogDebug("Method Nuked!");
                 return false; // method nuked
             }
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("ReleasedFromTheVoid.Scripts.RulebookExtras"), "Init");
-            }
         }
         public static void VoidSuppressor()
         {
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchVoidSuppressor));
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(VoidSupressorSpawner), nameof(VoidSupressorSpawner.Init))]
         public class PatchVoidSuppressor
         {
             static bool Prefix()
             {
                 RiskyMonkeyBase.Log.LogDebug("Method Nuked!");
                 return false; // method nuked
-            }
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("ReleasedFromTheVoid.Scripts.VoidSupressorSpawner"), "Init"); // typo in class :/
             }
         }
 
@@ -59,17 +51,13 @@ namespace RiskyMonkeyBase.Tweaks
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchItemEnable));
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(ItemEnabler), nameof(ItemEnabler.Init))]
         public class PatchItemEnable
         {
             static bool Prefix()
             {
                 RiskyMonkeyBase.Log.LogDebug("Method Nuked!");
                 return false; // method nuked
-            }
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("ReleasedFromTheVoid.Scripts.ItemEnabler"), "Init");
             }
         }
 
@@ -78,17 +66,13 @@ namespace RiskyMonkeyBase.Tweaks
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchCommandoSkin));
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(CommandoSkinPatcher), nameof(CommandoSkinPatcher.Init))]
         public class PatchCommandoSkin
         {
             static bool Prefix()
             {
                 RiskyMonkeyBase.Log.LogDebug("Method Nuked!");
                 return false; // method nuked
-            }
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("ReleasedFromTheVoid.Scripts.CommandoSkinPatcher"), "Init");
             }
         }
 
@@ -97,17 +81,13 @@ namespace RiskyMonkeyBase.Tweaks
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchLocusTweaks));
         }
 
-        [HarmonyPatch]
+        [HarmonyPatch(typeof(VoidLocusTweaker), nameof(VoidLocusTweaker.Init))]
         public class PatchLocusTweaks
         {
             static bool Prefix()
             {
                 RiskyMonkeyBase.Log.LogDebug("Method Nuked!");
                 return false; // method nuked
-            }
-            public static MethodBase TargetMethod()
-            {
-                return AccessTools.Method(AccessTools.TypeByName("ReleasedFromTheVoid.Scripts.VoidLocusTweaker"), "Init");
             }
         }
     }

@@ -104,7 +104,7 @@ namespace RiskyMonkeyBase.Tutorials
                 for (var index = 0; index < RuleCatalog.categoryCount; ++index)
                 {
                     if (RuleCatalog.GetCategoryDef(index).displayToken != "RULE_HEADER_ARTIFACTS") continue;
-                    ReadOnlyCollection<RuleCategoryController> elements = AccessTools.FieldRefAccess<RuleBookViewer, UIElementAllocator<RuleCategoryController>>(self, "categoryElementAllocator").elements;
+                    ReadOnlyCollection<RuleCategoryController> elements = self.categoryElementAllocator.elements;
                     if (0 <= index && index < elements.Count) elements[index].gameObject.SetActive(false);
                 }
             };
@@ -117,18 +117,18 @@ namespace RiskyMonkeyBase.Tutorials
                 {
                     List<RuleDef> rules = new();
                     foreach (var exp in ExpansionCatalog.expansionDefs) if (exp.nameToken != "DLC1_NAME") rules.Add(RuleCatalog.FindRuleDef("Expansions." + exp.name));
-                    if (Reference.FirstRun.Value) foreach (var art in AccessTools.StaticFieldRefAccess<ArtifactDef[]>(typeof(ArtifactCatalog), "artifactDefs")) rules.Add(RuleCatalog.FindRuleDef("Artifacts." + art.cachedName));
-                    List<RuleDef> rulesToDisplay = AccessTools.FieldRefAccess<RuleCategoryController, List<RuleDef>>(self, "rulesToDisplay");
-                    foreach (var rule in rules) if (rulesToDisplay.Contains(rule)) rulesToDisplay.Remove(rule);
-                    foreach (var art in AccessTools.StaticFieldRefAccess<ArtifactDef[]>(typeof(ArtifactCatalog), "artifactDefs"))
+                    if (Reference.FirstRun.Value) foreach (var art in ArtifactCatalog.artifactDefs) rules.Add(RuleCatalog.FindRuleDef("Artifacts." + art.cachedName));
+                    foreach (var rule in rules) if (self.rulesToDisplay.Contains(rule)) self.rulesToDisplay.Remove(rule);
+                    foreach (var art in ArtifactCatalog.artifactDefs)
                     {
                         if (art.cachedName == "ArtifactOfCorruption") continue;
                         var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);
-                        if (self.currentCategory.displayToken == "RULE_HEADER_ARTIFACTS" && !Reference.FirstRun.Value && Reference.ShowAllArtifacts.Value && !rulesToDisplay.Contains(rule)) rulesToDisplay.Add(rule);
+                        if (self.currentCategory.displayToken == "RULE_HEADER_ARTIFACTS" 
+                        && !Reference.FirstRun.Value && Reference.ShowAllArtifacts.Value 
+                        && !self.rulesToDisplay.Contains(rule)) self.rulesToDisplay.Add(rule);
                     }
-                    AccessTools.FieldRefAccess<RuleCategoryController, List<RuleDef>>(self, "rulesToDisplay") = rulesToDisplay;
                     List<ArtifactDef> _lockedArts = new();
-                    foreach (var art in AccessTools.StaticFieldRefAccess<ArtifactDef[]>(typeof(ArtifactCatalog), "artifactDefs"))
+                    foreach (var art in ArtifactCatalog.artifactDefs)
                     {
                         if (art.cachedName == "ArtifactOfCorruption") continue;
                         var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);

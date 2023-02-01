@@ -17,12 +17,11 @@ using TMPro;
 using UnityEngine.Events;
 using System.Reflection;
 using System.IO;
-
 namespace RiskyMonkeyBase
 {
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInPlugin(Reference.PluginGUID, Reference.PluginName, Reference.PluginVersion)]
-    [R2APISubmoduleDependency(nameof(LanguageAPI), nameof(LoadoutAPI), nameof(DifficultyAPI), nameof(ArtifactCodeAPI), nameof(ItemAPI))]
+    [R2APISubmoduleDependency(nameof(LanguageAPI), nameof(LoadoutAPI), nameof(DifficultyAPI), nameof(ArtifactCodeAPI), nameof(ItemAPI), nameof(DirectorAPI))]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
     [BepInDependency("bubbet.bubbetsitems", BepInDependency.DependencyFlags.SoftDependency)]
@@ -183,6 +182,7 @@ namespace RiskyMonkeyBase
             {
                 ShrineOfRepairHook.Patch();
                 if (Reference.ReprogrammerActivate.Value) Reprogrammer.Patch();
+                RepairTweaks.repairList = new();
                 if (Reference.RepairStackAtOnce.Value != 0) RepairTweaks.PatchRepair();
             }
             if (Reference.Mods("com.cuno.discord")) FloodingTheyLogsLikeVoidSurvivor.Patch();

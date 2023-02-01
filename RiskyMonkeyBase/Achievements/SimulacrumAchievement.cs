@@ -118,7 +118,7 @@ namespace RiskyMonkeyBase.Achievements
             unlockableDef.nameToken = def.nameToken;
             unlockableDef.achievementIcon = def.icon;
             def.unlockableDef = unlockableDef;
-            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName)) = def.icon;
+            AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = def.icon;
         }
         public class BasePerSurvivorClearGameSimulacrumAchievement : BaseEndingAchievement
         {

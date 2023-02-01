@@ -40,9 +40,8 @@ namespace RiskyMonkeyBase.LangDynamic
             altList = new List<LangKeyReplaceEntry>();
 
             RiskyMonkeyBase.Log.LogInfo("[[BetterUI Stats Langkey]] module loaded");
-            Type configManager = AccessTools.TypeByName("BetterUI.ConfigManager");
-            normalText = AccessTools.StaticFieldRefAccess<ConfigEntry<string>>(configManager, "StatsDisplayStatString").Value;
-            altText = AccessTools.StaticFieldRefAccess<ConfigEntry<string>>(configManager, "StatsDisplayStatStringCustomBind").Value;
+            normalText = ConfigManager.StatsDisplayStatString.Value;
+            altText = ConfigManager.StatsDisplayStatStringCustomBind.Value;
             int index = 0;
             while (true)
             {
@@ -82,10 +81,8 @@ namespace RiskyMonkeyBase.LangDynamic
             altList.Reverse();
             foreach (var entry in normalList) normalText = entry.replace(normalText);
             foreach (var entry in altList) altText = entry.replace(altText);
-
-            var regexpattern = AccessTools.StaticFieldRefAccess<Regex>(typeof(StatsDisplay), "regexpattern");
-            AccessTools.StaticFieldRefAccess<string[]>(typeof(StatsDisplay), "normalText") = regexpattern.Split(normalText);
-            AccessTools.StaticFieldRefAccess<string[]>(typeof(StatsDisplay), "altText") = regexpattern.Split(altText);
+            StatsDisplay.normalText = StatsDisplay.regexpattern.Split(normalText);
+            StatsDisplay.altText = StatsDisplay.regexpattern.Split(altText);
         }
     }
 }

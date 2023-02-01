@@ -10,9 +10,10 @@ namespace RiskyMonkeyBase
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RiskyMonkeyBase";
         public const string PluginDisplayName = "Radiant Malignance";
-        public const string PluginVersion = "0.9.6";
-        public static int[] Releases = { 96, 95, 94, 93, 92, 91, 90 }; // prepend new releases
+        public const string PluginVersion = "0.9.7";
+        public static int[] Releases = { 97, 96, 95, 94, 93, 92, 91, 90 }; // prepend new releases
         public static ConfigFile Config;
+        public static ConfigFile ConfigTutorial;
         public static ConfigEntry<bool> RadiantMalignance;
         public static ConfigEntry<bool> UseFullDescForPickup;
         public static ConfigEntry<bool> FixPaladinAchievementNames;
@@ -132,7 +133,10 @@ namespace RiskyMonkeyBase
         public static void InitConfig(string configPath)
         {
             Config = new ConfigFile(Path.Combine(configPath, PluginGUID + ".cfg"), true);
-            Config.SaveOnConfigSet = true;
+            int idx = configPath.IndexOf("RiskOfRain2"); // cfg so powerful it goes outside the profile page
+            if (idx != -1) ConfigTutorial = new ConfigFile(Path.Combine(configPath.Substring(0, idx + "RiskOfRain2".Length), "RadiantMalignancePersistent.cfg"), true);
+            else ConfigTutorial = Config;
+            ConfigTutorial.SaveOnConfigSet = true;
             // allTutorials = new();
             // moddedTutorials = new();
 
@@ -180,10 +184,10 @@ namespace RiskyMonkeyBase
             ReprogrammerRefresh = Config.Bind("Reprogrammer", "Reprogrammer HUD Refresh", 0.2f, "every N seconds reprogrammer will check for new target. helps with lag but may desync HUD. does not affect gameplay.");
             ReprogrammerRepairChance = Config.Bind("Reprogrammer", "Reprogrammer Shrine Chance", 0.25f, "Chance for Reprogrammer to turn printers into Shrine of Repair. Will be ignored if Shrine of Repair is not installed.");
 
-            /* END USER OPTIONS */ SeriousMode = Config.Bind("Settings", "Serious Mode", true, "Set to false to Monkey.");
-            /* END USER OPTIONS */ ResetTutorial = Config.Bind("Settings", "Reset Tutorial", true, "Set to true to reprompt the first tutorial prompt.");
-            /* END USER OPTIONS */ GetChangelog = Config.Bind("Settings", "Get Changelog", true, "Set to false to no longer recieve changelog on pack update.");
-            LastVersion = Config.Bind("Settings", "Last Version", Releases[0], "For changelog prompt. ignored if getChangelog is false.");
+            /* END USER OPTIONS */ SeriousMode = ConfigTutorial.Bind("Settings", "Serious Mode", true, "Set to false to Monkey.");
+            /* END USER OPTIONS */ ResetTutorial = ConfigTutorial.Bind("Settings", "Reset Tutorial", true, "Set to true to reprompt the first tutorial prompt.");
+            /* END USER OPTIONS */ GetChangelog = ConfigTutorial.Bind("Settings", "Get Changelog", true, "Set to false to no longer recieve changelog on pack update.");
+            LastVersion = ConfigTutorial.Bind("Settings", "Last Version", Releases[0], "For changelog prompt. ignored if getChangelog is false.");
             // main menu
 
             // first stage encounters
@@ -264,7 +268,7 @@ namespace RiskyMonkeyBase
             /* MODPACK TUTORIAL */ TutorialSlumberingAltar = RegisterTutorial("Slumbering Pedestal Tutorial Seen");
 
             // Subsequent Runs
-            FirstRun = Config.Bind("Tutorial", "First Run", true, "--PACK DEVS DONT TOUCH THIS--"); // is first run?
+            FirstRun = ConfigTutorial.Bind("Tutorial", "First Run", true, "--PACK DEVS DONT TOUCH THIS--"); // is first run?
             TutorialLoadout = RegisterTutorial("Loadout Tutorial Seen"); // second run charselect, "press loadouts to change moveset", disables on loadout change
             TutorialDrizzle = RegisterTutorial("Drizzle Tutorial Seen"); // died 5 time in a row, "try drizzle for easier challenge", disables on diff change
             TutorialThunderstorm = RegisterTutorial("Thunderstorm Tutorial Seen"); // won within 5 tries, "try thunderstorm for harder challenge", disables on diff change
@@ -272,7 +276,7 @@ namespace RiskyMonkeyBase
 
         private static ConfigEntry<bool> RegisterTutorial(string title, bool isModded = false)
         {
-            ConfigEntry<bool> ret = Config.Bind("Tutorial", title, false, "--PACK DEVS DONT TOUCH THIS--");
+            ConfigEntry<bool> ret = ConfigTutorial.Bind("Tutorial", title, false, "--PACK DEVS DONT TOUCH THIS--");
             // allTutorials.Add(ret);
             // if (isModded) moddedTutorials.Add(ret);
             return ret;

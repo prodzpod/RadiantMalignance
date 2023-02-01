@@ -178,7 +178,7 @@ namespace RiskyMonkeyBase.Achievements
                     if (skillUseCount == 0)
                     {
                         Debug.Log("DEBUG: Lazy Bastard challenge failed.");
-                        if (AccessTools.StaticFieldRefAccess<ConfigEntry<bool>>(AccessTools.TypeByName("LasyBastardEngineer.Base"), "AnnounceWhenFail").Value)
+                        if (LasyBastardEngineer.Base.AnnounceWhenFail.Value)
                             Chat.AddMessage("Lazy Bastard challenge failed!");
                     }
                     ++skillUseCount;
@@ -214,7 +214,7 @@ namespace RiskyMonkeyBase.Achievements
             unlockableDef.nameToken = def.nameToken;
             unlockableDef.achievementIcon = def.icon;
             def.unlockableDef = unlockableDef;
-            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName)) = def.icon;
+            AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = def.icon;
         }
     }
 }

@@ -91,7 +91,7 @@ namespace RiskyMonkeyBase.Achievements
                     DiggerPlugin.Unlockables.pupleUnlockableDef.achievementIcon = variants[i].skillDef.icon;
                     IEnumerator<SkillFamily> families = SkillCatalog.allSkillFamilies.GetEnumerator();
                     DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponent<SkillLocator>().special.skillFamily.variants[i].unlockableDef = DiggerPlugin.Unlockables.pupleUnlockableDef;
-                    AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.pupleUnlockableDef.cachedName)) = variants[i].skillDef.icon;
+                    AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.pupleUnlockableDef.cachedName).achievedIcon = variants[i].skillDef.icon;
                 }
             }
             GenericSkill[] skls = DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponents<GenericSkill>();
@@ -104,7 +104,7 @@ namespace RiskyMonkeyBase.Achievements
                         if (skls[i].skillFamily.variants[j].skillDef.skillNameToken == "PASSIVEAGRESSION_DIGGERFLAME")
                         {
                             DiggerPlugin.Unlockables.blacksmithUnlockableDef.achievementIcon = skls[i].skillFamily.variants[j].skillDef.icon;
-                            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.blacksmithUnlockableDef.cachedName)) = skls[i].skillFamily.variants[j].skillDef.icon;
+                            AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.blacksmithUnlockableDef.cachedName).achievedIcon = skls[i].skillFamily.variants[j].skillDef.icon;
                         }
                     }
                 }
@@ -115,7 +115,7 @@ namespace RiskyMonkeyBase.Achievements
         {
             CharacterBody body = self.serverAchievementTracker.networkUser.GetCurrentBody();
             if (body == null) return;
-            if (body.GetBuffCount(BuffCatalog.FindBuffIndex("<style=cShrine>Aurelionite's Blessing</style>")) >= 2) AccessTools.Method(typeof(BaseServerAchievement), "Grant").Invoke(self, null);
+            if (body.GetBuffCount(BuffCatalog.FindBuffIndex("<style=cShrine>Aurelionite's Blessing</style>")) >= 2) self.Grant();
         }
 
         [RegisterModdedAchievement("TemplarClearGameMonsoon", "Skins.Templar.Alt1", null, null, "prodzpod.TemplarSkins")] public class TemplarClearGameMonsoonAchievement : BasePerSurvivorClearGameMonsoonAchievement { public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Templar_Survivor"); }
@@ -136,10 +136,10 @@ namespace RiskyMonkeyBase.Achievements
             unlockableDef.achievementIcon = def.icon;
             def.unlockableDef = unlockableDef;
             RiskyMonkeyBase.Log.LogDebug("Fetched Unlockable " + unlockableDef.cachedName);
-            if (setIcon) AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName)) = def.icon;
+            AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = def.icon;
         }
 
-        [HarmonyPatch(typeof(UnlockableAPI), "AddOurDefs")]
+        [HarmonyPatch(typeof(UnlockableAPI), nameof(UnlockableAPI.AddOurDefs))]
         public class PatchOurDefs
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel retLabel) 

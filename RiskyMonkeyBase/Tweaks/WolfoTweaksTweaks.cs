@@ -17,7 +17,7 @@ namespace RiskyMonkeyBase.Tweaks
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchFeathers));
         }
 
-        [HarmonyPatch(typeof(WolfoQualityOfLife.WolfoQualityOfLife), "StupidHeadStomper")]
+        [HarmonyPatch(typeof(WolfoQualityOfLife.WolfoQualityOfLife), nameof(WolfoQualityOfLife.WolfoQualityOfLife.StupidHeadStomper))]
         public class PatchHeadstompers
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel retLabel)
@@ -43,6 +43,11 @@ namespace RiskyMonkeyBase.Tweaks
                     int ret = body.inventory.GetItemCount(RoR2Content.Items.Feather);
                     foreach (var str in new string[] { "ZetAspectRed", "VV_ITEM_DASHQUILL_ITEM" }) {
                         if (ItemCatalog.FindItemIndex(str) != ItemIndex.None) ret += body.inventory.GetItemCount(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(str)));
+                    }
+                    if (ItemCatalog.FindItemIndex("MintCondition") != ItemIndex.None)
+                    {
+                        int count = body.inventory.GetItemCount(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("MintCondition")));
+                        if (count > 0) ret += (count * 2) - 1;
                     }
                     return ret;
                 });

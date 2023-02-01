@@ -76,7 +76,6 @@ namespace RiskyMonkeyBase.Tweaks
 
         public static void PatchRepair()
         {
-            repairList = new();
             foreach (var entry in Reference.RepairRepairList.Value.Split(',')) repairList.Add(entry.Trim());
             RiskyMonkeyBase.Log.LogDebug("Repair Repair List: " + repairList.Join());
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchStart));
@@ -103,7 +102,7 @@ namespace RiskyMonkeyBase.Tweaks
             }
         }
 
-        [HarmonyPatch(typeof(ShrineOfRepair.Modules.Interactables.ShrineOfRepairPicker.ShrineRepairManager), "HandleSelection", typeof(int))]
+        [HarmonyPatch(typeof(ShrineOfRepair.Modules.Interactables.ShrineOfRepairPicker.ShrineRepairManager), nameof(ShrineOfRepair.Modules.Interactables.ShrineOfRepairPicker.ShrineRepairManager.HandleSelection), typeof(int))]
         public class PatchSelection
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel retLabel)
@@ -122,7 +121,7 @@ namespace RiskyMonkeyBase.Tweaks
             }
         }
 
-        [HarmonyPatch(typeof(ShrineOfRepair.Modules.Interactables.ShrineOfRepairPicker.ShrineRepairManager), "HandleInteraction", typeof(Interactor))]
+        [HarmonyPatch(typeof(ShrineOfRepair.Modules.Interactables.ShrineOfRepairPicker.ShrineRepairManager), nameof(ShrineOfRepair.Modules.Interactables.ShrineOfRepairPicker.ShrineRepairManager.HandleInteraction), typeof(Interactor))]
         public class PatchInteraction
         {
             public static void ILManipulator(ILContext il, MethodBase original, ILLabel retLabel)

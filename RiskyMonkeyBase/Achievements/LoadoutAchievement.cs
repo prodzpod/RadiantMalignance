@@ -98,7 +98,7 @@ namespace RiskyMonkeyBase.Achievements
             if (def == null) return;
             unlockableDef.nameToken = def.skillNameToken;
             unlockableDef.achievementIcon = def.icon;
-            AccessTools.FieldRefAccess<Sprite>(typeof(AchievementDef), "achievedIcon")(AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName)) = def.icon;
+            AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = def.icon;
             IEnumerator<SkillFamily> families = SkillCatalog.allSkillFamilies.GetEnumerator();
             while (families.MoveNext()) for (var i = 0; i < families.Current.variants.Length; i++) if (families.Current.variants[i].skillDef == def) families.Current.variants[i].unlockableDef = unlockableDef;
         }
@@ -366,7 +366,7 @@ namespace RiskyMonkeyBase.Achievements
             {
                 if (report != null && !report.gameEnding.isWin) return;
                 int count = 0;
-                foreach (var art in AccessTools.StaticFieldRefAccess<ArtifactDef[]>(typeof(ArtifactCatalog), "artifactDefs"))
+                foreach (var art in ArtifactCatalog.artifactDefs)
                 {
                     var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);
                     if (report.ruleBook.IsChoiceActive(rule.FindChoice("On"))) count++;

@@ -192,7 +192,7 @@ Add unlocks for:
 - togglable tweak to H3AD-5T v2, removes cooldown and stack increases damage instead. also affects [Empyrean Braces](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics/).
 - Ability to see all artifacts, as well as display hints. (Vanilla artifact hints from [RoR2 Wiki](https://riskofrain2.fandom.com/wiki/Artifact_Hints)). Hint level configurable.
 - [PassiveAgression](https://thunderstore.io/package/RandomlyAwesome/PassiveAgression/): Fixes puncuations and capitalizations on skill, and removes "None" for Engineer's passive (why would you Not have a buff).
-- [WolfoQualityOfLife](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/): Compatibility for feather icon with [ZetAspects](https://thunderstore.io/package/William758/ZetAspects/) and [VanillaVoid](https://thunderstore.io/package/Zenithrium/VanillaVoid/).
+- [WolfoQualityOfLife](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/): Compatibility for feather icon with [ZetAspects](https://thunderstore.io/package/William758/ZetAspects/), [VanillaVoid](https://thunderstore.io/package/Zenithrium/VanillaVoid/) and [Hex3Mod](https://thunderstore.io/package/hex3/Hex3Mod/).
 
 ### Logbook
 Added logbook entries for missing things. may change as mods gets updates.

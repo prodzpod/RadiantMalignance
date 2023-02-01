@@ -217,25 +217,23 @@ namespace RiskyMonkeyBase.Contents
                 c.EmitDelegate<Action<GameObject, EquipmentSlot>>((obj, self) =>
                 {
                     if (_target == obj || self == null || self.equipmentIndex != reprogrammer.equipmentIndex) return;
-                    ref Indicator targetIndicator = ref AccessTools.FieldRefAccess<EquipmentSlot, Indicator>(self, "targetIndicator");
-                    if (targetIndicator == null) return;
-                    targetIndicator.visualizerPrefab = hover;
+                    if (self.targetIndicator == null) return;
+                    self.targetIndicator.visualizerPrefab = hover;
                     _target = obj; 
                     if (obj == null || !obj.name.Contains("Duplicator"))
                     {
-                        targetIndicator.active = false;
-                        targetIndicator.targetTransform = null;
+                        self.targetIndicator.active = false;
+                        self.targetIndicator.targetTransform = null;
                         detected = false;
                         return;
                     }
                     else
                     {
-                        ref EquipmentSlot.UserTargetInfo currentTarget = ref AccessTools.FieldRefAccess<EquipmentSlot, EquipmentSlot.UserTargetInfo>("currentTarget")(self);
-                        currentTarget = new EquipmentSlot.UserTargetInfo();
-                        currentTarget.rootObject = obj;
-                        currentTarget.transformToIndicateAt = obj.transform;
-                        targetIndicator.active = true;
-                        targetIndicator.targetTransform = obj.transform;
+                        self.currentTarget = new EquipmentSlot.UserTargetInfo();
+                        self.currentTarget.rootObject = obj;
+                        self.currentTarget.transformToIndicateAt = obj.transform;
+                        self.targetIndicator.active = true;
+                        self.targetIndicator.targetTransform = obj.transform;
                         detected = true;
                     }
                 });
@@ -271,7 +269,7 @@ namespace RiskyMonkeyBase.Contents
             if (!detected || _target == null) return false;
             PurchaseInteraction target = _target.GetComponent<PurchaseInteraction>();
             PickupIndex initialPickupIndex = target.GetComponent<ShopTerminalBehavior>().NetworkpickupIndex;
-            AccessTools.FieldRefAccess<EquipmentSlot, float>(self, "subcooldownTimer") = 0.2f;
+            self.subcooldownTimer = 0.2f;
             PickupIndex[] array = Enumerable.Where(PickupTransmutationManager.GetAvailableGroupFromPickupIndex(initialPickupIndex), pickupIndex => pickupIndex != initialPickupIndex).ToArray();
             if (array == null || array.Length == 0 || Run.instance.treasureRng.RangeFloat(0, 1) < Reference.ReprogrammerRepairChance.Value) // f
             {
@@ -284,7 +282,7 @@ namespace RiskyMonkeyBase.Contents
                 _target = null;
             } else target.GetComponent<ShopTerminalBehavior>().NetworkpickupIndex = Run.instance.treasureRng.NextElementUniform(array);
             EffectManager.SimpleEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OmniEffect/OmniRecycleEffect"), target.transform.position, Quaternion.identity, true);
-            AccessTools.Method(typeof(EquipmentSlot), "InvalidateCurrentTarget").Invoke(self, null);
+            self.InvalidateCurrentTarget();
             return true;
         }
 

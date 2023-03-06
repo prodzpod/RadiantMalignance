@@ -1,9 +1,7 @@
-﻿using BepInEx.Configuration;
-using BetterUI;
-using HarmonyLib;
+﻿using BetterUI;
 using RoR2;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace RiskyMonkeyBase.LangDynamic
@@ -38,8 +36,6 @@ namespace RiskyMonkeyBase.LangDynamic
         {
             normalList = new List<LangKeyReplaceEntry>();
             altList = new List<LangKeyReplaceEntry>();
-
-            RiskyMonkeyBase.Log.LogInfo("[[BetterUI Stats Langkey]] module loaded");
             normalText = ConfigManager.StatsDisplayStatString.Value;
             altText = ConfigManager.StatsDisplayStatStringCustomBind.Value;
             int index = 0;

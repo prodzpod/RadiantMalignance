@@ -7,7 +7,7 @@ namespace RiskyMonkeyBase.Tutorials
 {
     public class TutorialHelper
     {
-        public static MPInput input = GameObject.Find("MPEventSystem Player0").GetComponent<MPInput>();
+        public static MPInput input;
 
         public struct ComplexDialogBox
         {
@@ -19,14 +19,13 @@ namespace RiskyMonkeyBase.Tutorials
         public static ComplexDialogBox ShowPopup(string title, string desc, bool noCancel = false)
         {
             Time.timeScale = 0f;
-            MPEventSystem events = Reflection.GetFieldValue<MPEventSystem>(input, "eventSystem");
-            events.cursorOpenerCount++;
-            events.cursorOpenerForGamepadCount++;
+            input.eventSystem.cursorOpenerCount++;
+            input.eventSystem.cursorOpenerForGamepadCount++;
             SimpleDialogBox box = SimpleDialogBox.Create();
             box.headerToken = new SimpleDialogBox.TokenParamsPair(title);
             box.descriptionToken = new SimpleDialogBox.TokenParamsPair(desc);
-            if (!noCancel) box.AddActionButton(() => DefaultCancel(events), "RISKYMONKEY_TUTORIAL_ACKNOWLEDGE");
-            return new ComplexDialogBox(box, events);
+            if (!noCancel) box.AddActionButton(() => DefaultCancel(input.eventSystem), "RISKYMONKEY_TUTORIAL_ACKNOWLEDGE");
+            return new ComplexDialogBox(box, input.eventSystem);
         }
         
         public static void DefaultCancel(MPEventSystem events)

@@ -14,6 +14,7 @@ namespace RiskyMonkeyBase.Tweaks
         public static void ForgottenRelics()
         {
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchVF2Start));
+            PatchBatteryContainer.onStaticPortalActivated += () => { };
             if (!VF2ConfigManager.disableBellTower.Value) ReaddBT();
             if (!VF2ConfigManager.disableCoilGolem.Value) VF2ContentPackProvider.contentPack.bodyPrefabs.Add(new GameObject[] { VF2ContentPackProvider.coilGolemBody }); // silly
         }
@@ -35,13 +36,10 @@ namespace RiskyMonkeyBase.Tweaks
                 DirectorAPI.Stage.SkyMeadow,
                 DirectorAPI.Stage.SkyMeadowSimulacrum,
                 DirectorAPI.Stage.WetlandAspect
-            })
-            {
-                DirectorAPI.Helpers.AddNewMonsterToStage(card, DirectorAPI.MonsterCategory.Champions, stage);
-            }
+            }) DirectorAPI.Helpers.AddNewMonsterToStage(card, DirectorAPI.MonsterCategory.Champions, stage);
         }
 
-        [HarmonyPatch(typeof(VF2Plugin), "Start")]
+        [HarmonyPatch(typeof(VF2Plugin), nameof(VF2Plugin.Start))]
         public class PatchVF2Start
         {
             public static bool trueDisableBellTower;
@@ -53,10 +51,7 @@ namespace RiskyMonkeyBase.Tweaks
         public class PatchBatteryContainer
         {
             public static event Action onStaticPortalActivated;
-            public static void Postfix()
-            {
-                if (onStaticPortalActivated != null) onStaticPortalActivated();
-            }
+            public static void Postfix() { if (onStaticPortalActivated != null) onStaticPortalActivated(); }
         }
 
 

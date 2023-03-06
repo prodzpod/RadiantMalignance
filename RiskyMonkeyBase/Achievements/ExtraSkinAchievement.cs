@@ -15,7 +15,7 @@ namespace RiskyMonkeyBase.Achievements
         public static void Patch()
         {
             unlockables = new();
-            if (Reference.Mods("com.Borbo.LazyBastardEngineer")) MakeUnlockable("Skins.Engineer.Extra1");
+            if (Reference.Mods("com.Mark.Joyride")) MakeUnlockable("Skins.Bandit.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) MakeUnlockable("Skins.Captain.Extra1");
             if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) MakeForgottenRelics();
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) MakeUnlockable("Skins.Railgunner.Extra1");
@@ -28,7 +28,7 @@ namespace RiskyMonkeyBase.Achievements
         }
         public static void PostPatch()
         {
-            if (Reference.Mods("com.Borbo.LazyBastardEngineer")) AddUnlockable("LazyBastardEngineer", "Skins.Engineer.Extra1");
+            if (Reference.Mods("com.Mark.Joyride")) AddUnlockable("Skin Defo", "Skins.Bandit.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) AddUnlockable("PCap", "Skins.Captain.Extra1");
             if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) AddForgottenRelics();
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) AddUnlockable("RailgunnerSkin 2", "Skins.Railgunner.Extra1");
@@ -36,6 +36,15 @@ namespace RiskyMonkeyBase.Achievements
         public static void AddForgottenRelics()
         {
             if (!FRCSharp.VF2ConfigManager.disableSlumberingSatellite.Value) AddUnlockable("SpaceCadet", "Skins.Loader.Extra1");
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Bandit", "Skins.Bandit.Extra1", null, null, "com.Mark.Joyride")]
+        public class BanditExtra1SkinAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Bandit2Body");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); GlobalEventManager.onClientDamageNotified += OnDamage; }
+            public override void OnBodyRequirementBroken() { GlobalEventManager.onClientDamageNotified -= OnDamage; base.OnBodyRequirementBroken(); }
+            public void OnDamage(DamageDealtMessage damageDealtMessage) { if (damageDealtMessage.attacker == null || damageDealtMessage.attacker != localUser.cachedBody) return; if (damageDealtMessage.damage >= localUser.cachedBody.baseDamage * 100) Grant(); }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Loader", "Skins.Loader.Extra1", null, null, "com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")] 
@@ -150,67 +159,23 @@ namespace RiskyMonkeyBase.Achievements
                 orig(self, activator);
             }
         }
-        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Engineer", "Skins.Engineer.Extra1", null, null, "com.Borbo.LazyBastardEngineer")]
-        public class EngineerExtra1SkinAchievement : BaseAchievement
-        {
-            private int skillUseCount = 0;
-            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("EngiBody");
-            public override void OnBodyRequirementMet()
-            {
-                base.OnBodyRequirementMet();
-                Run.onRunStartGlobal += ResetSkillUseCount;
-                Run.onClientGameOverGlobal += ClearCheck;
-                On.RoR2.CharacterBody.OnSkillActivated += SkillCheck;
-            }
-
-            public override void OnBodyRequirementBroken()
-            {
-                Run.onRunStartGlobal += ResetSkillUseCount;
-                Run.onClientGameOverGlobal -= ClearCheck;
-                On.RoR2.CharacterBody.OnSkillActivated -= SkillCheck;
-                base.OnBodyRequirementBroken();
-            }
-
-            private void SkillCheck(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
-            {
-                if (self.bodyIndex == LookUpRequiredBodyIndex() && self.teamComponent.teamIndex == TeamIndex.Player && skill != self.skillLocator.special)
-                {
-                    if (skillUseCount == 0)
-                    {
-                        Debug.Log("DEBUG: Lazy Bastard challenge failed.");
-                        if (LasyBastardEngineer.Base.AnnounceWhenFail.Value)
-                            Chat.AddMessage("Lazy Bastard challenge failed!");
-                    }
-                    ++skillUseCount;
-                }
-                orig(self, skill);
-            }
-
-            private void ResetSkillUseCount(Run obj) => skillUseCount = 0;
-
-            public void ClearCheck(Run run, RunReport runReport)
-            {
-                bool flag = skillUseCount == 0 && meetsBodyRequirement;
-                skillUseCount = 0;
-                if (run == null || runReport == null || !(bool)runReport.gameEnding || !runReport.gameEnding.isWin || !flag) return;
-                Grant();
-            }
-        }
 
         public static void MakeUnlockable(string name)
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains(name)) return;
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.cachedName = name;
             ContentAddition.AddUnlockableDef(unlockableDef);
             unlockables.Add(name, unlockableDef);
-            RiskyMonkeyBase.Log.LogDebug("Registered Unlockable " + name);
+            RiskyMonkeyAchievements.Log("Registered Unlockable " + name);
         }
         public static void AddUnlockable(string skinName, string name)
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains(name)) return;
             SkinDef def = null;
             foreach (var skin in SkinCatalog.allSkinDefs) if (skin.name == skinName) def = skin;
             UnlockableDef unlockableDef = unlockables[name];
-            RiskyMonkeyBase.Log.LogDebug("Fetched Unlockable " + name);
+            RiskyMonkeyAchievements.Log("Fetched Unlockable " + name);
             unlockableDef.nameToken = def.nameToken;
             unlockableDef.achievementIcon = def.icon;
             def.unlockableDef = unlockableDef;

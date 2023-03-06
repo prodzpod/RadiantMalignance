@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 4245744672
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 76156cd474025d145b3bf642080f124c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c90fc19e2679e5295d10bd00f33cb4c3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/momentumBuff.png
+- Assets/momentumSkill.png
+Dependencies: []

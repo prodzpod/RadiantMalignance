@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1347890959
+CRC: 943821677
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a119155f01a8f794b7348003b97d3a04
+    Hash: b350792169aacfdda77fc753a69dbf22
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e43acdfd8c19e20e90b11b4531392bdb
+    Hash: 4dc7850fcb1b432ccfd331a31d4b5a10
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -35,12 +35,17 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/unlocks/texArtifactSanction.png
 - Assets/iconProd.png
 - Assets/iconModpack.png
+- Assets/unlocks/texItemMysticsItems_ExtraShrineUse.png
 - Assets/unlocks/texItemItemDefGemCarapace.png
+- Assets/iconDelete.png
 - Assets/texReprogrammer.png
+- Assets/unlocks/texItemMysticsItems_FragileMask.png
+- Assets/unlocks/texItemMysticsItems_ScratchTicket.png
 - Assets/unlocks/texArtifactKith.png
 - Assets/unlocks/texArtifactMultitudes.png
 - Assets/unlocks/texItemItemDefEscapePlan.png
@@ -50,15 +55,20 @@ Assets:
 - Assets/SatelliteSpecial.obj
 - Assets/texNormalConcrete.png
 - Assets/mdlLunarBloodArenaRoofSpecial.obj
+- Assets/unlocks/texItemMysticsItems_MarwanAsh1.png
+- Assets/PillowMeshSpecial.obj
 - Assets/unlocks/texArtifactRevival.png
 - Assets/texReprogrammerEmit.png
+- Assets/unlocks/texItemHopooEgg.png
 - Assets/unlocks/texItemHCFB_ITEM_KNIFE.png
 - Assets/ALSphere2.prefab
 - Assets/texReprogrammerDiffuse.png
 - Assets/unlocks/texArtifactEclipse.png
+- Assets/unlocks/texItemExecuteLowHealthElite.png
 - Assets/unlocks/texArtifactEscalation.png
+- Assets/rock3ModularMeshSpecial.obj
+- Assets/texExecuteLowHealthElite.png
 - Assets/BbRuinPillar1_LOD0Special.obj
-- Assets/downpour.png
 - Assets/unlocks/texArtifactDissimilarity.png
 - Assets/unlocks/texArtifactAccumulation.png
 - Assets/icon.png
@@ -66,6 +76,7 @@ Assets:
 - Assets/unlocks/texItemItemDefEternalSlug.png
 - Assets/unlocks/texArtifactTranspose.png
 - Assets/unlocks/texItemItemDefBunnyFoot.png
+- Assets/unlocks/texItemEQUIPMENT_DOUBLEITEMS.png
 - Assets/matRecycler.mat
 - Assets/ALSphere.prefab
 - Assets/unlocks/texArtifactBrigade.png
@@ -74,30 +85,43 @@ Assets:
 - Assets/IconMods.png
 - Assets/iconOutline.png
 - Assets/unlocks/texItemHCFB_ITEM_CHOPSTICKS.png
+- Assets/unlocks/texItemHCFB_ITEM_MOLTEN_FORK.png
 - Assets/columnLargeSpecial.obj
 - Assets/unlocks/texItemReprogrammer.png
 - Assets/Terrain Middle Special.obj
 - Assets/DisplayReprogrammer.fbx
+- Assets/unlocks/texItemITEM_PAINBOX.png
+- Assets/qo.obj
+- Assets/unlocks/texArtifactSpread.png
+- Assets/unlocks/texItemITEM_SHIELDREMOVAL.png
+- Assets/unlocks/texSurvivorEngineer.png
 - Assets/unlocks/texArtifactTossing.png
+- Assets/unlocks/texItemRandomEquipmentTrigger.png
 - Assets/MoonArenaBaseLayerBowlSpecial.obj
 - Assets/unlocks/texSurvivorRailgunner.png
 - Assets/PickupReprogrammer.fbx
 - Assets/matAncientLoft_Boulder.mat
+- Assets/unlocks/texItemITEM_SINGULARITY.png
+- Assets/unlocks/texItemLunarSun.png
 - Assets/texRockyNormals.png
 - Assets/meshVoidCenterStatueSpecial.obj
 - Assets/meshSPDomeSpecial.obj
 - Assets/logoLunar.png
 - Assets/logoMeme.png
+- Assets/unlocks/texItemITEM_DOTPROCS.png
 - Assets/iconTemplar.png
 - Assets/unlocks/texItemEquipmentDefWildlifeCamera.png
 - Assets/texRecyclerNormal.png
-- Assets/unlocks/texSurvivorTemplar.png
+- Assets/unlocks/texItemScavengersPouch.png
+- Assets/unlocks/texItemHitList.png
 - Assets/logoVoid.png
 - Assets/GPRuinGrateSpecial.obj
 - Assets/logo.png
+- Assets/unlocks/texArtifactWrath.png
 - Assets/texAncientLoft_StoneSurfaceDiffuse.png
 - Assets/unlocks/texArtifactSpiriting.png
 - Assets/unlocks/texArtifactChosen.png
+- Assets/unlocks/texItemMysticsItems_GateChalice.png
 - Assets/unlocks/texArtifactPotential.png
 - Assets/unlocks/texArtifactBlindness.png
 Dependencies: []

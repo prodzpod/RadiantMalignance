@@ -3,91 +3,65 @@ using BubbetsItems;
 using BubbetsItems.Equipments;
 using BubbetsItems.Items;
 using HarmonyLib;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using RiskyMonkeyBase.LangDynamic;
 using RoR2;
 using RoR2.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace RiskyMonkeyBase.Tweaks
 {
     public class VoidLunarTweaks
     {
-        public static Dictionary<ItemIndex, ItemIndex> VoidLunarConversions = new();
+        public static WeightedSelection<PickupIndex> LunarShopList = new();
         public static void Bazaar()
         {
-            On.RoR2.Items.ContagiousItemManager.Init += (orig) =>
+            Stage.onStageStartGlobal += (self) =>
             {
-                orig();
-                ItemIndex itemIndex = ~ItemIndex.None;
-                for (ItemIndex itemCount = (ItemIndex)ItemCatalog.itemCount; itemIndex < itemCount; ++itemIndex)
-                {
-                    ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
-                    if (itemDef.tier == BubbetsItemsPlugin.VoidLunarTier.tier)
-                    {
-                        ItemIndex originalItemIndex = ContagiousItemManager.GetOriginalItemIndex(itemDef.itemIndex);
-                        if (!VoidLunarConversions.ContainsKey(originalItemIndex)) VoidLunarConversions.Add(originalItemIndex, itemDef.itemIndex);
-                    }
-                }
+                GameObject lvs = GameObject.Find("LunarVoidShop(Clone)");
+                if (lvs != null) lvs.SetActive(false);
             };
-            On.RoR2.ShopTerminalBehavior.SetPickupIndex += (orig, self, newPickupIndex, hidden) =>
+            RoR2Application.onLoad += () =>
             {
-                if (self.GetComponentInParent<PurchaseInteraction>().name.StartsWith("LunarShop"))
-                {
-                    PickupDef pickup = PickupCatalog.GetPickupDef(self.NetworkpickupIndex);
-                    if (pickup != null && VoidLunarConversions.ContainsKey(pickup.itemIndex) && Run.instance.stageRng.RangeFloat(0, 1) < Reference.VoidLunarOnBazaar.Value)
-                    {
-                        RiskyMonkeyBase.Log.LogDebug("Voiding the Bazaar...");
-                        PickupIndex ret = PickupCatalog.FindPickupIndex(VoidLunarConversions[pickup.itemIndex]);
-                        orig(self, ret, hidden); // since hook is guarded
-                        return;
-                    }
-                }
-                orig(self, newPickupIndex, hidden);
+                foreach (var lunar in ItemCatalog.lunarItemList) LunarShopList.AddChoice(new() { value = PickupCatalog.FindPickupIndex(lunar), weight = 1 });
+                foreach (var equip in EquipmentCatalog.equipmentList) if (EquipmentCatalog.GetEquipmentDef(equip).isLunar) 
+                        LunarShopList.AddChoice(new() { value = PickupCatalog.FindPickupIndex(equip), weight = 1 });
+                foreach (var item in ItemCatalog.allItemDefs) if (item.tier == BubbetsItemsPlugin.VoidLunarTier.tier)
+                        LunarShopList.AddChoice(new() { value = PickupCatalog.FindPickupIndex(item.itemIndex), weight = Reference.VoidLunarOnBazaar.Value });
             };
-        }
-        public static void CleansingPool()
-        {
-            On.RoR2.ShrineCleanseBehavior.Init += (orig) =>
+            IL.RoR2.ShopTerminalBehavior.GenerateNewPickupServer_bool += (il) =>
             {
-                orig();
-                List<ItemIndex> itemIndexList = new(ShrineCleanseBehavior.cleansableItems);
-                ItemIndex itemIndex = ~ItemIndex.None;
-                for (ItemIndex itemCount = (ItemIndex)ItemCatalog.itemCount; itemIndex < itemCount; ++itemIndex)
+                ILCursor c = new(il);
+                c.GotoNext(x => x.MatchCallOrCallvirt<PickupDropTable>(nameof(PickupDropTable.GenerateDrop)));
+                c.Index++;
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Func<PickupIndex, ShopTerminalBehavior, PickupIndex>>((orig, self) =>
                 {
-                    ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
-                    if (isVoidLunar(itemDef.tier)) itemIndexList.Add(itemIndex);
-                }
-                ShrineCleanseBehavior.cleansableItems = itemIndexList.ToArray();
-            };
-            On.RoR2.CostTypeCatalog.LunarItemOrEquipmentCostTypeHelper.Init += (orig) =>
-            {
-                orig();
-                List<ItemIndex> indicies = new();
-                indicies.AddRange(ItemCatalog.lunarItemList);
-                ItemIndex itemIndex = ~ItemIndex.None;
-                for (ItemIndex itemCount = (ItemIndex)ItemCatalog.itemCount; itemIndex < itemCount; ++itemIndex)
-                {
-                    ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex);
-                    if (isVoidLunar(itemDef.tier)) indicies.Add(itemDef.itemIndex);
-                }
-                CostTypeCatalog.LunarItemOrEquipmentCostTypeHelper.lunarItemIndices = indicies.ToArray();
+                    if (self.gameObject.name.Contains("LunarShopTerminal")) return PickupDropTable.GenerateDropFromWeightedSelection(self.rng, LunarShopList);
+                    return orig;
+                });
             };
         }
         public static void Donkey()
         {
-            EquipmentBase.Equipments.FirstOrDefault(x => x is HolographicDonkey).Enabled.Value = !Reference.SeriousMode.Value; // donkey
+            Run.onRunSetRuleBookGlobal += (run, ruleBook) =>
+            {
+                EquipmentIndex idx = EquipmentCatalog.FindEquipmentIndex("EquipmentDefHolographicDonkey");
+                if (idx != EquipmentIndex.None && run.availableEquipment.Contains(idx))
+                {
+                    run.availableEquipment.Remove(idx);
+                    PickupDropTable.RegenerateAll(run);
+                }
+            };
         }
 
         public static bool isVoidLunar(ItemTier tier)
         {
             return tier == BubbetsItemsPlugin.VoidLunarTier.tier;
-        }
-        public static void handleRepulsionMK2()
-        {
-            var isReduction = RepulsionPlateMk2._reductionOnTrue.Value; // private config value lol
-            RiskyMonkeyBase.Log.LogInfo("Repulsion Armor MK2 desc setting, Reduction: " + isReduction);
-            BetterDesc.keyRepl.Add("REPULSION_ARMOR_MK2_PICKUP", isReduction ? "REPULSION_ARMOR_MK2_DESC_REDUCTION_SIMPLE" : "REPULSION_ARMOR_MK2_DESC_ARMOR_SIMPLE");
         }
     }
 }

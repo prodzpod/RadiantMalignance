@@ -9,7 +9,7 @@ using System.Reflection;
 namespace RiskyMonkeyBase.LangDynamic
 {
     public class GrandMasteryFix
-    {
+    {   
         public static string[] Survivors = { "PALADIN_TYPHOONUNLOCKABLE", "MINER_TYPHOONUNLOCKABLE", "SNIPERCLASSIC_GRANDMASTERYUNLOCKABLE", "ENFORCER_GRANDMASTERYUNLOCKABLE", "NEMFORCER_TYPHOONUNLOCKABLE" }; // guh
         public static void Patch()
         {
@@ -31,77 +31,76 @@ namespace RiskyMonkeyBase.LangDynamic
             if (Reference.Mods("com.rob.DiggerUnearthed")) RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchMiner));
             if (Reference.Mods("com.Moffein.SniperClassic")) RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchSniper));
             if (Reference.Mods("com.EnforcerGang.Enforcer")) RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchEnforcer));
+            if (Reference.Mods("com.TeamMoonstorm.Starstorm2-Nightly")) RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchSS2));
         }
 
         [HarmonyPatch(typeof(PaladinMod.Achievements.BaseMasteryUnlockable), nameof(PaladinMod.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchPaladin
         {
-            public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
+            public static bool Prefix(PaladinMod.Achievements.BaseMasteryUnlockable __instance, Run run, RunReport runReport    )
             {
-                ILCursor c = new(il);
-                c.GotoNext(x => x.MatchLdloc(2));
-                while (c.Next.Next.OpCode != OpCodes.Ret) c.Remove(); // keep label AND ret alive for previous rets
-                c.Emit(OpCodes.Ldarg_0);
-                c.Emit(OpCodes.Ldloc_2);
-                c.EmitDelegate<Action<object, DifficultyDef>>((_self, def) =>
+                if (__instance.RequiredDifficultyCoefficient >= 3.5f)
                 {
-                    if (def.nameToken == Reference.GrandDifficulty.Value) ((BaseAchievement)_self).Grant();
-                });
-                RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
+                    if ((bool)runReport.gameEnding && runReport.gameEnding.isWin && DifficultyCatalog.GetDifficultyDef(runReport.ruleBook.FindDifficulty()).nameToken == Reference.GrandDifficulty.Value) __instance.Grant();
+                    return false;
+                }
+                return true;
             }
         }
 
         [HarmonyPatch(typeof(DiggerPlugin.Achievements.BaseMasteryUnlockable), nameof(DiggerPlugin.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchMiner
         {
-            public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
+            public static bool Prefix(PaladinMod.Achievements.BaseMasteryUnlockable __instance, Run run, RunReport runReport)
             {
-                ILCursor c = new(il);
-                c.GotoNext(x => x.MatchLdloc(2));
-                while (c.Next.Next.OpCode != OpCodes.Ret) c.Remove();
-                c.Emit(OpCodes.Ldarg_0);
-                c.Emit(OpCodes.Ldloc_2);
-                c.EmitDelegate<Action<object, DifficultyDef>>((_self, def) =>
+                if (__instance.RequiredDifficultyCoefficient >= 3.5f)
                 {
-                    if (def.nameToken == Reference.GrandDifficulty.Value) ((BaseAchievement)_self).Grant();
-                });
-                RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
+                    if ((bool)runReport.gameEnding && runReport.gameEnding.isWin && DifficultyCatalog.GetDifficultyDef(runReport.ruleBook.FindDifficulty()).nameToken == Reference.GrandDifficulty.Value) __instance.Grant();
+                    return false;
+                }
+                return true;
             }
         }
 
         [HarmonyPatch(typeof(SniperClassic.Modules.Achievements.BaseMasteryUnlockable), nameof(SniperClassic.Modules.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchSniper
         {
-            public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
+            public static bool Prefix(PaladinMod.Achievements.BaseMasteryUnlockable __instance, Run run, RunReport runReport)
             {
-                ILCursor c = new(il);
-                c.GotoNext(x => x.MatchLdsfld<bool>("SniperClassic.SniperClassic::infernoPluginLoaded"));
-                while (c.Next.Next.OpCode != OpCodes.Ret) c.Remove();
-                c.Emit(OpCodes.Ldarg_0);
-                c.Emit(OpCodes.Ldloc_2);
-                c.EmitDelegate<Action<object, DifficultyDef>>((_self, def) =>
+                if (__instance.RequiredDifficultyCoefficient >= 3.5f)
                 {
-                    if (def.nameToken == Reference.GrandDifficulty.Value) ((BaseAchievement)_self).Grant();
-                });
-                RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
+                    if ((bool)runReport.gameEnding && runReport.gameEnding.isWin && DifficultyCatalog.GetDifficultyDef(runReport.ruleBook.FindDifficulty()).nameToken == Reference.GrandDifficulty.Value) __instance.Grant();
+                    return false;
+                }
+                return true;
             }
         }
 
         [HarmonyPatch(typeof(EnforcerPlugin.Achievements.BaseMasteryUnlockable), nameof(EnforcerPlugin.Achievements.BaseMasteryUnlockable.OnClientGameOverGlobal))]
         public static class PatchEnforcer
         {
-            public static void ILManipulator(ILContext il, MethodBase original, ILLabel _)
+            public static bool Prefix(PaladinMod.Achievements.BaseMasteryUnlockable __instance, Run run, RunReport runReport)
             {
-                ILCursor c = new(il);
-                c.GotoNext(x => x.MatchLdloc(2));
-                while (c.Next.Next.OpCode != OpCodes.Ret) c.Remove();
-                c.Emit(OpCodes.Ldarg_0);
-                c.Emit(OpCodes.Ldloc_2);
-                c.EmitDelegate<Action<object, DifficultyDef>>((_self, def) =>
+                if (__instance.RequiredDifficultyCoefficient >= 3.5f)
                 {
-                    if (def.nameToken == Reference.GrandDifficulty.Value) ((BaseAchievement)_self).Grant();
-                });
-                RiskyMonkeyBase.Log.LogDebug("Patched " + original.DeclaringType.FullName);
+                    if ((bool)runReport.gameEnding && runReport.gameEnding.isWin && DifficultyCatalog.GetDifficultyDef(runReport.ruleBook.FindDifficulty()).nameToken == Reference.GrandDifficulty.Value) __instance.Grant();
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(Moonstorm.Starstorm2.Unlocks.GenericMasteryAchievement), nameof(Moonstorm.Starstorm2.Unlocks.GenericMasteryAchievement.OnClientGameOverGlobal))]
+        public static class PatchSS2
+        {
+            public static bool Prefix(Moonstorm.Starstorm2.Unlocks.GenericMasteryAchievement __instance, Run run, RunReport runReport)
+            {
+                if (__instance.RequiredDifficultyCoefficient >= 3.5f)
+                {
+                    if ((bool)runReport.gameEnding && runReport.gameEnding.isWin && DifficultyCatalog.GetDifficultyDef(runReport.ruleBook.FindDifficulty()).nameToken == Reference.GrandDifficulty.Value) __instance.Grant();
+                    return false;
+                }
+                return true;
             }
         }
     }

@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 2666909381
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ce03a1a54fa61f678d97066474419e22
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c90fc19e2679e5295d10bd00f33cb4c3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/downpour.png
+- Assets/iconDownpour.png
+- Assets/brimstone.png
+Dependencies: []

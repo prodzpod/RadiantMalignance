@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using RoR2;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RiskyMonkeyBase.Tweaks
 {
     public class ArtifactHints
     {
-        public static bool didTranspose = false;
-        public static bool didKith = false;
+        public static float second = 0;
+        public static Mesh spreadMesh;
+        public static Mesh wrathMesh;
         public static void Patch()
         {
-            On.RoR2.Stage.Start += (orig, self) =>
+            Stage.onStageStartGlobal += (self) =>
             {
-                orig(self);
                 if (self.sceneDef.cachedName == "snowyforest" && Reference.Mods("com.TPDespair.ZetArtifacts")) Revival();
                 if (self.sceneDef.cachedName == "ancientloft" && Reference.Mods("com.TPDespair.ZetArtifacts")) Eclipse();
                 if (self.sceneDef.cachedName == "sulfurpools" && Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) Wander();
@@ -23,13 +24,16 @@ namespace RiskyMonkeyBase.Tweaks
                 if (self.sceneDef.cachedName == "itmoon" && Reference.Mods("HIFU.ArtifactOfBlindness")) Blindness();
                 // void
                 if (self.sceneDef.cachedName == "BulwarksHaunt_GhostWave" && Reference.Mods("com.TPDespair.ZetArtifacts")) Tossing();
-                didTranspose = false; didKith = false;
             };
-            On.RoR2.Stage.FixedUpdate += (orig, self) =>
+            On.RoR2.VoidStageMissionController.Start += (orig, self) =>
             {
                 orig(self);
-                if (!didTranspose && self.sceneDef.cachedName == "voidstage" && Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) Transpose();
-                if (!didKith && self.sceneDef.cachedName == "voidraid" && Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) Kith();
+                if (Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) Transpose();
+            };
+            On.RoR2.VoidRaidGauntletExitController.OnBodyTeleport += (orig, self, body) =>
+            {
+                orig(self, body);
+                if (Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) Kith();
             };
         }
         public static void Spiriting()
@@ -47,7 +51,6 @@ namespace RiskyMonkeyBase.Tweaks
                 if (pillar == null) continue;
                 pillar.GetComponent<MeshFilter>().sharedMesh = RiskyMonkeyBase.AssetBundle.LoadAsset<Mesh>("Assets/BbRuinPillar1_LOD0Special.obj");
                 pillar.GetComponent<MeshCollider>().sharedMesh = RiskyMonkeyBase.AssetBundle.LoadAsset<Mesh>("Assets/BbRuinPillar1_LOD0Special.obj");
-                didKith = true;
             }
         }
         public static void Transpose()
@@ -56,7 +59,6 @@ namespace RiskyMonkeyBase.Tweaks
             if (root == null) return;
             root.GetComponent<MeshFilter>().sharedMesh = RiskyMonkeyBase.AssetBundle.LoadAsset<Mesh>("Assets/meshVoidCenterStatueSpecial.obj");
             root.GetComponent<MeshCollider>().sharedMesh = RiskyMonkeyBase.AssetBundle.LoadAsset<Mesh>("Assets/meshVoidCenterStatueSpecial.obj");
-            didTranspose = true;
         }
         public static void Blindness()
         {

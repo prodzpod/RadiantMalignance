@@ -27,6 +27,7 @@ namespace RiskyMonkeyBase.Achievements
                     if (def.cachedName == "ARTIFACT_HIFU_ArtifactOfBlindness") blindness = def;
                 MakeUnlockable("Blindness");
             }
+            if (Reference.Mods("com.groovesalad.GrooveSaladSpikestripContent", "com.plasmacore.PlasmaCoreSpikestripContent")) MakeSpikestrip();
             AchievementManager.onAchievementsRegistered += PostPatch;
         }
 
@@ -37,6 +38,7 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("com.TPDespair.ZetArtifacts")) AddZetArtifacts();
             if (Reference.Mods("com.Wolfo.ArtifactOfDissimilarity")) AddArtifactOfDissimilarity();
             if (Reference.Mods("HIFU.ArtifactOfBlindness")) AddUnlockable(blindness, "Blindness", 1, 3, 1, 3, 5, 3, 1, 3, 1);
+            if (Reference.Mods("com.groovesalad.GrooveSaladSpikestripContent", "com.plasmacore.PlasmaCoreSpikestripContent")) AddSpikestrip();
         }
 
         public static void MakeZetArtifacts()
@@ -61,6 +63,12 @@ namespace RiskyMonkeyBase.Achievements
             if (ArtifactDissimilarity.ArtifactDissimilarity.EnableSpiritualArtifact.Value) MakeUnlockable("Spiriting");
         }
 
+        public static void MakeSpikestrip()
+        {
+            if (GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Exists(x => x.cachedName == "Spread")) MakeUnlockable("Spread");
+            if (GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Exists(x => x.cachedName == "Wrath")) MakeUnlockable("Wrath");
+        }
+
         public static void AddPotential()
         {
             AddUnlockable(ArtifactOfPotential.PotentialArtifact.Potential, "Potential", 7, 3, 3, 7, 5, 7, 3, 3, 7);
@@ -74,9 +82,9 @@ namespace RiskyMonkeyBase.Achievements
         public static void AddZetArtifacts()
         {
             if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.DropifactEnable.Value == 1)  AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetDropifact, "Tossing", 1, 5, 1, 7, 5, 7, 1, 7, 1);
-            if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.EarlifactEnable.Value == 1)  AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEarlifact, "Sanction", 7, 5, 7, 1, 7, 1, 7, 5, 7);
+            if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.EarlifactEnable.Value == 1)  AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEarlifact, "Sanction", 7, 5, 7, 7, 7, 7, 7, 5, 7);
             if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.EclifactEnable.Value == 1)   AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetEclifact, "Eclipse", 1, 7, 1, 7, 1, 7, 1, 1, 1);
-            if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.HoardifactEnable.Value == 1) AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetHoardifact, "Accumulation", 7, 5, 7, 1, 7, 1, 7, 7, 7);
+            if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.HoardifactEnable.Value == 1) AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetHoardifact, "Accumulation", 7, 5, 7, 1, 7, 1, 1, 1, 1);
             if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.LoopifactEnable.Value == 1)  AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetLoopifact, "Escalation", 3, 5, 3, 3, 7, 3, 3, 3, 3);
             if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.MultifactEnable.Value == 1)  AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetMultifact, "Multitudes", 1, 1, 7, 1, 7, 7, 7, 7, 7);
             if (TPDespair.ZetArtifacts.ZetArtifactsPlugin.RivivifactEnable.Value == 1) AddUnlockable(TPDespair.ZetArtifacts.ZetArtifactsContent.Artifacts.ZetRevivifact, "Revival", 7, 7, 7, 7, 7, 7, 3, 7, 3);
@@ -93,20 +101,28 @@ namespace RiskyMonkeyBase.Achievements
             if (ArtifactDissimilarity.ArtifactDissimilarity.EnableSpiritualArtifact.Value) AddUnlockable(ArtifactDissimilarity.ArtifactDissimilarity.Spiriting, "Spiriting", 5, 3, 5, 1, 3, 1, 5, 3, 5);
         }
 
+        public static void AddSpikestrip()
+        {
+            if (GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Exists(x => x.cachedName == "Spread")) AddUnlockable(GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Find(x => x.cachedName == "Spread"), "Spread", 3, 5, 3, 3, 1, 3, 3, 5, 3);
+            if (GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Exists(x => x.cachedName == "Wrath")) AddUnlockable(GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Find(x => x.cachedName == "Wrath"), "Wrath", 1, 7, 1, 7, 7, 7, 3, 3, 3);
+        }
+
         public static void MakeUnlockable(string name)
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains("Artifacts." + name)) return;
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.cachedName = "Artifacts." + name;
             ContentAddition.AddUnlockableDef(unlockableDef);
             unlockables.Add(name, unlockableDef);
-            RiskyMonkeyBase.Log.LogDebug("Registered Unlockable " + name);
+            RiskyMonkeyAchievements.Log("Registered Unlockable " + name);
         }
         public static void AddUnlockable(ArtifactDef def, string name, int e1, int e2, int e3, int e4, int e5, int e6, int e7, int e8, int e9)
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains("Artifacts." + name)) return;
             AddCode(def, e1, e2, e3, e4, e5, e6, e7, e8, e9);
             Sprite icon = RiskyMonkeyBase.AssetBundle.LoadAsset<Sprite>("Assets/unlocks/texArtifact" + name + ".png");
             UnlockableDef unlockableDef = unlockables[name];
-            RiskyMonkeyBase.Log.LogDebug("Fetched Unlockable " + name);
+            RiskyMonkeyAchievements.Log("Fetched Unlockable " + name);
             unlockableDef.nameToken = def.nameToken;
             unlockableDef.achievementIcon = icon;
             def.unlockableDef = unlockableDef;
@@ -141,6 +157,8 @@ namespace RiskyMonkeyBase.Achievements
         [RegisterModdedAchievement("ObtainArtifactKith", "Artifacts.Kith", null, null, "com.Wolfo.ArtifactOfDissimilarity")] public class ObtainKithAchievement : BaseObtainArtifactAchievement { public override ArtifactDef artifactDef => ArtifactDissimilarity.ArtifactDissimilarity.Kith; public static bool OnlyRegisterIf() { return ArtifactDissimilarity.ArtifactDissimilarity.EnableKith.Value; } }
         [RegisterModdedAchievement("ObtainArtifactSpiriting", "Artifacts.Spiriting", null, null, "com.Wolfo.ArtifactOfDissimilarity")] public class ObtainSpiritingAchievement : BaseObtainArtifactAchievement { public override ArtifactDef artifactDef => ArtifactDissimilarity.ArtifactDissimilarity.Spiriting; public static bool OnlyRegisterIf() { return ArtifactDissimilarity.ArtifactDissimilarity.EnableSpiritualArtifact.Value; } }
         [RegisterModdedAchievement("ObtainArtifactBlindness", "Artifacts.Blindness", null, null, "HIFU.ArtifactOfBlindness")] public class ObtainBlindnessAchievement : BaseObtainArtifactAchievement { public override ArtifactDef artifactDef => blindness; }
+        [RegisterModdedAchievement("ObtainArtifactSpread", "Artifacts.Spread", null, null, "com.groovesalad.GrooveSaladSpikestripContent", "com.plasmacore.PlasmaCoreSpikestripContent")] public class ObtainSpreadAchievement : BaseObtainArtifactAchievement { public override ArtifactDef artifactDef => GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Find(x => x.cachedName == "Spread"); public static bool OnlyRegisterIf() { return GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Exists(x => x.cachedName == "Spread"); } }
+        [RegisterModdedAchievement("ObtainArtifactWrath", "Artifacts.Wrath", null, null, "com.groovesalad.GrooveSaladSpikestripContent", "com.plasmacore.PlasmaCoreSpikestripContent")] public class ObtainWrathAchievement : BaseObtainArtifactAchievement { public override ArtifactDef artifactDef => GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Find(x => x.cachedName == "Wrath"); public static bool OnlyRegisterIf() { return GrooveSaladSpikestripContent.SpikestripContentBase.artifactDefContent.Exists(x => x.cachedName == "Wrath"); } }
 
     }
 }

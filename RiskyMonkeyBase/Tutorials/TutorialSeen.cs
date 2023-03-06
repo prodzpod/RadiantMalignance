@@ -14,7 +14,6 @@ namespace RiskyMonkeyBase.Tutorials
             On.RoR2.PingerController.OnSyncCurrentPing += (orig, self, newPingInfo) =>
             {
                 orig(self, newPingInfo);
-                RiskyMonkeyBase.Log.LogDebug(newPingInfo.origin.x + ", " + newPingInfo.origin.y + ", " + newPingInfo.origin.z);
                 // also maybe do smth for tablets
                 string[] scene = new string[] { "golemplains2", "blackbeach", "snowyforest", "foggyswamp", "goolake", "FBLScene", "frozenwall", "wispgraveyard", "shipgraveyard", "arena", "dampcavesimple", "rootjungle", "skymeadow", "slumberingsatellite", "artifactworld", "bazaar", "forgottenhaven", "goldshores", "moon2", "voidraid", "voidstage", "mysteryspace", "BulwarksHaunt_GhostWave", "itmoon" };
                 Vector3[] pos = new Vector3[] { new Vector3(-14.032445f, 59.56197f, 569.5622f), new Vector3(83.161835f, -100.376f, -32.45949f), new Vector3(220.91655f, 70.28304f, -261.43035f), new Vector3(167.91045f, 65.02085f, 266.70285f), new Vector3(56.296895f, -212.7365f, -179.3394f), new Vector3(-87.87186f, -174.22905f, -414.34755f), new Vector3(74.25433f, -76.92122f, -186.29525f), new Vector3(-25.054475f, 205.40805f, 528.1014f), new Vector3(-782.29475f, 29.520135f, 145.8164f), new Vector3(-415.32515f, 146.3342f, 185.1537f), new Vector3(68.06669f, 20.061355f, -156.04855f), new Vector3(91.22834f, 2.4940275f, 232.7996f), new Vector3(-93.55012f, -54.278035f, -129.51055f), new Vector3(-28.624875f, -23.479195f, 85.733655f), new Vector3(-122.65935f, -103.48755f, -236.6111f), new Vector3(-27.81225f, -47.540095f, 43.497655f), new Vector3(13.181515f, 86.85408f, 271.0321f), new Vector3(-128.13835f, -20.54223f, -52.843725f), new Vector3(159.73835f, 6.9063085f, 211.47225f), new Vector3(-37.810325f, -12.45223f, -65.75679f), new Vector3(-617.293f, -5.7893735f, -0.77086f), new Vector3(70.2657f, 15.90943f, -4087.9405f), new Vector3(79.156895f, -44.768835f, -57.43729f), new Vector3(373.20385f, -152.463f, 215.4269f), new Vector3(-12.962905f, 70.89496f, 124.3398f), new Vector3(7.043066f, -57.9691f, -3.4158f) };
@@ -178,7 +177,6 @@ namespace RiskyMonkeyBase.Tutorials
             On.RoR2.PurchaseInteraction.OnInteractionBegin += (orig, self, activator) =>
             {
                 orig(self, activator);
-                RiskyMonkeyBase.Log.LogDebug(self.name);
                 checkInteracted(self, "Duplicator", Reference.TutorialPrinter, "printer");
                 checkInteracted(self, "Scrapper", Reference.TutorialScrapper, "scrapper");
                 checkInteracted(self, "MultiShop", Reference.TutorialShop, "shop");

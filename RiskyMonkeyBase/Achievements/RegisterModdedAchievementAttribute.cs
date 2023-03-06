@@ -9,7 +9,7 @@ namespace RiskyMonkeyBase.Achievements
     {
         public readonly string identifier;
         public readonly string unlockableRewardIdentifier;
-        public readonly string prerequisiteAchievementIdentifier;
+        public string prerequisiteAchievementIdentifier;
         public readonly Type serverTrackerType;
         public readonly string[] mods;
 

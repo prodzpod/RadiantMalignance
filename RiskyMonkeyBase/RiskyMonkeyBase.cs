@@ -21,7 +21,6 @@ namespace RiskyMonkeyBase
 {
     [BepInDependency(R2API.R2API.PluginGUID)]
     [BepInPlugin(Reference.PluginGUID, Reference.PluginName, Reference.PluginVersion)]
-    [R2APISubmoduleDependency(nameof(LanguageAPI), nameof(LoadoutAPI), nameof(DifficultyAPI), nameof(ArtifactCodeAPI), nameof(ItemAPI), nameof(DirectorAPI))]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
     [BepInDependency("bubbet.bubbetsitems", BepInDependency.DependencyFlags.SoftDependency)]
@@ -78,8 +77,8 @@ namespace RiskyMonkeyBase
     [BepInDependency("com.Takrak.RailgunnerAltTextures", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.themysticsword.bulwarkshaunt", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.TPDespair.ZetArtifacts", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.TPDespair.ZetAspects", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Tymmey.Templar", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInDependency("com.Viliger.ShrineOfRepair", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.weliveinasociety.CustomEmotesAPI", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Wolfo.ArtifactOfDissimilarity", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Wolfo.LittleGameplayTweaks", BepInDependency.DependencyFlags.SoftDependency)]
@@ -95,6 +94,27 @@ namespace RiskyMonkeyBase
     [BepInDependency("zombieseatflesh7.ArtifactOfPotential", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("xyz.yekoc.PassiveAgression", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Wolfo.WolfoQualityOfLife", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("Quickstraw.StormyItems", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Hex3.Hex3Mod", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("Xatha.SoCRebalancePlugin", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("HIFU.HIFURexTweaks", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Wolfo.LittleGameplayTweaks", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.firewaze.FeedbackSunnyDifficulty", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Zenithrium.vanillaVoid", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.ContactLight.LostInTransit", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.groovesalad.GrooveSaladSpikestripContent", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.plasmacore.PlasmaCoreSpikestripContent", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.heyimnoob.NoopSpikestripContent", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("pseudopulse.ChaoticSkills", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("xyz.yekoc.FetchAFriend", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Mark.Joyride", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.themysticsword.mysticsitems", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("prodzpod.Downpour", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("prodzpod.ProperLoop", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("prodzpod.LimitedInteractables", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Moffein.AccurateEnemies", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.TeamMoonstorm.Starstorm2-Nightly", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Nebby.VAPI", BepInDependency.DependencyFlags.SoftDependency)]
 
     public class RiskyMonkeyBase : BaseUnityPlugin
     {
@@ -120,7 +140,6 @@ namespace RiskyMonkeyBase
             Log = Logger;
             Harmony = new Harmony(Reference.PluginGUID); // uh oh!
             Reference.InitConfig(Paths.ConfigPath);
-            BetterDesc.Patch();
 
             GrandMasteryFix.Patch();
             if (Reference.Mods("com.rob.Paladin"))
@@ -140,13 +159,7 @@ namespace RiskyMonkeyBase
             if (File.Exists(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "krpatch.overlaylanguage"))) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "krpatch.overlaylanguage"));
             else if (File.Exists(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\krpatch.overlaylanguage"))) LanguageAPI.AddPath(Assembly.GetExecutingAssembly().Location.Replace(Reference.PluginName + ".dll", "Lang\\krpatch.overlaylanguage"));
             if (!Reference.SeriousMode.Value) Memes.Patch();
-            if (Reference.Mods("com.doctornoodlearms.huntressmomentum")) LanguageAPI.AddOverlay("NOODLE_HUNTRESSPASSIVE_DESC", $"Sprinting gives stacks of momentum.\nAt 10 stacks, the next attack will be a <style=cIsDamage>Critical Strike</style>.");
             if (Reference.Mods("com.xoxfaby.BetterUI")) BetterUIStatsLangKey.Patch();
-            if (Reference.Mods("com.Tymmey.Templar"))
-            {
-                TemplarSkillFix.Patch();
-                TemplarSkillFix.LogbookPatch();
-            }
             if (Reference.Mods("com.TPDespair.ZetArtifacts"))
             {
                 TossingScrapAltless.Patch();
@@ -156,7 +169,6 @@ namespace RiskyMonkeyBase
             if (Reference.Mods("bubbet.bubbetsitems"))
             {
                 if (Reference.VoidLunarOnBazaar.Value > 0) VoidLunarTweaks.Bazaar();
-                if (Reference.CleansingPoolVoidLunar.Value) VoidLunarTweaks.CleansingPool();
                 VoidLunarTweaks.Donkey();
             }
             PauseButtonLangKeys.PatchOrder();
@@ -164,37 +176,55 @@ namespace RiskyMonkeyBase
             if (Reference.Mods("com.themysticsword.bulwarkshaunt")) LanguageAPI.AddOverlay("ACHIEVEMENT_BULWARKSHAUNT_VOIDSURVIVORWINGHOSTWAVE_NAME", "¡¸V??oid Fiend¡»: Spiritual Success"); // bad >:(
             if (Reference.Mods("com.Anreol.ReleasedFromTheVoid"))
             {
-                if (Reference.RFTVDisableVoidCoin.Value) DisableRFTVFeatures.VoidCoin();
-                if (Reference.RFTVDisableVoidSuppressor.Value) DisableRFTVFeatures.VoidSuppressor();
-                if (Reference.RFTVDisableLocusTweaks.Value) DisableRFTVFeatures.LocusTweaks();
+                // if (Reference.RFTVDisableVoidCoin.Value) DisableRFTVFeatures.VoidCoin();
+                // if (Reference.RFTVDisableVoidSuppressor.Value) DisableRFTVFeatures.VoidSuppressor();
+                // if (Reference.RFTVDisableLocusTweaks.Value) DisableRFTVFeatures.LocusTweaks();
                 if (Reference.RFTVDisableItemEnable.Value) DisableRFTVFeatures.ItemEnable();
-                if (Reference.RFTVDisableCommandoSkin.Value) DisableRFTVFeatures.CommandoSkin();
+                // if (Reference.RFTVDisableCommandoSkin.Value) DisableRFTVFeatures.CommandoSkin();
+                if (Reference.RFTVIotaConstructFix.Value) RFTVIotaConstructFix.Patch();
+                if (Reference.RFTVIotaConstructNerf.Value) RFTVIotaConstructFix.IotaNerf();
+                if (Reference.RFTVIotaConstructBuff.Value && Reference.Mods("com.plasmacore.PlasmaCoreSpikestripContent")) RFTVIotaConstructFix.IotaBuff();
+                if (Reference.RFTVAssassinNerf.Value) RFTVIotaConstructFix.AssassinNerf();
             }
-            if (Reference.FocusedConvergenceRangeLimit.Value != 3 || Reference.FocusedConvergenceRateLimit.Value != 3) FocusedConvergenceFix.Patch();
             if (Reference.Mods("com.weliveinasociety.CustomEmotesAPI")) EmoteKeybind.Patch();
             ReorderSurvivors.Patch();
             if (Reference.Mods("PlasmaCore.ForgottenRelics")) ForgottenRelicsTweaks.ForgottenRelics();
-            if (Reference.Mods("com.justinderby.bossantisoftlock")) BATweaks.Patch();
-            if (Reference.ScrapperFrequency.Value != 1f) RepairTweaks.PatchFrequency();
-            if (Reference.ScrapperMaxUses.Value != 0) RepairTweaks.PatchUses();
-            if (Reference.ScrapperStackAtOnce.Value != 0) RepairTweaks.PatchScrapper();
             if (Reference.Mods("com.Viliger.ShrineOfRepair"))
             {
                 ShrineOfRepairHook.Patch();
                 if (Reference.ReprogrammerActivate.Value) Reprogrammer.Patch();
-                RepairTweaks.repairList = new();
-                if (Reference.RepairStackAtOnce.Value != 0) RepairTweaks.PatchRepair();
+                GayMarrige.PatchRepair();
             }
             if (Reference.Mods("com.cuno.discord")) FloodingTheyLogsLikeVoidSurvivor.Patch();
             if (Reference.HEADSTChanges.Value) HEADSTTweaks.Patch();
-            if (Reference.LunarBudOnStage2.Value) LunarBudTweaks.Patch();
             if (Reference.Mods("com.Wolfo.WolfoQualityOfLife")) WolfoTweaksTweaks.Patch();
+            NumberChanges.Patch();
+            if (Reference.WhiteGuillotine.Value) WhiteGuillotine.Patch();
+            if (Reference.GayMarrige.Value) GayMarrige.Patch();
+            if (Reference.BetterEclipseRex.Value) EclipseTweaks.PatchREX();
+            if (Reference.BetterEclipseCorpsebloom.Value) EclipseTweaks.PatchCorpsebloom();
+            if (Reference.WorseEclipseShield.Value) EclipseTweaks.PatchShield();
+            if (Reference.Mods("com.Hex3.Hex3Mod"))
+            {
+                if (Reference.TicketPotential.Value) MoreTickets.PatchPotential();
+                if (Reference.TicketPool.Value) MoreTickets.PatchPool();
+                if (Reference.TicketShrine.Value) MoreTickets.PatchShrine();
+                if (Reference.TicketLocked.Value) MoreTickets.PatchLocked();
+            }
+            // EclipseTweaks.PatchSimulacrumStats();
+            if (Reference.SimulacrumItemChanges.Value) EclipseTweaks.PatchSimulacrum();
+            if (Reference.Mods("com.xoxfaby.BetterUI", "bubbet.bubbetsitems")) BetterUIBubbetsFix.Patch();
+            if (Reference.InvulnerableInUI.Value) InvulnerableInUITweaks.Patch();
+            if (Reference.Mods("com.groovesalad.GrooveSaladSpikestripContent") && Reference.PainBoxBetterHide.Value) PainBoxBetterHide.Patch();
+            if (Reference.Mods("com.Nebby.VAPI") && Reference.RadiantMalignance.Value) VAPIDisableByDefault.Patch();
 
             // achievements
             RiskyMonkeyAchievements.Patch();
+            RoR2Application.onLoad += () => TutorialHelper.input = GameObject.Find("MPEventSystem Player0").GetComponent<MPInput>();
             TutorialInit.Patch();
             TutorialSeen.Patch();
             TutorialOther.Patch();
+            RiskyMonkeyAchievements.stringBuilder = HG.StringBuilderPool.RentStringBuilder();
             PaladinWinGhostWaveAchievement.Patch();
             ArtifactAchievement.Patch();
             InfernoAchievement.Patch();
@@ -208,28 +238,24 @@ namespace RiskyMonkeyBase
             SurvivorAchievement.Patch();
             ReorderChallenges.Patch();
             ArtifactHints.Patch();
+            RiskyMonkeyAchievements.Print();
+            RoR2Application.onLoad += RiskyMonkeyAchievements.Print;
 
-            // downpour
-            if (Reference.DownpourScaling.Value > 0) DownpourDifficulty.AddDifficulty();
+            ProfileDeleteButton.Patch();
             if (Reference.RadiantMalignance.Value)
             {
+                ArtifactHints.spreadMesh = AssetBundle.LoadAsset<Mesh>("Assets/rock3ModularMeshSpecial.obj");
+                ArtifactHints.wrathMesh = AssetBundle.LoadAsset<Mesh>("Assets/PillowMeshSpecial.obj");
                 On.RoR2.UI.MainMenu.BaseMainMenuScreen.OnEnter += (orig, self, mainMenuController) =>
                 {
                     orig(self, mainMenuController);
-                    GameObject _1 = GameObject.Find("GenericMenuButton (Music&More)");
-                    if (_1 != null)
-                    {
-                        HGTextMeshProUGUI _2 = _1.GetComponentInChildren<HGTextMeshProUGUI>();
-                        if (_2 != null && _2.text == "Credits") return;
-                    }
-                    GameObject obj = GameObject.Find("LogoImage");
-                    if (obj != null)
-                    {
-                        Log.LogDebug("Changing Logo Image");
-                        obj.transform.localPosition = new Vector3(0, 200, 0);
-                        obj.transform.localScale = new Vector3(2, 2, 2);
-                        obj.GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>(Reference.SeriousMode.Value ? style("Assets/logo.png", "Assets/logoVoid.png", "Assets/logoLunar.png") : "Assets/logoMeme.png");
-                    }
+                    GameObject obj = GameObject.Find("LogoImage"); 
+                    if (obj == null) return;
+                    Log.LogDebug("Changing Logo Image");
+                    obj.name = "RMLogoImage";
+                    obj.transform.localPosition = new Vector3(0, 200, 0);
+                    obj.transform.localScale = new Vector3(2, 2, 2);
+                    obj.GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>(Reference.SeriousMode.Value ? style("Assets/logo.png", "Assets/logoVoid.png", "Assets/logoLunar.png") : "Assets/logoMeme.png");
                     if (mainMenuController.titleMenuScreen != null)
                     {
                         Log.LogDebug("Changing Title Camera");
@@ -260,8 +286,6 @@ namespace RiskyMonkeyBase
                     }
                     GameObject gameObject2 = GameObject.Find("GenericMenuButton (Signup)");
                     if (gameObject2 != null) gameObject2.transform.SetParent(null);
-                    GameObject gameObject3 = GameObject.Find("GenericMenuButton (Music&More)");
-                    if (gameObject3 != null) gameObject3.GetComponentInChildren<HGTextMeshProUGUI>().text = "Credits";
 
                     Log.LogDebug("Changing Credits");
                     GameObject infoPanel = GameObject.Find("MENU: More").transform.Find("MoreMenu").Find("Main Panel").Find("InfoPanel").gameObject;
@@ -284,15 +308,15 @@ namespace RiskyMonkeyBase
                         title.transform.SetAsFirstSibling();
 
                         title.GetComponent<LanguageTextMeshController>().token = "RISKYMONKEY_CREDITS_DESC";
-                        modpackCredits.transform.GetChild(0).Find("ButtonImage").gameObject.GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>("Assets/iconOutline.png");
-                        modpackCredits.transform.Find("SSText").gameObject.GetComponent<HGTextMeshProUGUI>().text = "Modpack Credits";
-                        modpackCredits.transform.GetChild(0).gameObject.GetComponent<HGButton>().onClick = OpenURL(modpackCredits.transform.GetChild(0).gameObject, "https://prodzpod.github.io/RadiantMalignance/modpackCredits.html");
-                        modsCredits.transform.GetChild(0).Find("ButtonImage").gameObject.GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>("Assets/iconMods.png");
-                        modsCredits.transform.Find("SSText").gameObject.GetComponent<HGTextMeshProUGUI>().text = "Included Mod Credits";
-                        modsCredits.transform.GetChild(0).gameObject.GetComponent<HGButton>().onClick = OpenURL(modsCredits.transform.GetChild(0).gameObject, "https://prodzpod.github.io/RadiantMalignance/modsCredits.html");
-                        prod.transform.GetChild(0).Find("ButtonImage").gameObject.GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>("Assets/iconProd.png");
-                        prod.transform.Find("SSText").gameObject.GetComponent<HGTextMeshProUGUI>().text = "Contact prod through discord: @prod#0339";
-                        prod.transform.GetChild(0).gameObject.GetComponent<HGButton>().onClick = OpenURL(prod.transform.GetChild(0).gameObject, "https://github.com/prodzpod");
+                        modpackCredits.transform.GetChild(0).Find("ButtonImage").GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>("Assets/iconOutline.png");
+                        modpackCredits.transform.Find("SSText").GetComponent<HGTextMeshProUGUI>().text = "Modpack Credits";
+                        modpackCredits.transform.GetChild(0).GetComponent<HGButton>().onClick = OpenURL(modpackCredits.transform.GetChild(0).gameObject, "https://prodzpod.github.io/RadiantMalignance/modpackCredits.html");
+                        modsCredits.transform.GetChild(0).Find("ButtonImage").GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>("Assets/iconMods.png");
+                        modsCredits.transform.Find("SSText").GetComponent<HGTextMeshProUGUI>().text = "Included Mod Credits";
+                        modsCredits.transform.GetChild(0).GetComponent<HGButton>().onClick = OpenURL(modsCredits.transform.GetChild(0).gameObject, "https://prodzpod.github.io/RadiantMalignance/modsCredits.html");
+                        prod.transform.GetChild(0).Find("ButtonImage").GetComponent<Image>().sprite = AssetBundle.LoadAsset<Sprite>("Assets/iconProd.png");
+                        prod.transform.Find("SSText").GetComponent<HGTextMeshProUGUI>().text = "Contact prod through discord: @prod#0339";
+                        prod.transform.GetChild(0).GetComponent<HGButton>().onClick = OpenURL(prod.transform.GetChild(0).gameObject, "https://github.com/prodzpod/RadiantMalignance");
 
                         for (var i = 0; i < contactPanel.transform.childCount; i++)
                         {
@@ -303,12 +327,20 @@ namespace RiskyMonkeyBase
                             button.transform.localPosition = new Vector3(-250, 0, 0);
                         }
                     }
-                    if (mainMenuController.moreMenuScreen == self) header.transform.Find("GenericHeaderButton (Contact)").gameObject.GetComponent<HGButton>().InvokeClick();
+                    if (mainMenuController.moreMenuScreen == self) header.transform.Find("GenericHeaderButton (Contact)").GetComponent<HGButton>().InvokeClick();
+                    // artifact
+                    if (ArtifactCatalog.FindArtifactDef("Spread") != null && lobbyVisited && wonLastGame)
+                    {
+                        GameObject rock = GameObject.Find("HOLDER: Title Background").transform.Find("Rocks").Find("RockModular2 (3)").gameObject;
+                        rock.transform.eulerAngles = new Vector3(348.8414f, 174.3904f, 315.6984f);
+                        rock.GetComponent<MeshFilter>().mesh = ArtifactHints.spreadMesh;
+                    }
+                    if (ArtifactCatalog.FindArtifactDef("Wrath") != null && lobbyVisited && !wonLastGame) GameObject.Find("MENU: Multiplayer").transform.Find("World Position").Find("HOLDER: Background").Find("spacecabin").Find("PillowMesh.001").GetComponent<MeshFilter>().mesh = ArtifactHints.wrathMesh;
                 };
                 On.RoR2.UI.SteamBuildIdLabel.Start += (orig, self) =>
                 {
                     orig(self);
-                    self.GetComponent<TextMeshProUGUI>().text += " <style=cIsDamage>+ RM " + Reference.PluginVersion + "</style>";
+                    self.GetComponent<TextMeshProUGUI>().text += " <style=cIsDamage>+ RM 1.0 Pre-Release 1</style>";
                 };
                 On.RoR2.SceneCatalog.OnActiveSceneChanged += (orig, oldScene, newScene) =>
                 {
@@ -347,8 +379,8 @@ namespace RiskyMonkeyBase
         {
             if (Reference.Mods("com.rune580.riskofoptions")) RiskOfOptionsHideTweaks.Patch();
             ReorderSkins.Patch();
-            if (Reference.EnableDamageNumbers.Value) SettingsConVars.enableDamageNumbers.value = true;
-            if (Reference.Mods("com.rob.Paladin", "com.KrononConspirator.Thy_Providence", "com.themysticsword.bulwarkshaunt") && Reference.EnablePaladinBulwark.Value) PaladinWinGhostWaveAchievement.PostPatch();
+            ReorderSkills.Patch();
+            if (Reference.Mods("com.rob.Paladin", "com.KrononConspirator.Thy_Providence", "com.themysticsword.bulwarkshaunt")) PaladinWinGhostWaveAchievement.PostPatch();
         }
     }
 }

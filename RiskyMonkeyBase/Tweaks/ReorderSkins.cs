@@ -5,6 +5,7 @@ using UnityEngine;
 using HarmonyLib;
 using RoR2.ExpansionManagement;
 using UnityEngine.AddressableAssets;
+using System.Text;
 
 namespace RiskyMonkeyBase.Tweaks
 {
@@ -12,21 +13,18 @@ namespace RiskyMonkeyBase.Tweaks
     {
         public static List<string> skinOrder;
         public static List<string> memeSkins;
-        public static List<string> skinRemoval;
         public static void Patch()
         {
             skinOrder = new();
             memeSkins = new();
-            skinRemoval = new();
             foreach (var entry in Reference.SkinsToReorder.Value.Split(',')) skinOrder.Add(entry.Trim());
             foreach (var entry in Reference.MemeSkins.Value.Split(',')) memeSkins.Add(entry.Trim());
-            foreach (var entry in Reference.SkinsToRemove.Value.Split(',')) skinRemoval.Add(entry.Trim());
             RiskyMonkeyBase.Log.LogDebug("Skin Order: " + skinOrder.Join());
             RiskyMonkeyBase.Log.LogDebug("Meme Skins: " + memeSkins.Join());
-            RiskyMonkeyBase.Log.LogDebug("Skin Removal: " + skinRemoval.Join());
             RoR2Application.onLoad += () =>
             {
                 ExpansionDef DLC1 = Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+                StringBuilder stringBuilder = HG.StringBuilderPool.RentStringBuilder();
                 try
                 {
                     IEnumerable<GameObject> bodyPrefabs = BodyCatalog.allBodyPrefabs;
@@ -38,7 +36,7 @@ namespace RiskyMonkeyBase.Tweaks
                         if (skins.Length == 0) continue;
                         List<SkinDef> skinsList = new List<SkinDef>(skins);
                         bool modified = false;
-                        for (var i = 0; i < skins.Length; i++) if (skinRemoval.Contains(skins[i].name) || (memeSkins.Contains(skins[i].name) && Reference.SeriousMode.Value))
+                        for (var i = 0; i < skins.Length; i++) if (memeSkins.Contains(skins[i].name) && Reference.SeriousMode.Value)
                         {
                             skinsList.Remove(skins[i]);
                             modified = true;
@@ -53,16 +51,18 @@ namespace RiskyMonkeyBase.Tweaks
                         }
                         List<string> names = new();
                         foreach (var skin in skinsList) names.Add(skin.name);
-                        RiskyMonkeyBase.Log.LogDebug("Skins for " + BodyCatalog.GetBodyName(idx) + ": " + names.Join());
+                        stringBuilder.AppendLine("Skins for " + BodyCatalog.GetBodyName(idx) + ": " + names.Join());
                         if (modified)
                         {
                             BodyCatalog.skins[(int)idx] = skinsList.ToArray();
                             SkinCatalog.skinsByBody[(int)idx] = skinsList.ToArray();
-                            bodyPrefab.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<ModelSkinController>().skins = skinsList.ToArray(); // ??
+                            bodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<ModelSkinController>().skins = skinsList.ToArray(); // ??
                         }
                     }
                 }
                 catch (Exception ex) { RiskyMonkeyBase.Log.LogError(ex); }
+                RiskyMonkeyBase.Log.LogDebug(stringBuilder.ToString());
+                HG.StringBuilderPool.ReturnStringBuilder(stringBuilder);
             };
         }
     }

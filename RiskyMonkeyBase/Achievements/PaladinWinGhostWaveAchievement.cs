@@ -1,5 +1,4 @@
-﻿using BulwarksHaunt.Achievements;
-using MonoMod.RuntimeDetour.HookGen;
+﻿using MonoMod.RuntimeDetour.HookGen;
 using RoR2;
 using System;
 using System.Reflection;
@@ -12,6 +11,7 @@ namespace RiskyMonkeyBase.Achievements
         public static UnlockableDef unlockableDef;
         public static void Patch()
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains("Skins.Paladin.BulwarksHaunt_Alt")) return;
             unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.cachedName = "Skins.Paladin.BulwarksHaunt_Alt";
             unlockableDef.nameToken = "KRONONCONSPIRATOR_SKIN_PROVIPALADIN_NAME";
@@ -19,6 +19,7 @@ namespace RiskyMonkeyBase.Achievements
         }
         public static void PostPatch()
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains("Skins.Paladin.BulwarksHaunt_Alt")) return;
             BodyCatalog.availability.CallWhenAvailable(() =>
             {
                 MethodInfo method = typeof(SkinDef).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -45,12 +46,11 @@ namespace RiskyMonkeyBase.Achievements
         }
         
         [RegisterModdedAchievement("BulwarksHaunt_PaladinWinGhostWave", "Skins.Paladin.BulwarksHaunt_Alt", null, null, "com.rob.Paladin", "com.KrononConspirator.Thy_Providence", "com.themysticsword.bulwarkshaunt")]
-        public class PaladinWinGhostWave : BaseWinGhostWavePerSurvivor
+        public class PaladinWinGhostWave : BulwarksHaunt.Achievements.BaseWinGhostWavePerSurvivor
         {
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("RobPaladinBody");
         }
 
-        [RegisterModdedAchievement("BulwarksHaunt_TemplarWinGhostWave", "Skins.Templar.BulwarksHaunt_Alt", null, null, "com.themysticsword.bulwarkshaunt", "prodzpod.TemplarSkins")] public class TemplarWinGhostWave : BaseWinGhostWavePerSurvivor { public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Templar_Survivor"); }
-        [RegisterModdedAchievement("BulwarksHaunt_MinerWinGhostWave", "Skins.Miner.BulwarksHaunt_Alt", null, null, "com.themysticsword.bulwarkshaunt", "com.rob.DiggerUnearthed")] public class MinerWinGhostWave : BaseWinGhostWavePerSurvivor { public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MinerBody"); }
+        [RegisterModdedAchievement("BulwarksHaunt_MinerWinGhostWave", "Skins.Miner.BulwarksHaunt_Alt", null, null, "com.themysticsword.bulwarkshaunt", "com.rob.DiggerUnearthed")] public class MinerWinGhostWave : BulwarksHaunt.Achievements.BaseWinGhostWavePerSurvivor { public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MinerBody"); }
     }
 }

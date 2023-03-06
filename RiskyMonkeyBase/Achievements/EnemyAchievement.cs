@@ -21,7 +21,6 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("HIFU.Inferno", "PlasmaCore.ForgottenRelics")) MakeForgottenRelics();
             if (Reference.Mods("com.Rero.MasquePack")) MakeUnlockable("Acrid");
             if (Reference.Mods("com.KrononConspirator.ScavangerLoader")) MakeUnlockable("Loader");
-            if (Reference.Mods("prodzpod.TemplarSkins")) MakeUnlockable("Templar");
             if (Reference.Mods("com.KrononConspirator.Solus_RailGunner")) MakeUnlockable("Railgunner");
             if (Reference.Mods("com.TailLover.VoidJailerFiend")) MakeUnlockable("VoidFiend");
             AchievementManager.onAchievementsRegistered += PostPatch;
@@ -42,7 +41,6 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("HIFU.Inferno", "PlasmaCore.ForgottenRelics")) AddForgottenRelics();
             if (Reference.Mods("com.Rero.MasquePack")) AddUnlockable("AcridBlind", "Acrid");
             if (Reference.Mods("com.KrononConspirator.ScavangerLoader")) AddUnlockable("ScavLoaderY", "Loader");
-            if (Reference.Mods("prodzpod.TemplarSkins")) AddUnlockable("skinTemplarGoldAlt", "Templar");
             if (Reference.Mods("com.KrononConspirator.Solus_RailGunner")) AddUnlockable("SolusGunner", "Railgunner");
             if (Reference.Mods("com.TailLover.VoidJailerFiend")) AddUnlockable("VoidJailerFiendSkin", "VoidFiend");
         }
@@ -65,7 +63,7 @@ namespace RiskyMonkeyBase.Achievements
         {
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Bandit2Body");
             public class BanditEnemySkinServerAchievement : BasePerSurvivorEnemySkinServerAchievement
-            { public override BodyIndex body => BodyCatalog.FindBodyIndex("BeetleBody"); public override int reqKills => 1000; }
+            { public override BodyIndex body => BodyCatalog.FindBodyIndex("BeetleBody"); public override int reqKills => 250; }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_MulT", "Skins.MulT.Enemy", null, typeof(MulTEnemySkinServerAchievement), "com.TailLover.DinoMulT", "com.rob.Direseeker")]
@@ -89,7 +87,7 @@ namespace RiskyMonkeyBase.Achievements
         {
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MercBody");
             public class MercenaryEnemySkinServerAchievement : BasePerSurvivorEnemySkinServerAchievement
-            { public override BodyIndex body => BodyCatalog.FindBodyIndex("Assassin2Body"); public override int reqKills => 50; }
+            { public override BodyIndex body => BodyCatalog.FindBodyIndex("Assassin2Body"); public override int reqKills => 100; }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Artificer", "Skins.Artificer.Enemy", null, typeof(ArtificerEnemySkinServerAchievement), "HIFU.Inferno", "PlasmaCore.ForgottenRelics")]
@@ -98,7 +96,7 @@ namespace RiskyMonkeyBase.Achievements
             public static bool OnlyRegisterIf() { return !FRCSharp.VF2ConfigManager.disableFrostWisp.Value; }
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MageBody");
             public class ArtificerEnemySkinServerAchievement : BasePerSurvivorEnemySkinServerAchievement
-            { public override BodyIndex body => BodyCatalog.FindBodyIndex("FrostWispBody"); public override int reqKills => 100; }
+            { public override BodyIndex body => BodyCatalog.FindBodyIndex("FrostWispBody"); public override int reqKills => 25; }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Acrid", "Skins.Acrid.Enemy", null, typeof(AcridEnemySkinServerAchievement), "com.Rero.MasquePack")]
@@ -106,7 +104,7 @@ namespace RiskyMonkeyBase.Achievements
         {
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("CrocoBody");
             public class AcridEnemySkinServerAchievement : BasePerSurvivorEnemySkinServerAchievement
-            { public override BodyIndex body => BodyCatalog.FindBodyIndex("FlyingVerminBody"); public override int reqKills => 250; }
+            { public override BodyIndex body => BodyCatalog.FindBodyIndex("VerminBody"); public override int reqKills => 250; }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Loader", "Skins.Loader.Enemy", null, typeof(LoaderEnemySkinServerAchievement), "com.KrononConspirator.ScavangerLoader")]
@@ -115,14 +113,6 @@ namespace RiskyMonkeyBase.Achievements
             public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("LoaderBody");
             public class LoaderEnemySkinServerAchievement : BasePerSurvivorEnemySkinServerAchievement
             { public override BodyIndex body => BodyCatalog.FindBodyIndex("ScavBody"); public override int reqKills => 10; }
-        }
-
-        [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Templar", "Skins.Templar.Enemy", null, typeof(TemplarEnemySkinServerAchievement), "prodzpod.TemplarSkins")]
-        public class TemplarEnemySkinAchievement : BasePerSurvivorEnemySkinAchievement
-        {
-            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Templar_Survivor");
-            public class TemplarEnemySkinServerAchievement : BasePerSurvivorEnemySkinServerAchievement
-            { public override BodyIndex body => BodyCatalog.FindBodyIndex("TitanGoldBody"); public override int reqKills => 2; }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Enemy_Railgunner", "Skins.Railgunner.Enemy", null, typeof(RailgunnerEnemySkinServerAchievement), "com.KrononConspirator.Solus_RailGunner")]
@@ -187,18 +177,20 @@ namespace RiskyMonkeyBase.Achievements
 
         public static void MakeUnlockable(string name)
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains("Skins." + name + ".Enemy")) return;
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.cachedName = "Skins." + name + ".Enemy";
             ContentAddition.AddUnlockableDef(unlockableDef);
             unlockables.Add(name, unlockableDef);
-            RiskyMonkeyBase.Log.LogDebug("Registered Unlockable " + name);
+            RiskyMonkeyAchievements.Log("Registered Unlockable " + name);
         }
         public static void AddUnlockable(string skinName, string name)
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains("Skins." + name + ".Enemy")) return;
             SkinDef def = null;
             foreach (var skin in SkinCatalog.allSkinDefs) if (skin.name == skinName) def = skin;
             UnlockableDef unlockableDef = unlockables[name];
-            RiskyMonkeyBase.Log.LogDebug("Fetched Unlockable " + name);
+            RiskyMonkeyAchievements.Log("Fetched Unlockable " + name);
             unlockableDef.nameToken = def.nameToken;
             unlockableDef.achievementIcon = def.icon;
             def.unlockableDef = unlockableDef;

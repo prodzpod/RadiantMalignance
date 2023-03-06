@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="BepInEx.Core" Version="5.4.19" />
 	<PackageReference Include="BepInEx.BaseLib" Version="5.4.19" /> 
 	<PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.4-r.0" />
@@ -28,122 +24,185 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="AccurateEnemies">
+      <HintPath>..\..\libs\AccurateEnemies-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="ActuallyFaster">
+      <HintPath>..\..\libs\ActuallyFaster-nstrip.dll</HintPath> 
+    </Reference>
     <Reference Include="AOCAssembly">
-      <HintPath>libs\AOCAssembly-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\AOCAssembly-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="ArtifactDissimilarity">
-      <HintPath>libs\ArtifactDissimilarity-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\ArtifactDissimilarity-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="ArtifactOfBlindness">
-      <HintPath>libs\ArtifactOfBlindness-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\ArtifactOfBlindness-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="ArtifactOfPotential">
-      <HintPath>libs\ArtifactOfPotential-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\ArtifactOfPotential-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="BetterUI">
-      <HintPath>libs\BetterUI-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\BetterUI-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="BossAntiSoftlock">
-      <HintPath>libs\BossAntiSoftlock-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\BossAntiSoftlock-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="BubbetsItems">
-      <HintPath>libs\BubbetsItems-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\BubbetsItems-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="BulwarksHaunt">
-      <HintPath>libs\BulwarksHaunt-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\BulwarksHaunt-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="CustomEmotesAPI">
-      <HintPath>libs\CustomEmotesAPI-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\CustomEmotesAPI-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="DiggerUnearthed">
-      <HintPath>libs\DiggerUnearthed-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\DiggerUnearthed-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="Downpour">
+      <HintPath>..\..\libs\Downpour-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="Enforcer">
-      <HintPath>libs\Enforcer-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\Enforcer-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="FeedbackSunnyDifficulty">
+      <HintPath>..\..\libs\FeedbackSunnyDifficulty-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="FHCSharp">
-      <HintPath>libs\FHCSharp-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\FHCSharp-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="GrooveSaladSpikestripContent">
+      <HintPath>..\..\libs\GrooveSaladSpikestripContent-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="Hex3Mod">
+      <HintPath>..\..\libs\Hex3Mod-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="HolyCrapForkIsBack">
-      <HintPath>libs\HolyCrapForkIsBack-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\HolyCrapForkIsBack-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="Inferno">
-      <HintPath>libs\Inferno-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\Inferno-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="LasyBastardEngineer">
-      <HintPath>libs\LasyBastardEngineer-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\LasyBastardEngineer-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="LimitedInteractables">
+      <HintPath>..\..\libs\LimitedInteractables-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="LittleGameplayTweaks">
+      <HintPath>..\..\libs\LittleGameplayTweaks-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="LostInTransit">
+      <HintPath>..\..\libs\LostInTransit-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_RoR2">
-      <HintPath>libs\MMHOOK_RoR2-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\MMHOOK_RoR2-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="MoonstormSharedUtils">
+      <HintPath>..\..\libs\MoonstormSharedUtils-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="MysticsItemsPlugin">
+      <HintPath>..\..\libs\MysticsItemsPlugin-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="PaladinMod">
-      <HintPath>libs\PaladinMod-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\PaladinMod-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="PlasmaCoreSpikestripContent">
+      <HintPath>..\..\libs\PlasmaCoreSpikestripContent-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="ProperLoop">
+      <HintPath>..\..\libs\ProperLoop-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API">
-      <HintPath>libs\R2API-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.ArtifactCode">
-      <HintPath>libs\R2API.ArtifactCode-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.ArtifactCode-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.ContentManagement">
-      <HintPath>libs\R2API.ContentManagement-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.ContentManagement-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.Core">
-      <HintPath>libs\R2API.Core-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.Core-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.Difficulty">
-      <HintPath>libs\R2API.Difficulty-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.Difficulty-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.Director">
-      <HintPath>libs\R2API.Director-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.Director-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.Items">
-      <HintPath>libs\R2API.Items-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.Items-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.Language">
-      <HintPath>libs\R2API.Language-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.Language-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.Loadout">
-      <HintPath>libs\R2API.Loadout-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.Loadout-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="R2API.RecalculateStats">
+      <HintPath>..\..\libs\R2API.RecalculateStats-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="R2API.Unlockable">
-      <HintPath>libs\R2API.Unlockable-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\R2API.Unlockable-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="RFTV">
-      <HintPath>libs\RFTV-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\RFTV-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="RiskOfOptions">
-      <HintPath>libs\RiskOfOptions-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\RiskOfOptions-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="RoR2BepInExPack">
-      <HintPath>libs\RoR2BepInExPack-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\RoR2BepInExPack-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="ShrineOfRepair">
-      <HintPath>libs\ShrineOfRepair-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\ShrineOfRepair-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="SniperClassic">
-      <HintPath>libs\SniperClassic-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\SniperClassic-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="SoCRebalancePlugin">
+      <HintPath>..\..\libs\SoCRebalancePlugin-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="StageAesthetic">
-      <HintPath>libs\StageAesthetic-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\StageAesthetic-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="Starstorm2">
+      <HintPath>..\..\libs\Starstorm2-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="StormyItems">
+      <HintPath>..\..\libs\StormyItems-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="Templar">
-      <HintPath>libs\Templar-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\Templar-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="TemplarSkins">
-      <HintPath>libs\TemplarSkins-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\TemplarSkins-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>libs\Unity.Postprocessing.Runtime-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\Unity.Postprocessing.Runtime-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="UnityNamedPipe">
-      <HintPath>libs\UnityNamedPipe-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\UnityNamedPipe-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="VanillaRebalance">
+      <HintPath>..\..\libs\VanillaRebalance-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="vanillaVoid">
+      <HintPath>..\..\libs\vanillaVoid-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="VarianceAPI">
+      <HintPath>..\..\libs\VarianceAPI-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="WolfoQualityOfLife">
-      <HintPath>libs\WolfoQualityOfLife-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\WolfoQualityOfLife-nstrip.dll</HintPath>
     </Reference>
     <Reference Include="ZetArtifacts">
-      <HintPath>libs\ZetArtifacts-nstrip.dll</HintPath>
+      <HintPath>..\..\libs\ZetArtifacts-nstrip.dll</HintPath>
+    </Reference>
+    <Reference Include="ZetAspects">
+      <HintPath>..\..\libs\ZetAspects-nstrip.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -11,9 +11,15 @@ namespace RiskyMonkeyBase.Tweaks
 {
     public class WolfoTweaksTweaks
     {
+        public static Dictionary<string, Func<int, int>> featherInteraction = new();
         public static void Patch()
         {
             if (Reference.HEADSTChanges.Value) RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchHeadstompers));
+            featherInteraction.Add("Feather", count => count);
+            featherInteraction.Add("VV_ITEM_DASHQUILL_ITEM", count => count);
+            featherInteraction.Add("ZetAspectRed", count => count > 0 ? 1 : 0);
+            featherInteraction.Add("MysticsItems_Backpack", count => count > 0 ? 1 : 0);
+            featherInteraction.Add("MintCondition", count => MintConditionJumps(count));
             RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchFeathers));
         }
 
@@ -40,15 +46,9 @@ namespace RiskyMonkeyBase.Tweaks
                 c.Emit(OpCodes.Ldloc_1);
                 c.EmitDelegate<Func<CharacterBody, int>>(body =>
                 {
-                    int ret = body.inventory.GetItemCount(RoR2Content.Items.Feather);
-                    foreach (var str in new string[] { "ZetAspectRed", "VV_ITEM_DASHQUILL_ITEM" }) {
-                        if (ItemCatalog.FindItemIndex(str) != ItemIndex.None) ret += body.inventory.GetItemCount(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex(str)));
-                    }
-                    if (ItemCatalog.FindItemIndex("MintCondition") != ItemIndex.None)
-                    {
-                        int count = body.inventory.GetItemCount(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("MintCondition")));
-                        if (count > 0) ret += (count * 2) - 1;
-                    }
+                    if (body?.inventory == null) return 0;
+                    int ret = 0;
+                    foreach (var key in featherInteraction.Keys) if (ItemCatalog.FindItemIndex(key) != ItemIndex.None) ret += featherInteraction[key](body.inventory.GetItemCount(ItemCatalog.FindItemIndex(key)));
                     return ret;
                 });
                 c.Emit(OpCodes.Stloc_3);
@@ -59,6 +59,11 @@ namespace RiskyMonkeyBase.Tweaks
             {
                 return AccessTools.DeclaredMethod(typeof(WolfoQualityOfLife.WolfoQualityOfLife).GetNestedType("<>c", AccessTools.all), "<BuffColorChanger>b__361_11");
             }
+        }
+
+        public static int MintConditionJumps(int count)
+        {
+            return Hex3Mod.Main.MintCondition_AddJumps.Value + ((count - 1) * Hex3Mod.Main.MintCondition_AddJumpsStack.Value);
         }
     }
 }

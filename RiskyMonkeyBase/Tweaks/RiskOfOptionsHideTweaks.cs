@@ -23,7 +23,7 @@ namespace RiskyMonkeyBase.Tweaks
                     ICollection<string> keys = optionCollections.Keys;
                     categoriesToRemove = new();
                     foreach (var entry in Reference.RiskOfOptionsHideList.Value.Split(',')) if (keys.Contains(entry.Trim())) categoriesToRemove.Add(entry.Trim());
-                    if (Reference.SeriousMode.Value && !categoriesToRemove.Contains("com.weliveinasociety.CustomEmotesAPI") && keys.Contains("com.weliveinasociety.CustomEmotesAPI")) categoriesToRemove.Add("com.weliveinasociety.CustomEmotesAPI");
+                    if (Reference.EnableEmotes.Value && !categoriesToRemove.Contains("com.weliveinasociety.CustomEmotesAPI") && keys.Contains("com.weliveinasociety.CustomEmotesAPI")) categoriesToRemove.Add("com.weliveinasociety.CustomEmotesAPI");
                     RiskyMonkeyBase.Log.LogDebug("ROO Category: Removing" + categoriesToRemove.Join());
                     foreach (var entry in categoriesToRemove) optionCollections.Remove(entry);
                     List<string> identifiersToRemove = new();

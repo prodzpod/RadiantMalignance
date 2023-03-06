@@ -8,6 +8,7 @@ using RoR2.UI.MainMenu;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 namespace RiskyMonkeyBase.Tutorials
@@ -52,8 +53,7 @@ namespace RiskyMonkeyBase.Tutorials
                     }
                     if (Reference.GetChangelog.Value && Reference.LastVersion.Value != Reference.Releases[0])
                     {
-                        List<int> releases = new(Reference.Releases);
-                        int idx = releases.IndexOf(Reference.LastVersion.Value);
+                        int idx = Reference.Releases.ToList().IndexOf(Reference.LastVersion.Value);
                         if (idx == -1) idx = Reference.Releases.Length - 1;
                         string txt = "";
                         for (var i = idx; i >= 0; i--) if (Reference.LastVersion.Value != Reference.Releases[i]) txt += Language.GetString("RISKYMONKEY_CHANGELOG_" + Reference.Releases[i]) + "\n\n";
@@ -100,12 +100,11 @@ namespace RiskyMonkeyBase.Tutorials
             On.RoR2.UI.RuleBookViewer.SetData += (orig, self, choiceAvailability, ruleBook) =>
             {
                 orig(self, choiceAvailability, ruleBook);
-                if (!Reference.FirstRun.Value) return;
                 for (var index = 0; index < RuleCatalog.categoryCount; ++index)
                 {
-                    if (RuleCatalog.GetCategoryDef(index).displayToken != "RULE_HEADER_ARTIFACTS") continue;
+                    if ((Reference.FirstRun.Value && RuleCatalog.GetCategoryDef(index).displayToken != "RULE_HEADER_ARTIFACTS") || (RuleCatalog.GetCategoryDef(index).displayToken != "VAPI_RULE_HEADER_VARIANTPACKS")) continue;
                     ReadOnlyCollection<RuleCategoryController> elements = self.categoryElementAllocator.elements;
-                    if (0 <= index && index < elements.Count) elements[index].gameObject.SetActive(false);
+                    if (elements[index] != null) elements[index].gameObject.SetActive(false);
                 }
             };
             IL.RoR2.UI.RuleCategoryController.SetData += (il) =>
@@ -116,7 +115,7 @@ namespace RiskyMonkeyBase.Tutorials
                 c.EmitDelegate<Action<RuleCategoryController>>((self) =>
                 {
                     List<RuleDef> rules = new();
-                    foreach (var exp in ExpansionCatalog.expansionDefs) if (exp.nameToken != "DLC1_NAME") rules.Add(RuleCatalog.FindRuleDef("Expansions." + exp.name));
+                    if (Reference.RadiantMalignance.Value) foreach (var exp in ExpansionCatalog.expansionDefs) if (exp.nameToken != "DLC1_NAME" && exp.nameToken != "VAPI_EXPANSION_NAME") rules.Add(RuleCatalog.FindRuleDef("Expansions." + exp.name));
                     if (Reference.FirstRun.Value) foreach (var art in ArtifactCatalog.artifactDefs) rules.Add(RuleCatalog.FindRuleDef("Artifacts." + art.cachedName));
                     foreach (var rule in rules) if (self.rulesToDisplay.Contains(rule)) self.rulesToDisplay.Remove(rule);
                     foreach (var art in ArtifactCatalog.artifactDefs)
@@ -139,7 +138,7 @@ namespace RiskyMonkeyBase.Tutorials
             };
             On.RoR2.Language.GetLocalizedStringByToken += (orig, self, token) => // this is the nth time i hook this method in this mod alone
             {
-                foreach (var art in lockedArts) if (token == art.descriptionToken && NetworkUser.readOnlyLocalPlayersList?[0]?.master?.GetBody() == null)
+                if (Reference.ArtifactUnlockHint.Value != 0) foreach (var art in lockedArts) if (token == art.descriptionToken && NetworkUser.readOnlyLocalPlayersList?[0]?.master?.GetBody() == null)
                 {
                     string txt = "";
                     switch (Reference.ArtifactUnlockHint.Value)
@@ -165,9 +164,8 @@ namespace RiskyMonkeyBase.Tutorials
                 orig(self);
                 if (NetworkUser.readOnlyLocalPlayersList[0].GetCurrentBody() == self) Reference.TutorialRun.Value = true;
             };
-            On.RoR2.Stage.Start += (orig, self) =>
+            Stage.onStageStartGlobal += (self) =>
             {
-                orig(self);
                 if (Reference.FirstRun.Value) Reference.FirstRun.Value = false;
                 TutorialHelper.Tutorial(Reference.TutorialTeleporter, "teleporter");
                 TutorialHelper.Tutorial(Reference.TutorialPing, "ping");

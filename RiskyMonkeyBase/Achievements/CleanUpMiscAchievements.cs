@@ -15,22 +15,15 @@ namespace RiskyMonkeyBase.Achievements
 {
     public class CleanUpMiscAchievements
     {
-        public static UnlockableDef templarMonsoon;
-        public static UnlockableDef templarBulwark;
         public static UnlockableDef minerBulwark;
         public static void Patch()
         {
-            if (Reference.Mods("prodzpod.TemplarSkins")) templarMonsoon = MakeUnlockable("Skins.Templar.Alt1");
-            if (Reference.Mods("com.themysticsword.bulwarkshaunt", "prodzpod.TemplarSkins")) templarBulwark = MakeUnlockable("Skins.Templar.BulwarksHaunt_Alt");
             if (Reference.Mods("com.themysticsword.bulwarkshaunt", "com.rob.DiggerUnearthed")) minerBulwark = MakeUnlockable("Skins.Miner.BulwarksHaunt_Alt");
             if (Reference.Mods("com.rob.DiggerUnearthed")) RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchOurDefs));
             AchievementManager.onAchievementsRegistered += PostPatch;
         }
         public static void PostPatch()
         {
-            RiskyMonkeyBase.Log.LogDebug("Skills: " + SkillCatalog.allSkillDefs.Join(skill => skill.skillNameToken));
-            if (Reference.Mods("prodzpod.TemplarSkins")) AddUnlockable("skinTemplarAlt", templarMonsoon, true);
-            if (Reference.Mods("com.themysticsword.bulwarkshaunt", "prodzpod.TemplarSkins")) AddUnlockable("skinTemplarBulwarksHauntAlt", templarBulwark, true);
             if (Reference.Mods("com.themysticsword.bulwarkshaunt", "com.rob.DiggerUnearthed")) AddUnlockable("MINERBODY_TUNDRA_SKIN_NAME", minerBulwark, true);
             if (Reference.Mods("com.Wolfo.WolfoQualityOfLife")) AddUnlockable("skinMercAltNoEdit", UnlockableCatalog.GetUnlockableDef("Skins.Merc.Alt1"));
             if (Reference.Mods("com.bobblet.UltrakillV1BanditSkin")) AddUnlockable("V2BanditSkin", UnlockableCatalog.GetUnlockableDef("Skins.Bandit2.Alt1"));
@@ -118,24 +111,26 @@ namespace RiskyMonkeyBase.Achievements
             if (body.GetBuffCount(BuffCatalog.FindBuffIndex("<style=cShrine>Aurelionite's Blessing</style>")) >= 2) self.Grant();
         }
 
-        [RegisterModdedAchievement("TemplarClearGameMonsoon", "Skins.Templar.Alt1", null, null, "prodzpod.TemplarSkins")] public class TemplarClearGameMonsoonAchievement : BasePerSurvivorClearGameMonsoonAchievement { public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Templar_Survivor"); }
+        
 
         public static UnlockableDef MakeUnlockable(string name)
         {
+            if (RiskyMonkeyAchievements.achievementBlacklist.Contains(name)) return null;
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.cachedName = name;
             ContentAddition.AddUnlockableDef(unlockableDef);
-            RiskyMonkeyBase.Log.LogDebug("Registered Unlockable " + name);
+            RiskyMonkeyAchievements.Log("Registered Unlockable " + name);
             return unlockableDef;
         }
         public static void AddUnlockable(string skinName, UnlockableDef unlockableDef, bool setIcon = false)
         {
+            if (unlockableDef == null) return;
             SkinDef def = null;
             foreach (var skin in SkinCatalog.allSkinDefs) if (skin.name == skinName) def = skin;
             unlockableDef.nameToken = def.nameToken;
             unlockableDef.achievementIcon = def.icon;
             def.unlockableDef = unlockableDef;
-            RiskyMonkeyBase.Log.LogDebug("Fetched Unlockable " + unlockableDef.cachedName);
+            RiskyMonkeyAchievements.Log("Fetched Unlockable " + unlockableDef.cachedName);
             AchievementManager.GetAchievementDefFromUnlockable(unlockableDef.cachedName).achievedIcon = def.icon;
         }
 
@@ -150,7 +145,7 @@ namespace RiskyMonkeyBase.Achievements
                 c.Emit(OpCodes.Ldloc_1);
                 c.EmitDelegate<Func<AchievementDef, AchievementDef>>(def =>
                 {
-                    if (def.nameToken == "MINER_TUNDRAUNLOCKABLE_ACHIEVEMENT_NAME") return null;
+                    if (RiskyMonkeyAchievements.achievementBlacklist.Contains(def.unlockableRewardIdentifier)) return null;
                     return def;
                 });
                 c.Emit(OpCodes.Stloc_1);

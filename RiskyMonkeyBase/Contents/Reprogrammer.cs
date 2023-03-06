@@ -202,7 +202,7 @@ namespace RiskyMonkeyBase.Contents
                 ILCursor c = new(il);
                 c.GotoNext(x => x.MatchLdarg(0), x => x.MatchCallOrCallvirt(typeof(InteractionDriver), "get_interactor"));
                 c.Emit(OpCodes.Ldarg_0);
-                c.Emit(OpCodes.Ldfld, typeof(InteractionDriver).GetFieldCached("equipmentSlot"));
+                c.Emit(OpCodes.Ldfld, typeof(InteractionDriver).GetFieldCached(nameof(InteractionDriver.equipmentSlot)));
                 c.Emit(OpCodes.Ldloc_3);
                 c.EmitDelegate<Func<EquipmentSlot, float, float>>((slot, dist) =>
                 {
@@ -213,7 +213,7 @@ namespace RiskyMonkeyBase.Contents
                 c.GotoNext(x => x.MatchRet());
                 c.Emit(OpCodes.Dup);
                 c.Emit(OpCodes.Ldarg_0);
-                c.Emit(OpCodes.Ldfld, typeof(InteractionDriver).GetFieldCached("equipmentSlot"));
+                c.Emit(OpCodes.Ldfld, typeof(InteractionDriver).GetFieldCached(nameof(InteractionDriver.equipmentSlot)));
                 c.EmitDelegate<Action<GameObject, EquipmentSlot>>((obj, self) =>
                 {
                     if (_target == obj || self == null || self.equipmentIndex != reprogrammer.equipmentIndex) return;
@@ -242,7 +242,7 @@ namespace RiskyMonkeyBase.Contents
                 "RISKYMONKEY_ITEM_REPROGRAMMER_NAME",
                 "RISKYMONKEY_ITEM_REPROGRAMMER_DESC",
                 "RISKYMONKEY_ITEM_REPROGRAMMER_LORE",
-                Reference.UseFullDescForPickup.Value ? "RISKYMONKEY_ITEM_REPROGRAMMER_DESC" : "RISKYMONKEY_ITEM_REPROGRAMMER_PICKUP",
+                "RISKYMONKEY_ITEM_REPROGRAMMER_PICKUP",
                 RiskyMonkeyBase.AssetBundle.LoadAsset<Sprite>("Assets/texReprogrammer.png"), model,
                 Reference.ReprogrammerCooldown.Value, true, true, false, false, null, null, ColorCatalog.ColorIndex.Equipment, true, true, rules);
             ItemAPI.Add(eq);

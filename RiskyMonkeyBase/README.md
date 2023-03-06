@@ -159,7 +159,6 @@ Add unlocks for:
 
 ### Contents
 - Reprogrammer: Equipment. 60s cooldown, toggle/configurable. Currently a reskin of Recycler. Transform a 3D Printer into a different one. Chance to transform it into a [Shrine of Repair](https://thunderstore.io/package/viliger/ShrineOfRepair/) instead. comes with an unlock achievement.
-- Downpour: Experimental Difficulty. global difficulty also scales with time so it's like squared I think, meant to be an alternate to Monsoon. also toggle/configurable.
 - Tutorials for new players / new players to the modpack. currently utilizes popups but will shift to less distracting methods if possible. (Modpack Mode Only)
 - Changes main menu. 3 versions. (Modpack Mode Only)
 - Displays modpack changelog. (Modpack Mode Only)

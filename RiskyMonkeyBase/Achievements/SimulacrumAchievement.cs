@@ -15,11 +15,8 @@ namespace RiskyMonkeyBase.Achievements
             unlockables = new();
             if (Reference.Mods("prodzpod.Downpour"))
             {
-                if (Reference.Mods("com.dotflare.LTT1"))
-                {
-                    MakeUnlockable("Commando");
-                    MakeUnlockable("Bandit");
-                }
+                if (Reference.Mods("com.dotflare.LTT1")) MakeUnlockable("Commando");
+                if (Reference.Mods("com.dotflare.LTT2")) MakeUnlockable("Bandit");
                 if (Reference.Mods("com.FrostRay.FrostRaySkinPack")) MakeUnlockable("Huntress");
                 if (Reference.Mods("com.ArtyBoi.CryingGolem")) MakeUnlockable("MulT");
                 if (Reference.Mods("com.MAVRI.CaptainUnderglowDrip")) MakeUnlockable("Captain");
@@ -45,11 +42,8 @@ namespace RiskyMonkeyBase.Achievements
         {
             if (Reference.Mods("prodzpod.Downpour"))
             {
-                if (Reference.Mods("com.dotflare.LTT1"))
-                {
-                    AddUnlockable("MobsterMando", "Commando");
-                    AddUnlockable("HBandit", "Bandit");
-                }
+                if (Reference.Mods("com.dotflare.LTT1")) AddUnlockable("MobsterMando", "Commando");
+                if (Reference.Mods("com.dotflare.LTT2")) AddUnlockable("HBandit", "Bandit");
                 if (Reference.Mods("com.FrostRay.FrostRaySkinPack")) AddUnlockable("HuntressRanger", "Huntress");
                 if (Reference.Mods("com.ArtyBoi.CryingGolem")) AddUnlockable("CryingGolem", "MulT");
                 if (Reference.Mods("com.MAVRI.CaptainUnderglowDrip"))
@@ -72,7 +66,7 @@ namespace RiskyMonkeyBase.Achievements
 
         [RegisterModdedAchievement("CommandoClearGameSimulacrum", "Skins.Simulacrum_Commando", "CompleteMainEnding", typeof(BasePerSurvivorClearGameSimulacrumServerAchievement), "prodzpod.Downpour", "com.dotflare.LTT1")] public class CommandoClearGameSimulacrumAchievement : BasePerSurvivorClearGameSimulacrumAchievement {public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("CommandoBody"); }
         [RegisterModdedAchievement("HuntressClearGameSimulacrum", "Skins.Simulacrum_Huntress", "CompleteMainEnding", typeof(BasePerSurvivorClearGameSimulacrumServerAchievement), "prodzpod.Downpour", "com.FrostRay.FrostRaySkinPack")] public class HuntressClearGameSimulacrumAchievement : BasePerSurvivorClearGameSimulacrumAchievement {public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("HuntressBody"); }
-        [RegisterModdedAchievement("BanditClearGameSimulacrum", "Skins.Simulacrum_Bandit", "CompleteMainEnding", typeof(BasePerSurvivorClearGameSimulacrumServerAchievement), "prodzpod.Downpour", "com.dotflare.LTT1")] public class BanditClearGameSimulacrumAchievement : BasePerSurvivorClearGameSimulacrumAchievement {public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Bandit2Body"); }
+        [RegisterModdedAchievement("BanditClearGameSimulacrum", "Skins.Simulacrum_Bandit", "CompleteMainEnding", typeof(BasePerSurvivorClearGameSimulacrumServerAchievement), "prodzpod.Downpour", "com.dotflare.LTT2")] public class BanditClearGameSimulacrumAchievement : BasePerSurvivorClearGameSimulacrumAchievement {public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Bandit2Body"); }
         [RegisterModdedAchievement("MulTClearGameSimulacrum", "Skins.Simulacrum_MulT", "CompleteMainEnding", typeof(BasePerSurvivorClearGameSimulacrumServerAchievement), "prodzpod.Downpour", "com.ArtyBoi.CryingGolem")] public class MulTClearGameSimulacrumAchievement : BasePerSurvivorClearGameSimulacrumAchievement {public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("ToolbotBody"); }
         [RegisterModdedAchievement("CaptainClearGameSimulacrum", "Skins.Simulacrum_Captain", "CompleteMainEnding", typeof(BasePerSurvivorClearGameSimulacrumServerAchievement), "prodzpod.Downpour", "com.MAVRI.CaptainUnderglowDrip")] public class CaptainClearGameSimulacrumAchievement : BasePerSurvivorClearGameSimulacrumAchievement {public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("CaptainBody"); }
         [RegisterModdedAchievement("MercenaryClearGameSimulacrum", "Skins.Simulacrum_Mercenary", "CompleteMainEnding", typeof(BasePerSurvivorClearGameSimulacrumServerAchievement), "prodzpod.Downpour", "com.ArtyBoi.YinYang")] public class MercenaryClearGameSimulacrumAchievement : BasePerSurvivorClearGameSimulacrumAchievement {public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MercBody"); }

@@ -13,38 +13,7 @@ namespace RiskyMonkeyBase.Tweaks
     {
         public static void ForgottenRelics()
         {
-            RiskyMonkeyBase.Harmony.PatchAll(typeof(PatchVF2Start));
             PatchBatteryContainer.onStaticPortalActivated += () => { };
-            if (!VF2ConfigManager.disableBellTower.Value) ReaddBT();
-            if (!VF2ConfigManager.disableCoilGolem.Value) VF2ContentPackProvider.contentPack.bodyPrefabs.Add(new GameObject[] { VF2ContentPackProvider.coilGolemBody }); // silly
-        }
-        
-        public static void ReaddBT()
-        {
-            DirectorCard card = new DirectorCard()
-            {
-                spawnCard = VF2ContentPackProvider.cscBellTower,
-                selectionWeight = 1,
-                preventOverhead = false,
-                minimumStageCompletions = 0,
-                spawnDistance = DirectorCore.MonsterSpawnDistance.Standard
-            };
-            foreach (var stage in new DirectorAPI.Stage[] {
-                DirectorAPI.Stage.AbyssalDepths,
-                DirectorAPI.Stage.AbyssalDepthsSimulacrum,
-                DirectorAPI.Stage.SirensCall,
-                DirectorAPI.Stage.SkyMeadow,
-                DirectorAPI.Stage.SkyMeadowSimulacrum,
-                DirectorAPI.Stage.WetlandAspect
-            }) DirectorAPI.Helpers.AddNewMonsterToStage(card, DirectorAPI.MonsterCategory.Champions, stage);
-        }
-
-        [HarmonyPatch(typeof(VF2Plugin), nameof(VF2Plugin.Start))]
-        public class PatchVF2Start
-        {
-            public static bool trueDisableBellTower;
-            public static void Prefix() { trueDisableBellTower = VF2ConfigManager.disableBellTower.Value; }
-            public static void Postfix() { VF2ConfigManager.disableBellTower.Value = trueDisableBellTower; }
         }
 
         [HarmonyPatch(typeof(BatteryContainerInteraction), nameof(BatteryContainerInteraction.Begin))]

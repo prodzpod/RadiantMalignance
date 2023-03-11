@@ -10,8 +10,8 @@ namespace RiskyMonkeyBase
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RiskyMonkeyBase";
         public const string PluginDisplayName = "Radiant Malignance";
-        public const string PluginVersion = "0.10.0";
-        public static int[] Releases = { 100, 97, 96, 95, 94, 93, 92, 91, 90 }; // prepend new releases
+        public const string PluginVersion = "0.11.1";
+        public static int[] Releases = { 1101, 97, 96, 95, 94, 93, 92, 91, 90 }; // prepend new releases
         public static ConfigFile Config;
         public static ConfigFile ConfigTutorial;
         public static ConfigEntry<bool> RadiantMalignance;
@@ -128,9 +128,6 @@ namespace RiskyMonkeyBase
         // public static ConfigEntry<bool> RFTVDisableVoidSuppressor;
         public static ConfigEntry<bool> RFTVDisableItemEnable;
         public static ConfigEntry<bool> RFTVIotaConstructFix;
-        public static ConfigEntry<bool> RFTVIotaConstructBuff;
-        public static ConfigEntry<bool> RFTVIotaConstructNerf;
-        public static ConfigEntry<bool> RFTVAssassinNerf;
         // public static ConfigEntry<bool> RFTVDisableCommandoSkin;
         // public static ConfigEntry<bool> RFTVDisableLocusTweaks;
 
@@ -254,9 +251,6 @@ namespace RiskyMonkeyBase
             // RFTVDisableCommandoSkin = Config.Bind("5. RFTV but Epic", "Disable Commando Skin", false, "Set to true to disable Helot skin.");
             // RFTVDisableLocusTweaks = Config.Bind("5. RFTV but Epic", "Disable Void Locus Tweaks", false, "Set to true to disable Void Locus Tweaks.");
             RFTVIotaConstructFix = Config.Bind("5. RFTV but Epic", "Iota Construct Fix", true, "Modded stage compat & Void seed fix");
-            RFTVIotaConstructBuff = Config.Bind("5. RFTV but Epic", "Iota Construct Buff", true, "Make it occasionally spawn Sigma Constructs");
-            RFTVIotaConstructNerf = Config.Bind("5. RFTV but Epic", "Iota Construct Nerf", true, "Makes it unable to snipe you from 6000 miles away");
-            RFTVAssassinNerf = Config.Bind("5. RFTV but Epic", "Assassin Nerf", true, "Makes it unable to literally one hit you");  
 
             ShowAllArtifacts = Config.Bind("6. ProdQualityOfLife", "Show All Artifacts", true, "Set to false to hide artifacts like vanilla. DOES NOT AFFECT UNLOCKS");
             ArtifactUnlockHint = Config.Bind("6. ProdQualityOfLife", "Artifact Unlock Hint", 3, "Displays artifact hints from the wiki in number of lines, 0 to disable, 4 to give direct answers");

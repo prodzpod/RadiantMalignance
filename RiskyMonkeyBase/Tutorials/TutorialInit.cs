@@ -120,7 +120,7 @@ namespace RiskyMonkeyBase.Tutorials
                     foreach (var rule in rules) if (self.rulesToDisplay.Contains(rule)) self.rulesToDisplay.Remove(rule);
                     foreach (var art in ArtifactCatalog.artifactDefs)
                     {
-                        if (art.cachedName == "ArtifactOfCorruption") continue;
+                        if (art.cachedName == "ArtifactOfCorruption" || art.cachedName == "Variance") continue;
                         var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);
                         if (self.currentCategory.displayToken == "RULE_HEADER_ARTIFACTS" 
                         && !Reference.FirstRun.Value && Reference.ShowAllArtifacts.Value 
@@ -129,7 +129,7 @@ namespace RiskyMonkeyBase.Tutorials
                     List<ArtifactDef> _lockedArts = new();
                     foreach (var art in ArtifactCatalog.artifactDefs)
                     {
-                        if (art.cachedName == "ArtifactOfCorruption") continue;
+                        if (art.cachedName == "ArtifactOfCorruption" || art.cachedName == "Variance") continue;
                         var rule = RuleCatalog.FindRuleDef("Artifacts." + art.cachedName);
                         if (art.unlockableDef != null && !NetworkUser.readOnlyLocalPlayersList[0].unlockables.Contains(art.unlockableDef)) _lockedArts.Add(art);
                     }

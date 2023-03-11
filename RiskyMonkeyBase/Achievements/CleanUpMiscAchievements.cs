@@ -7,6 +7,7 @@ using RoR2.Achievements;
 using RoR2.Skills;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -76,6 +77,11 @@ namespace RiskyMonkeyBase.Achievements
 
         public static void AddMinerStuff()
         {
+            if (Reference.Mods("com.dotflare.LTT2"))
+            {
+                AddUnlockable("IMiner", DiggerPlugin.Unlockables.tundraUnlockableDef);
+                AchievementManager.GetAchievementDefFromUnlockable(DiggerPlugin.Unlockables.tundraUnlockableDef.cachedName).achievedIcon = SkinCatalog.allSkinDefs.First(x => x.name == "IMiner").icon;
+            }
             SkillFamily.Variant[] variants = DiggerPlugin.DiggerPlugin.characterBodyPrefab.GetComponent<SkillLocator>().special.skillFamily.variants;
             for (var i = 0; i < variants.Length; i++)
             {
@@ -110,8 +116,6 @@ namespace RiskyMonkeyBase.Achievements
             if (body == null) return;
             if (body.GetBuffCount(BuffCatalog.FindBuffIndex("<style=cShrine>Aurelionite's Blessing</style>")) >= 2) self.Grant();
         }
-
-        
 
         public static UnlockableDef MakeUnlockable(string name)
         {

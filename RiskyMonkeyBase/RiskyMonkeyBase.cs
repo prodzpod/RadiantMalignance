@@ -17,6 +17,8 @@ using TMPro;
 using UnityEngine.Events;
 using System.Reflection;
 using System.IO;
+using System.Linq;
+
 namespace RiskyMonkeyBase
 {
     [BepInDependency(R2API.R2API.PluginGUID)]
@@ -26,6 +28,7 @@ namespace RiskyMonkeyBase
     [BepInDependency("bubbet.bubbetsitems", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.12GaugeAwayFromFace.TeamFortress2_Engineer_Engineer_Skin", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Anreol.ReleasedFromTheVoid", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("prodzpod.RecoveredAndReformed", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.ApexConspirator.MadVeteran", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.ArtyBoi.CryingGolem", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.ArtyBoi.Kindred", BepInDependency.DependencyFlags.SoftDependency)]
@@ -38,6 +41,7 @@ namespace RiskyMonkeyBase
     [BepInDependency("com.cuno.discord", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.doctornoodlearms.huntressmomentum", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.dotflare.LTT1", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.dotflare.LTT2", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Dragonyck.PhotoMode", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Egg.EggsSkills", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.EmnoX.LightDreamer", BepInDependency.DependencyFlags.SoftDependency)]
@@ -182,9 +186,6 @@ namespace RiskyMonkeyBase
                 if (Reference.RFTVDisableItemEnable.Value) DisableRFTVFeatures.ItemEnable();
                 // if (Reference.RFTVDisableCommandoSkin.Value) DisableRFTVFeatures.CommandoSkin();
                 if (Reference.RFTVIotaConstructFix.Value) RFTVIotaConstructFix.Patch();
-                if (Reference.RFTVIotaConstructNerf.Value) RFTVIotaConstructFix.IotaNerf();
-                if (Reference.RFTVIotaConstructBuff.Value && Reference.Mods("com.plasmacore.PlasmaCoreSpikestripContent")) RFTVIotaConstructFix.IotaBuff();
-                if (Reference.RFTVAssassinNerf.Value) RFTVIotaConstructFix.AssassinNerf();
             }
             if (Reference.Mods("com.weliveinasociety.CustomEmotesAPI")) EmoteKeybind.Patch();
             ReorderSurvivors.Patch();
@@ -340,7 +341,8 @@ namespace RiskyMonkeyBase
                 On.RoR2.UI.SteamBuildIdLabel.Start += (orig, self) =>
                 {
                     orig(self);
-                    self.GetComponent<TextMeshProUGUI>().text += " <style=cIsDamage>+ RM 1.0 Pre-Release 1</style>";
+                    int[] vers = Reference.PluginVersion.Split('.').ToList().ConvertAll(x => int.Parse(x)).ToArray();
+                    self.GetComponent<TextMeshProUGUI>().text += $" <style=cIsDamage>+ RM 1.0 Pre-Release {vers[1] - 10} Build {vers[2]}</style>";
                 };
                 On.RoR2.SceneCatalog.OnActiveSceneChanged += (orig, oldScene, newScene) =>
                 {

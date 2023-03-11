@@ -63,58 +63,5 @@ namespace RiskyMonkeyBase.Tweaks
                 }
             }
         }
-
-        public static void IotaNerf()
-        {
-            On.EntityStates.MajorConstruct.Weapon.FireLaser.OnEnter += (orig, self) =>
-            {
-                orig(self);
-                if (self.characterBody.name.Contains("MajorConstruct")) self.maxDistance = 150f;
-            };
-        }
-
-        public const int IotaConstructSpawnCount = 3;
-        public static Dictionary<CharacterBody, List<GameObject>> spawnedConstructs = new();
-        public static void IotaBuff()
-        {
-            CharacterSpawnCard card = null;
-            RoR2Application.onLoad += () => card = PlasmaCoreSpikestripContent.Content.Monsters.SigmaConstruct.instance.CharacterSpawnCard;
-            On.EntityStates.MajorConstruct.Stance.LoweredToRaised.OnEnter += (orig, self) =>
-            {
-                orig(self);
-                if (!NetworkServer.active) return;
-                foreach (HurtBox hurtBox in new SphereSearch() { origin = self.gameObject.transform.position, radius = 37.5f, mask = LayerIndex.entityPrecise.mask }.RefreshCandidates().FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes())
-                {
-                    CharacterBody body = hurtBox.healthComponent.body;
-                    if (body && body.name == "SigmaConstructBody") return;
-                }
-                Quaternion rot = Quaternion.AngleAxis(120f, Vector3.up);
-                Vector3 cur = self.transform.forward * 16f;
-                if (!spawnedConstructs.ContainsKey(self.characterBody)) spawnedConstructs.Add(self.characterBody, new());
-                for (int i = 0; i < IotaConstructSpawnCount; i++)
-                {
-                    Vector3 pos = cur + self.transform.position;
-                    GameObject obj = card.DoSpawn(pos, Quaternion.Euler(self.transform.forward), new(card, new() { position = pos, placementMode = DirectorPlacementRule.PlacementMode.Direct }, Run.instance.spawnRng) { teamIndexOverride = self.characterBody.teamComponent.teamIndex }).spawnedInstance;
-                    NetworkServer.Spawn(obj);
-                    spawnedConstructs[self.characterBody].Add(obj);
-                    cur = rot * cur;
-                }
-            };
-            GlobalEventManager.onCharacterDeathGlobal += report =>
-            {
-                if (spawnedConstructs.ContainsKey(report.victimBody)) foreach (var body in spawnedConstructs[report.victimBody])
-                        body?.GetComponent<CharacterMaster>()?.bodyInstanceObject?.GetComponent<HealthComponent>()?.Suicide(report.attackerBody.gameObject);
-                spawnedConstructs.Remove(report.victimBody);
-            };
-        }
-
-        public static void AssassinNerf()
-        {
-            On.EntityStates.Assassin2.DashStrike.OnEnter += (orig, self) =>
-            {
-                orig(self);
-                if (self.slashCount == 1) self.slashCount = 2;
-            };
-        }
     }
 }

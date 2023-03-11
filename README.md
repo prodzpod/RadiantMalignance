@@ -8,7 +8,9 @@ Refer to the [official page](https://prodzpod.github.io/RadiantMalignance/index.
 ## Note: Optimization
 Yes I know the mod is wildly unoptimized. This was my first RoR2 project and the first C# project of this scale. Adjusting to the API took some time (I don't even think I know all the helper functions yet), and there were definitely large obstacles. Feel free to mess with the code, push a PR, whatever. go nuts. Thank you for visiting this.
 
-## Changes - Major
+
+## Changes
+> List of changes are **not** up to date! The following list is for version 0.9.7, and the list will be updated at 1.0 proper.
 
 ### Achievements
 Add unlocks for:

@@ -18,6 +18,7 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("com.Mark.Joyride")) MakeUnlockable("Skins.Bandit.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) MakeUnlockable("Skins.Captain.Extra1");
             if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) MakeForgottenRelics();
+            if (Reference.Mods("prodzpod.TemplarSkins")) MakeUnlockable("Skins.Templar.Extra1");
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) MakeUnlockable("Skins.Railgunner.Extra1");
             AchievementManager.onAchievementsRegistered += PostPatch;
         }
@@ -31,6 +32,7 @@ namespace RiskyMonkeyBase.Achievements
             if (Reference.Mods("com.Mark.Joyride")) AddUnlockable("Skin Defo", "Skins.Bandit.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) AddUnlockable("PCap", "Skins.Captain.Extra1");
             if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) AddForgottenRelics();
+            if (Reference.Mods("prodzpod.TemplarSkins")) AddUnlockable("skinTemplarGreenAlt", "Skins.Templar.Extra1");
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) AddUnlockable("RailgunnerSkin 2", "Skins.Railgunner.Extra1");
         }
         public static void AddForgottenRelics()
@@ -70,6 +72,30 @@ namespace RiskyMonkeyBase.Achievements
                 orig(self, activator);
             }
         }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Templar", "Skins.Templar.Extra1", null, null, "prodzpod.TemplarSkins")]
+        public class TemplarExtra1SkinAchievement : BaseAchievement
+        {
+            private bool win;
+            private bool found;
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("Templar_Survivor");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); GlobalEventManager.onCharacterDeathGlobal += OnKill; Run.onClientGameOverGlobal += OnGameOver; GlobalEventManager.onServerDamageDealt += OnDamage; Stage.onStageStartGlobal += OnStart; }
+            public override void OnBodyRequirementBroken() { GlobalEventManager.onCharacterDeathGlobal -= OnKill; Run.onClientGameOverGlobal += OnGameOver; GlobalEventManager.onServerDamageDealt += OnDamage; Stage.onStageStartGlobal -= OnStart; base.OnBodyRequirementBroken(); }
+            public void OnStart(Stage self) { win = true; found = false; }
+            public void OnKill(DamageReport report)
+            {
+                if (report.victimBody.name == "ClayBruiserBody") found = true;
+            }
+            public void OnDamage(DamageReport report)
+            {
+                if (report.victimBody == localUser.cachedBody && report.attackerBody.name == "ClayBruiserBody") win = false;
+            }
+            public void OnGameOver(Run self, RunReport report)
+            {
+                if (found && win && report.gameEnding.isWin) Grant();
+            }
+        }
+
         [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Railgunner", "Skins.Railgunner.Extra1", null, typeof(RailgunnerExtra1SkinServerAchievement), "com.Takrak.RailgunnerAltTextures")]
         public class RailgunnerExtra1SkinAchievement : BaseAchievement
         {

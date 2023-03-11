@@ -1,7 +1,7 @@
-# Radiant Malignance - Playtest Beta
+# Radiant Malignance - Prerelease
 ![logo image](https://prodzpod.github.io/RadiantMalignance/logo.png)  
 > Kitchen Sink pushed to its logical extreme  
-> Proper introduction soon:tm: (maybe a video)
+> Proper introduction soon:tm:
 
 **DO NOT REPORT ERRORS YOU ENCOUNTER IN THE MODPACK TO THE MOD DEV** unless you know what you're doing. Cross-mod interactions are supposed to be messy and it should be reported [here](https://github.com/prodzpod/RadiantMalignance/issues) instead.
 
@@ -9,16 +9,18 @@
 
 Refer to the [official page](https://prodzpod.github.io/RadiantMalignance/index.html) for credits and changelog.
 
-**Profile Code**: `01860cf3-9276-0d78-7986-492fb6e7ddf3`  
+**Profile Code**: `0186cf84-6700-aeb3-4ba9-51d9c228eb78`  
 **Profile File**: [Download](https://prodzpod.github.io/RadiantMalignance/RadiantMalignance.r2z)
 
 ## Note: Survivors of the Void
 SotV is **heavily recommended** when playing this modpack as many features are tied in with SotV in mind. the modpack without SotV is **not tested** and can lead to diminished experience.
 
-## Note: Playtest Beta
-Some features may be buggy or missing in the 0.9 versions of the game. This release is to conduct playtest and is subject to change. Although I don't see major changes in its future, **It is advised against that you make serious progress.** fully expect to make a new profile once the 1.0 version drops.
+## Note: Prerelease
+Some features are missing in the prerelease versions of the game. This release is subject to change. Although I don't see major changes in its future, **It is advised against that you make serious progress.** fully expect to make a new profile once the proper release version drops.
 
 ## Note: Balancing
+> Modified instance of [WRB](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/WellRoundedBalance/) will be added to Prerelease 2.
+
 Hopoo isn't known for its balance, and so am I. While I tuned the game for my experience (and I do have quite a lot of hours in this game), I do not consider myself a skilled player or someone who is confident in their balance intuitions. Feel free to leave suggestions in the modpack's [issues page](https://github.com/prodzpod/RadiantMalignance/issues) if you have any balance related suggestions, and I will consider implementing them.
 
 ## Note: Do Not Update Mods

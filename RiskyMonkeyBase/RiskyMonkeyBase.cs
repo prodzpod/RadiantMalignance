@@ -119,6 +119,7 @@ namespace RiskyMonkeyBase
     [BepInDependency("com.Moffein.AccurateEnemies", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.TeamMoonstorm.Starstorm2-Nightly", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Nebby.VAPI", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Nebby.TO30", BepInDependency.DependencyFlags.SoftDependency)]
 
     public class RiskyMonkeyBase : BaseUnityPlugin
     {

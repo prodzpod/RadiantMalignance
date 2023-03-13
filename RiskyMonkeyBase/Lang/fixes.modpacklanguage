@@ -99,7 +99,8 @@
     "NW_MOTHERSHIP_RMOVERRIDE": "Vagrant Mothership",
     "NW_SOMEWHATARCHAIC_RMOVERRIDE": "Wisp Nomad",
     "NW_LEASTEST_RMOVERRIDE": "Grove Child",
-    "SHBVAR_ADULT_LEMURIAN_RMOVERRIDE": "Lemurian Veteran"
+    "SHBVAR_ADULT_LEMURIAN_RMOVERRIDE": "Lemurian Veteran",
+    "ELITE_MODIFIER_BLIGHTED_MOFFEIN": "Obsidian {0}"
   },
   "ko": {
     "INTERACTABLE_SHRINE_REPAIR_NAME": "시간의 성소",

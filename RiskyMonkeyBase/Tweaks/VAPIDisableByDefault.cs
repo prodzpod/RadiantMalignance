@@ -1,8 +1,8 @@
-﻿using ArtifactOfPotential;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RoR2;
 using VAPI;
 using VAPI.Components;
+using VAPI.RuleSystem;
 
 namespace RiskyMonkeyBase.Tweaks
 {
@@ -16,7 +16,17 @@ namespace RiskyMonkeyBase.Tweaks
                 if (self.nameToken == "VAPI_EXPANSION_NAME") ret.defaultChoiceIndex = 1; // off
                 return ret;
             };
+            if (Reference.Mods("com.Nebby.TO30")) RiskyMonkeyBase.Harmony.PatchAll(typeof(NoDeagle));
             RiskyMonkeyBase.Harmony.PatchAll(typeof(VariantName));
+        }
+
+        [HarmonyPatch(typeof(RuleBookExtras), nameof(RuleBookExtras.CreateRuleDefFromVariantPack))]
+        public class NoDeagle
+        {
+            public static void Postfix(ref RuleDef __result)
+            {
+                if (__result.globalName == "Variants.AlloyDeagle") __result.defaultChoiceIndex = Reference.SeriousMode.Value ? 1 : 0;
+            }
         }
 
         [HarmonyPatch(typeof(BodyVariantManager), nameof(BodyVariantManager.ModifyName))]

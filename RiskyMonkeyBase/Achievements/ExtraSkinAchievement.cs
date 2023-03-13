@@ -1,6 +1,8 @@
 ﻿using BepInEx.Configuration;
+using BubbetsItems.Items.BarrierItems;
 using HarmonyLib;
 using R2API;
+using RiskyMonkeyBase.Tweaks;
 using RoR2;
 using RoR2.Achievements;
 using System;
@@ -17,9 +19,11 @@ namespace RiskyMonkeyBase.Achievements
             unlockables = new();
             if (Reference.Mods("com.Mark.Joyride")) MakeUnlockable("Skins.Bandit.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) MakeUnlockable("Skins.Captain.Extra1");
+            if (Reference.Mods("com.Mark.RoninMercSkin", "prodzpod.Downpour")) MakeUnlockable("Skins.Mercenary.Extra1");
             if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) MakeForgottenRelics();
             if (Reference.Mods("prodzpod.TemplarSkins")) MakeUnlockable("Skins.Templar.Extra1");
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) MakeUnlockable("Skins.Railgunner.Extra1");
+            if (Reference.Mods("com.mark.InterloperViendSkin")) MakeUnlockable("Skins.VoidFiend.Extra1");
             AchievementManager.onAchievementsRegistered += PostPatch;
         }
 
@@ -31,9 +35,11 @@ namespace RiskyMonkeyBase.Achievements
         {
             if (Reference.Mods("com.Mark.Joyride")) AddUnlockable("Skin Defo", "Skins.Bandit.Extra1");
             if (Reference.Mods("com.dotflare.LTT1")) AddUnlockable("PCap", "Skins.Captain.Extra1");
+            if (Reference.Mods("com.Mark.RoninMercSkin", "prodzpod.Downpour")) AddUnlockable("Merc Defo", "Skins.Mercenary.Extra1");
             if (Reference.Mods("com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")) AddForgottenRelics();
             if (Reference.Mods("prodzpod.TemplarSkins")) AddUnlockable("skinTemplarGreenAlt", "Skins.Templar.Extra1");
             if (Reference.Mods("com.Takrak.RailgunnerAltTextures")) AddUnlockable("RailgunnerSkin 2", "Skins.Railgunner.Extra1");
+            if (Reference.Mods("com.mark.InterloperViendSkin")) AddUnlockable("Void Skin Defo", "Skins.VoidFiend.Extra1");
         }
         public static void AddForgottenRelics()
         {
@@ -47,6 +53,41 @@ namespace RiskyMonkeyBase.Achievements
             public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); GlobalEventManager.onClientDamageNotified += OnDamage; }
             public override void OnBodyRequirementBroken() { GlobalEventManager.onClientDamageNotified -= OnDamage; base.OnBodyRequirementBroken(); }
             public void OnDamage(DamageDealtMessage damageDealtMessage) { if (damageDealtMessage.attacker == null || damageDealtMessage.attacker != localUser.cachedBody) return; if (damageDealtMessage.damage >= localUser.cachedBody.baseDamage * 100) Grant(); }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Captain", "Skins.Captain.Extra1", null, null, "com.dotflare.LTT1")]
+        public class CaptainExtra1SkinAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("CaptainBody");
+            public override void OnBodyRequirementMet()
+            {
+                base.OnBodyRequirementMet();
+                On.RoR2.PurchaseInteraction.OnInteractionBegin += OnInteractionBegin;
+            }
+
+            public override void OnBodyRequirementBroken()
+            {
+                On.RoR2.PurchaseInteraction.OnInteractionBegin -= OnInteractionBegin;
+                base.OnBodyRequirementBroken();
+            }
+
+            private void OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
+            {
+                if (self.name.Contains("EquipmentDrone") && activator.GetComponent<CharacterBody>().inventory.currentEquipmentIndex == EquipmentCatalog.FindEquipmentIndex("BossHunterConsumed")) Grant();
+                orig(self, activator);
+            }
+        }
+
+        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Mercenary", "Skins.Mercenary.Extra1", null, null, "com.Mark.RoninMercSkin", "prodzpod.Downpour")]
+        public class MercenaryExtra1SkinAchievement : BaseAchievement
+        {
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("MercBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); Run.onClientGameOverGlobal += OnGameOver; }
+            public override void OnBodyRequirementBroken() { Run.onClientGameOverGlobal += OnGameOver; base.OnBodyRequirementBroken(); }
+            public void OnGameOver(Run self, RunReport report)
+            {
+                if (Downpour.DownpourPlugin.DownpourList.Contains(DifficultyCatalog.GetDifficultyDef(self.selectedDifficulty)) && report.gameEnding.isWin) Grant();
+            }
         }
 
         [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Loader", "Skins.Loader.Extra1", null, null, "com.eyeknow.HighFashionLoader", "PlasmaCore.ForgottenRelics")] 
@@ -88,7 +129,7 @@ namespace RiskyMonkeyBase.Achievements
             }
             public void OnDamage(DamageReport report)
             {
-                if (report.victimBody == localUser.cachedBody && report.attackerBody.name == "ClayBruiserBody") win = false;
+                if (report.victimBody == localUser.cachedBody && report.attackerBody?.name == "ClayBruiserBody") win = false;
             }
             public void OnGameOver(Run self, RunReport report)
             {
@@ -163,26 +204,27 @@ namespace RiskyMonkeyBase.Achievements
                 }
             }
         }
-        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_Captain", "Skins.Captain.Extra1", null, null, "com.dotflare.LTT1")]
-        public class CaptainExtra1SkinAchievement : BaseAchievement
+
+        [RegisterModdedAchievement("RiskyMonkey_Skin_Extra1_VoidFiend", "Skins.VoidFiend.Extra1", null, null, "com.mark.InterloperViendSkin")]
+        public class VoidFiendExtra1SkinAchievement : BaseAchievement
         {
-            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("CaptainBody");
-            public override void OnBodyRequirementMet()
+            private bool win;
+            public override BodyIndex LookUpRequiredBodyIndex() => BodyCatalog.FindBodyIndex("VoidSurvivorBody");
+            public override void OnBodyRequirementMet() { base.OnBodyRequirementMet(); Run.onClientGameOverGlobal += OnGameOver; Inventory.onInventoryChangedGlobal += OnPickup; Stage.onStageStartGlobal += OnStart; }
+            public override void OnBodyRequirementBroken() { Run.onClientGameOverGlobal += OnGameOver; Inventory.onInventoryChangedGlobal += OnPickup; Stage.onStageStartGlobal -= OnStart; base.OnBodyRequirementBroken(); }
+            public void OnStart(Stage self) { win = true; }
+            public void OnPickup(Inventory inv)
             {
-                base.OnBodyRequirementMet();
-                On.RoR2.PurchaseInteraction.OnInteractionBegin += OnInteractionBegin;
+                if (!win) return;
+                if (inv == localUser.cachedBody?.inventory && inv.itemAcquisitionOrder.Exists(x =>
+                {
+                    ItemTier def = ItemCatalog.GetItemDef(x)?.tier ?? ItemTier.NoTier;
+                    return def == ItemTier.VoidTier1 || def == ItemTier.VoidTier2 || def == ItemTier.VoidTier3 || (Reference.Mods("bubbet.bubbetsitems") && VoidLunarTweaks.isVoidLunar(def));
+                })) win = false;
             }
-
-            public override void OnBodyRequirementBroken()
+            public void OnGameOver(Run self, RunReport report)
             {
-                On.RoR2.PurchaseInteraction.OnInteractionBegin -= OnInteractionBegin;
-                base.OnBodyRequirementBroken();
-            }
-
-            private void OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
-            {
-                if (self.name.Contains("EquipmentDrone") && activator.GetComponent<CharacterBody>().inventory.currentEquipmentIndex == EquipmentCatalog.FindEquipmentIndex("BossHunterConsumed")) Grant();
-                orig(self, activator);
+                if (win && report.gameEnding.isWin) Grant();
             }
         }
 

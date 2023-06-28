@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace RiskyMonkeyBase.Tweaks
 {
@@ -13,7 +14,7 @@ namespace RiskyMonkeyBase.Tweaks
             {
                 string[] entries = entry.Split('-');
                 if (entries.Length != 2) continue;
-                survivorsOrder.Add(entries[0].Trim(), float.Parse(entries[1].Trim()));
+                survivorsOrder.Add(entries[0].Trim(), float.Parse(entries[1].Trim(), CultureInfo.InvariantCulture));
             }
             RiskyMonkeyBase.Log.LogDebug("Survivor Order: " + survivorsOrder.Join());
             On.RoR2.SurvivorCatalog.SetSurvivorDefs += (orig, defs) =>

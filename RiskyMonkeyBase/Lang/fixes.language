@@ -711,6 +711,7 @@
       "RISKYMONKEY_CHANGELOG_1101": "Prerelease 1 Build 1: Full Release",
       "RISKYMONKEY_CHANGELOG_1102": "Prerelease 1 Build 2: more compat & bugfixes",
       "RISKYMONKEY_CHANGELOG_1103": "Prerelease 1 Build 3: bugfixes and version ups",
+      "RISKYMONKEY_CHANGELOG_1104": "Prerelease 1 Build 4: cultureinvariant fix",
       "RISKYMONKEY_CHANGELOG_FOOTER": "See full changelog at cutt.ly/RMChangelog"
     },
   "ko": {

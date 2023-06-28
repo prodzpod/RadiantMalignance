@@ -3,6 +3,13 @@
 > Kitchen Sink pushed to its logical extreme  
 > Proper introduction soon:tm:
 
+------
+
+## IMPORTANT: When Downloading
+When downloading, **DO NOT CLOSE R2MODMAN** even after it reaches "100% downloaded"! It's a known thunderstore "issue" and the mods are still downloading until the download bar goes away. Your installation will be messed up and you will have to redownload RoR2 if downloaded improperly.
+
+------
+
 **DO NOT REPORT ERRORS YOU ENCOUNTER IN THE MODPACK TO THE MOD DEV** unless you know what you're doing. Cross-mod interactions are supposed to be messy and it should be reported [here](https://github.com/prodzpod/RadiantMalignance/issues) instead.
 
 **Radiant Malignance** is a content expansion aiming to weave various mods into a continuous, monolithic experience. It's designed to mimic how the base game presents its elements, but with a lot more content.
